@@ -15,11 +15,6 @@ VariablesBegin:
 
 VariablesEnd:
 #Glyph 'vglClBlurSq3' 
-Glyph:vglCheckContext:kvglBlurSq3::localhost:: -image_input   
+Glyph:vglCheckContext:kvglBlurSq3::localhost:: -image_input   -
 #create (VglImage* img_input, VglImage* img_output)
 
-
-
-#Glyph 'Command Select"
-Glyph:DATAMANIP:kCSelect::[]::-wsize '128' -hsize '128' -woff '56' -hoff '0' -doff '0' -toff '0' -eoff '0' -real '0' -imag '0' -valid 1  
-#create
