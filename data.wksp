@@ -28,7 +28,7 @@ Glyph:CYTOMETRY:kffl::localhost:3:382:122:: -conn 1
 #  Glyph 'Switch Axes'
 Glyph:DATAMANIP:kaxis::localhost:5:462:122:: -wh -hw -dd 
 
-#  Glyph 'Shape Analysis'
+#  Glyph 'Shape     Analysis'
 Glyph:RETRO:vshape::localhost:7:562:82:: -ms 0 -mc 0 -mi 0 -mr 0 -col 0 
 
 #  Glyph 'Append'
