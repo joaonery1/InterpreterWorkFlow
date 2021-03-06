@@ -15,6 +15,6 @@ VariablesBegin:
 
 VariablesEnd:
 #Glyph 'vglClBlurSq3' 
-Glyph:vglCheckContext:kvglBlurSq3::localhost:: -image_input   -
+Glyph:vglCheckContext:kvglBlurSq3::localhost:: -img1 -img2
 #create (VglImage* img_input, VglImage* img_output)
-aa
+
