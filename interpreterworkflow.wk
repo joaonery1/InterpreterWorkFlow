@@ -1,3 +1,4 @@
+
 # Khoros Visual Programming Workspace
 #
 # cantata 
@@ -15,6 +16,12 @@ VariablesBegin:
 
 VariablesEnd:
 #Glyph 'vglClBlurSq3' 
-Glyph:vglCheckContext:kvglBlurSq3::localhost:: -img1 -img2
+Glyph:vglCheckContext:kvglBlurSq3::localhost:: -img_input img_output
 #create (VglImage* img_input, VglImage* img_output)
 
+VariablesEnd:
+
+#GlyphBegin
+
+#Glyph 'vglClBlurSq3'
+Glyph:vglCheckContext:kvglBlurSq3::localhost:: -img_output
