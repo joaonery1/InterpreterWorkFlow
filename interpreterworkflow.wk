@@ -25,7 +25,7 @@ Glyph:vglCheckContext:kvglCl3dConvolution::23:150::440::-VglImage* 'img_input' -
 Glyph:vglCheckContext:kvglClDilate:27:250::440::-VglImage* 'img_input' -VglImage* 'img_output' -float 'convolution_window' -int 'window_size_x -int 'window_size_y'
 
 #Glyph 'vglCl3dCopy'
-Glyph:vglCheckContext:kvglCl3d:31:250:440:-VglImage* 'img_input' -VglImage* 'img_output'
+Glyph:vglCheckContext:kvglCl3d:31:250:440::-VglImage* 'img_input' -VglImage* 'img_output'
 
 
 #GlyphEnd
