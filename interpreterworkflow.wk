@@ -18,18 +18,27 @@ VariablesEnd:
 #Glyph 'vglClBlurSq3'
 Glyph:vglCheckContext:kvglBlurSq3::3:70:150::-VglImage* 'img_input' -VglImage* 'img_output' 
 
-#Glyph 'vglClCovolution'
-Glyph:vglCheckContext:kvglClCovolution::23:150::440::-VglImage* 'img_input' -VglImage* 'img_output' -float 'convolution_window' -int 'window_size_x -int 'window_size_y
+#Glyph 'vglCl3dConvolution'
+Glyph:vglCheckContext:kvglCl3dConvolution::23:150::440::-VglImage* 'img_input' -VglImage* 'img_output' -float 'convolution_window' -int 'window_size_x -int 'window_size_y
 
 #Glyph 'vglClDilate'
 Glyph:vglCheckContext:kvglClDilate:27:250::440::-VglImage* 'img_input' -VglImage* 'img_output' -float 'convolution_window' -int 'window_size_x -int 'window_size_y'
 
+#Glyph 'vglCl3dCopy'
+Glyph:vglCheckContext:kvglCl3d:31:250:440:-VglImage* 'img_input' -VglImage* 'img_output'
+
+
 #GlyphEnd
 #ConnectionsBegin
 
-#  'vglClCovolution'
+#  'vglClConvolution'
 NodeConnection:3:o:23:i:
 NodeConnection:3:o:27:i:
+
+#   'vglClDilate'
+NodeConnection:27:o:31:i:
+
+
 
 
 
