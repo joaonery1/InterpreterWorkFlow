@@ -16,27 +16,27 @@ VariablesBegin:
 
 VariablesEnd:
 #Glyph 'vglClBlurSq3'
-Glyph:vglCheckContext:kvglBlurSq3::3:70:150::-VglImage* 'img_input' -VglImage* 'img_output' 
+Glyph:vglLib:vglBlurSq3:3:70:150::-img_input -img_output
 
 #Glyph 'vglCl3dConvolution'
-Glyph:vglCheckContext:kvglCl3dConvolution::23:150::440::-VglImage* 'img_input' -VglImage* 'img_output' -float 'convolution_window' -int 'window_size_x -int 'window_size_y
+Glyph:vglLib:vglCl3dConvolution:23:150:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
 
 #Glyph 'vglClDilate'
-Glyph:vglCheckContext:kvglClDilate:27:250::440::-VglImage* 'img_input' -VglImage* 'img_output' -float 'convolution_window' -int 'window_size_x -int 'window_size_y'
+Glyph:vglLib:vglClDilate:27:250:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
 
 #Glyph 'vglCl3dCopy'
-Glyph:vglCheckContext:kvglCl3d:31:250:440::-VglImage* 'img_input' -VglImage* 'img_output'
+Glyph:vglLib:vglCl3d:31:250:440::-img_input -img_output
 
 
 #GlyphEnd
 #ConnectionsBegin
 
 #  'vglClConvolution'
-NodeConnection:3:o:23:i:
-NodeConnection:3:o:27:i:
+NodeConnection:data:3:img_input:23:img_output:
+NodeConnection:data:3:img_input:27:img_output:
 
 #   'vglClDilate'
-NodeConnection:27:o:31:i:
+NodeConnection:27:img_input:31:img_output
 
 
 
