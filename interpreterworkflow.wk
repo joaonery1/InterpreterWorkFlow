@@ -27,6 +27,9 @@ Glyph:vglLib:vglClDilate:27:250:440::-img_input -img_output -convolution_window 
 #Glyph 'vglCl3dCopy'
 Glyph:vglLib:vglCl3d:31:250:440::-img_input -img_output
 
+#Glyph 'vglCl3dNot'
+Glyph:vglLib:vglCl3dNot:35:250:440::-img_input -img_input
+
 
 #GlyphEnd
 #ConnectionsBegin
@@ -36,7 +39,8 @@ NodeConnection:data:3:img_input:23:img_output:
 NodeConnection:data:3:img_input:27:img_output:
 
 #   'vglClDilate'
-NodeConnection:27:img_input:31:img_output
+NodeConnection:27:data:img_input:31:img_output:
+NodeConnection:31:data:img_input:35:img_output:
 
 
 
