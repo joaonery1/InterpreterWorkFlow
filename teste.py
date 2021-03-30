@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 arquivo = open ("interpreterworkflow.wk","r")  #(endereço,modo)  r = ler
 conteudo= arquivo.read()   #funcao para retornar conteudo do arquivo retornando string
 arquivo.close()            #funcao para liberar recrusos
