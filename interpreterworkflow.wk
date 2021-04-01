@@ -52,7 +52,6 @@ Glyph:[lib]:loadimage:21:70:1560::-xoffset '0' -yoffset '0'
 
 #GlyphEnd
 #ConnectionsBegin
-##Fazer conexão do vglClLoadImage com os demais glyphos
 
 
 #loadimage
