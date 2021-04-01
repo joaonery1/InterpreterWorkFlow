@@ -1,0 +1,238 @@
+# Khoros Visual Programming Workspace
+#
+# cantata workspace file (wk/interpolation.wk) was created 
+# on Mon Nov  7 18:26:59 1994
+# by user dip
+#
+#GlyphBegin
+
+
+#  Glyph 'User defined'
+Glyph:DESIGN:user_def:2:70:130::  -o $DIP/data/map-roi.viff
+
+
+#  Glyph 'Resample'
+Glyph:DATAMANIP:kresample:5:150:130:: -wmag '4' -hmag '4' -dmag '1' -tmag '1' -emag '1' -inter 0 -resize 1 -center 
+
+
+#  Glyph 'Display Image'
+Glyph:ENVISION:putimage:8:470:20:: -use_cmap 1 
+
+
+#  Glyph 'Impulse'
+Glyph:DATAMANIP:kimpulse:11:60:220:: -wsize '256' -wnum '64' -hsize '256' -hnum '64' -dsize '1' -dnum '1' -tsize '1' -tnum '1' -esize '1' -enum '1' -wsp '4' -woff '0' -hsp '4' -hoff '0' -dsp '1' -doff '0' -tsp '1' -toff '0' -esp '1' -eoff '0' -fgreal '1' -bgreal '0' -fgimag '0' -bgimag '0' -type 3 
+
+
+#  Glyph 'FFT'
+Glyph:DATAMANIP:kfft:14:350:110:: -dir 0 -center 1 -scale 1 -type 12 -w -h 
+
+
+#  Glyph 'Low-Pass'
+Glyph:IMAGE:ilpf:17:320:180:: -pos 1 -type 10 -order '3' -ucutoff '0.125' -hsize '256' -wsize '256' -ideal 
+
+
+#  Glyph 'Multiply'
+Glyph:DATAMANIP:kmul:20:470:140:: 
+
+
+#  Glyph 'FFT'
+Glyph:DATAMANIP:kfft:23:640:140:: -dir 1 -center 1 -scale 2 -type 12 -w -h 
+
+
+#  Glyph 'Display Image'
+Glyph:ENVISION:putimage:26:800:140:: -use_cmap 1 
+
+
+#  Glyph 'Constant'
+Glyph:DATAMANIP:kgconst:29:190:370:: -wsize '4' -hsize '4' -dsize '1' -tsize '1' -esize '1' -real '1' -imag '0' -type 10 
+
+
+#  Glyph 'Display Image'
+Glyph:ENVISION:putimage:32:350:0:: -use_cmap 1 
+
+
+#  Glyph 'Display Image'
+Glyph:ENVISION:putimage:35:70:0:: -use_cmap 1 
+
+
+#  Glyph 'Display Image'
+Glyph:ENVISION:putimage:38:470:340:: -use_cmap 1 
+
+
+#  Glyph 'Piecewise Linear'
+Glyph:RETRO:vgpwl:41:60:390:: -r '9' -s '1' -c '9' -l '0' -b '1' -m '1' -xp '9' -yp '1' -xr '4' -yr '0' -xf '4' -yf '0' -xw '0' -yw '0' -t 'float' 
+
+
+#  Glyph 'Piecewise Linear'
+Glyph:RETRO:vgpwl:44:60:480:: -r '9' -s '1' -c '9' -l '0' -b '1' -m '1' -xp '1' -yp '9' -xr '0' -yr '4' -xf '0' -yf '4' -xw '0' -yw '0' -t 'float' 
+
+
+#  Glyph 'Multiply'
+Glyph:DATAMANIP:kmul:47:180:430:: 
+
+
+#  Glyph 'Display Image'
+Glyph:ENVISION:putimage:50:470:450:: -use_cmap 1 
+
+
+#  Glyph 'Low-Pass'
+Glyph:IMAGE:ilpf:53:320:250:: -pos 1 -type 11 -order '5' -ucutoff '0.125' -hsize '256' -wsize '256' -but 
+
+
+#  Glyph 'Multiply'
+Glyph:DATAMANIP:kmul:56:470:240:: 
+
+
+#  Glyph 'FFT'
+Glyph:DATAMANIP:kfft:59:640:240:: -dir 1 -center 1 -scale 2 -type 12 -w -h 
+
+
+#  Glyph 'Display Image'
+Glyph:ENVISION:putimage:62:800:240:: -use_cmap 1 
+
+
+#  Glyph 'Multiply'
+Glyph:DATAMANIP:kmul:65:550:240:: -real '16' 
+
+
+#  Glyph 'Multiply'
+Glyph:DATAMANIP:kmul:68:550:140:: -real '16' 
+
+
+#  Glyph 'Real Part'
+Glyph:DATAMANIP:krealpart:71:720:140:: 
+
+
+#  Glyph 'Real Part'
+Glyph:DATAMANIP:krealpart:74:720:240:: 
+
+
+#  Glyph 'Linear Operator'
+Glyph:DATAMANIP:klinearop:77:320:330:: -flip 0 -l -real '0' -imag '0' -size 0 -w -h -d -t -e 
+
+
+#  Glyph 'Linear Operator'
+Glyph:DATAMANIP:klinearop:80:320:450:: -flip 0 -l -real '0' -imag '0' -size 0 -w -h -d -t -e 
+
+
+#  Glyph 'Multiply'
+Glyph:DATAMANIP:kmul:104:210:190:: 
+
+
+#  Glyph 'FFT'
+Glyph:DATAMANIP:kfft:113:150:30:: -dir 0 -center 1 -scale 1 -type 12 -w -h 
+
+
+#  Glyph 'Display Image'
+Glyph:ENVISION:putimage:116:240:20:: -use_cmap 1 
+
+#GlyphEnd
+#ConnectionBegin
+
+
+#  'User defined'
+NodeConnection:2:o:5:i:
+NodeConnection:2:o:35:i:
+NodeConnection:2:o:113:i:
+
+
+#  'Resample'
+NodeConnection:5:o:104:i1:
+
+
+#  'Impulse'
+NodeConnection:11:o:104:i2:
+
+
+#  'FFT'
+NodeConnection:14:o:20:i1:
+NodeConnection:14:o:56:i1:
+NodeConnection:14:o:8:i:
+
+
+#  'Low-Pass'
+NodeConnection:17:o:20:i2:
+
+
+#  'Multiply'
+NodeConnection:20:o:68:i1:
+
+
+#  'FFT'
+NodeConnection:23:o:71:i:
+
+
+#  'Constant'
+NodeConnection:29:o:77:i2:
+
+
+#  'Piecewise Linear'
+NodeConnection:41:o:47:i1:
+
+
+#  'Piecewise Linear'
+NodeConnection:44:o:47:i2:
+
+
+#  'Multiply'
+NodeConnection:47:o:80:i2:
+
+
+#  'Low-Pass'
+NodeConnection:53:o:56:i2:
+
+
+#  'Multiply'
+NodeConnection:56:o:65:i1:
+
+
+#  'FFT'
+NodeConnection:59:o:74:i:
+
+
+#  'Multiply'
+NodeConnection:65:o:59:i:
+
+
+#  'Multiply'
+NodeConnection:68:o:23:i:
+
+
+#  'Real Part'
+NodeConnection:71:or:26:i:
+
+
+#  'Real Part'
+NodeConnection:74:or:62:i:
+
+
+#  'Linear Operator'
+NodeConnection:77:o:38:i:
+
+
+#  'Linear Operator'
+NodeConnection:80:o:50:i:
+
+
+#  'Multiply'
+NodeConnection:104:o:14:i:
+NodeConnection:104:o:77:i1:
+NodeConnection:104:o:80:i1:
+NodeConnection:104:o:32:i:
+
+
+#  'FFT'
+NodeConnection:113:o:116:i:
+
+#ConnectionEnd
+
+#AnnotationsBegin
+#AnnotationsEnd
+VariablesBegin:
+
+
+
+# No variables currently declared. #
+
+VariablesEnd:
+
