@@ -21,17 +21,33 @@ Glyph:[lib]:loadimage:1:70:150::-xoffset '0' -yoffset '0'
 #Glyph 'vglClBlurSq3'
 Glyph:CL:vglBlurSq3:3:70:150::-img_input -img_output
 
+#Glyph 'vglClLoadImage'
+Glyph:[lib]:loadimage:5:70:150::-xoffset '0' -yoffset '0'
+
 #Glyph 'vglCl3dConvolution'
-Glyph:CL:vglCl3dConvolution:23:150:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
+Glyph:CL:vglCl3dConvolution:7:150:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
+
+#Glyph 'vglClLoadImage'
+Glyph:[lib]:loadimage:9:70:150::-xoffset '0' -yoffset '0'
 
 #Glyph 'vglClDilate'
-Glyph:CL:vglClDilate:27:250:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
+Glyph:CL:vglClDilate:11:250:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
+
+#Glyph 'vglClLoadImage'
+Glyph:[lib]:loadimage:13:70:150::-xoffset '0' -yoffset '0'
 
 #Glyph 'vglCl3dCopy'
-Glyph:CL:vglCl3d:31:250:440::-img_input -img_output
+Glyph:CL:vglCl3d:15:250:440::-img_input -img_output
+
+#Glyph 'vglClLoadImage'
+Glyph:[lib]:loadimage:17:70:150::-xoffset '0' -yoffset '0'
 
 #Glyph 'vglCl3dNot'
-Glyph:CL:vglCl3dNot:35:250:440::-img_input -img_input
+Glyph:CL:vglCl3dNot:19:250:440::-img_input -img_input
+
+#Glyph 'vglClLoadImage'
+Glyph:[lib]:loadimage:21:70:1560::-xoffset '0' -yoffset '0'
+
 
 
 #GlyphEnd
@@ -39,13 +55,28 @@ Glyph:CL:vglCl3dNot:35:250:440::-img_input -img_input
 ##Fazer conexão do vglClLoadImage com os demais glyphos
 
 
-#  'vglClConvolution'
-NodeConnection:data:3:img_input:23:img_output:
-NodeConnection:data:3:img_input:27:img_output:
+#loadimage
+NodeConnection:data:1:img_input:3:img_output
+NodeConnection:data:1:img_input:7:img_output
+NodeConnection:data:1:img_input:11:img_output
+NodeConnection:data:1:img_input:15:img_output
+NodeConnection:data:1:img_input:19:img_output
 
-#   'vglClDilate'
-NodeConnection:27:data:img_input:31:img_output:
-NodeConnection:31:data:img_input:35:img_output:
+
+#vglClBlurSq3
+NodeConnection:data:3:img_input:5:img_output
+
+#vglCl3dConvolution
+NodeConnection:data:7:img_input:9:img_output
+
+#vglClDilate
+NodeConnection:data:11:img_input:13:img_output
+
+#vglCl3dCopy
+NodeConnection:data:15:img_input:17:img_output
+
+#vglCl3dNot
+NodeConnection:data:19:img_input:21:img_output
 
 
 
