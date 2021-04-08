@@ -1,4 +1,5 @@
 from collections import defaultdict
+import re
 class Grafo(object):
     """ Implementação básica de um grafo. """
 
@@ -48,3 +49,21 @@ class Grafo(object):
 
     def __getitem__(self, v):
         return self.adj[v]
+
+
+
+
+
+with open ('interpreterworkflow.wk') as arquivo:
+    dados = arquivo.readlines()[58:62]#array de strings
+    #print(dados)
+    texto = dados                     #varíavel para armazenar o array de string
+    for letra in texto: #for para transformar em string
+        #print(letra)
+        filtro = re.compile('([0-9]+)') #pegar só digitos númericos
+        resp = filtro.findall(letra)    #funcao para trasnformar em números
+        resp = list(map(int,resp))      #função apra transformar em inteiros
+        #print(resp)                     #output
+        
+        grafo = Grafo(resp, direcionado=True)
+        print(grafo.adj)        
