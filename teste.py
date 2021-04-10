@@ -1,17 +1,30 @@
-#!/usr/bin/env python3
-import re
 
-with open ('interpreterworkflow.wk') as arquivo:
-    dados = arquivo.readlines()[58:62]#array de strings
-    #print(dados)
-    texto = dados                     #varíavel para armazenar o array de string
-    for letra in texto: #for para transformar em string
-        #print(letra)
-        filtro = re.compile('([0-9]+)') #pegar só digitos númericos
-        resp = filtro.findall(letra)    #funcao para trasnformar em números
-        resp = list(map(int,resp))      #função apra transformar em inteiros
-        print(resp)                     #output
+import re
+import string
+
+
+b = "[]"
+lista = []
+final = ''
+with open('interpreterworkflow.wk') as arquivo:
+    dados = arquivo.readlines()[57:62]  # array de strings
+    # print(dados)
+    texto = dados  # varíavel para armazenar o array de string
+    for letra in texto:  # for para transformar em string
+        # print(letra)
+        filtro = re.compile('([0-9]+)')  # pegar só digitos númericos
         
+        resp = filtro.findall(letra)  # funcao para trasnformar em números
+        #resp = list(map(int, resp))  # função apra transformar em inteiros
+        print(resp)
+
+       # print(resp)
+        for ares in resp:
+            resp = list(map(int, resp))
+            lista.append(ares)
+#print(lista)       
+
+
 '''
     filtro =  re.compile('([0-9]+)')
     resp = filtro.findall(texto)
