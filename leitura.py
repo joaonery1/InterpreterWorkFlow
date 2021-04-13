@@ -1,41 +1,91 @@
-def pesquisar_nodes (arq, txt):
-    nome = ""
-    with open ( arq , 'r') as a:
-        for linha in a:
-            linha = linha.strip('\n')
-            if nome == "":
-                if txt in linha:
-                    nome = linha
-            else:
-                registro = linha.split(',')
-                dic = {"Node" : nome
-                        
-                   }
-            
-                return dic;
-    return None;
-
-texto = pesquisar_nodes ('interpreterworkflow.wk','NodeConnection')
-print(texto)
+from collections import defaultdict
 
 
+class Grafo(object):
+    """ Implementação básica de um grafo. """
 
-            
+    def __init__(self, arestas, direcionado=False):
+        """Inicializa as estruturas base do grafo."""
+        self.adj = defaultdict(set)
+        self.direcionado = direcionado
+        self.adiciona_arestas(arestas)
 
 
+    def get_vertices(self):
+        """ Retorna a lista de vértices do grafo. """
+        return list(self.adj.keys())
 
-'''
-nome = "interpreterworkflow.wk"
-with open(nome, "r") as arquivo:  # (endereço,modo)  r = ler
-    for linha in arquivo:
-        linha = arquivo.readlines()
-        for linha in linha:
-            linha_sem = linha.split()
-            for linha_sem in linha_sem:
-                palavra = linha_sem.split()
-                print(palavra)
-'''
 
-                
-            
-             
+    def get_arestas(self):
+        """ Retorna a lista de arestas do grafo. """
+        return [(k, v) for k in self.adj.keys() for v in self.adj[k]]
+
+
+    def adiciona_arestas(self, arestas):
+        """ Adiciona arestas ao grafo. """
+        for u, v in arestas:
+            self.adiciona_arco(u, v)
+
+
+    def adiciona_arco(self, u, v):
+        """ Adiciona uma ligação (arco) entre os nodos 'u' e 'v'. """
+        self.adj[u].add(v)
+        # Se o grafo é não-direcionado, precisamos adicionar arcos nos dois sentidos.
+        if not self.direcionado:
+            self.adj[v].add(u)
+
+
+    def existe_aresta(self, u, v):
+        """ Existe uma aresta entre os vértices 'u' e 'v'? """
+        return u in self.adj and v in self.adj[u]
+
+
+    def __len__(self):
+        return len(self.adj)
+
+
+    def __str__(self):
+        return '{}({})'.format(self.__class__.__name__, dict(self.adj))
+
+
+    def __getitem__(self, v):
+        return self.adj[v]
+
+
+import re
+import string
+
+
+b = "[]"
+lista = []
+final = ''
+with open('interpreterworkflow.wk') as arquivo:
+    dados = arquivo.readlines()[57:78]  # array de strings
+    # print(dados)
+    texto = dados  # varíavel para armazenar o array de string
+    for letra in texto:  # for para transformar em string
+        # print(letra)
+        filtro = re.compile('([0-9]+)')  # pegar só digitos númericos
+        
+        resp = filtro.findall(letra)  # funcao para trasnformar em números
+        #resp = list(map(int, resp))  # função apra transformar em inteiros
+        #print(resp)
+
+       # print(resp)
+        for ares in resp:
+            resp = list(map(int, resp))
+            lista.append(ares)
+#print(tuple(lista))       
+n = 3
+splited = ares
+len_l = len(ares)
+for i in range(n):
+    start = int(i*len_l/n)
+    end = int((i+1)*len_l/n)
+    splited.append(ares[start:end])
+print(splited) # [[0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 13, 14]]
+print(teste)
+#grafo = Grafo(teste,direcionado=True)
+#print(grafo.adj)
+#print(grafo.get_arestas())
+#print(grafo.get_vertices())
