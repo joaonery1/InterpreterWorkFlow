@@ -96,3 +96,4 @@ print(grafo.get_arestas())
 print("Saida dos vertices:")
 print(grafo.get_vertices())
 
+'fazer implementacao pra saida apontar pra varias entradas  e especificar ql entrada recebe a aresta e qual aresta ai'
