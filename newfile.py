@@ -3,12 +3,14 @@ from collections import defaultdict
 
 class Grafo(object):
     """ Implementação básica de um grafo. """
-
+    
     def __init__(self, arestas, direcionado=False):
         """Inicializa as estruturas base do grafo."""
         self.adj = defaultdict(set)
+        'self.adj = for defaultdict(set) in range(n)
         self.direcionado = direcionado
-        self.adiciona_arestas(arestas)
+        self.adiciona_arestas(arestas) 
+        
 
 
     def get_vertices(self):
@@ -18,7 +20,7 @@ class Grafo(object):
 
     def get_arestas(self):
         """ Retorna a lista de arestas do grafo. """
-        return [(k, v) for k in self.adj.keys() for v in self.adj[k]]
+        return [([k, v]) for k in self.adj.keys() for v in self.adj[k]]
 
 
     def adiciona_arestas(self, arestas):
@@ -50,15 +52,11 @@ class Grafo(object):
 
     def __getitem__(self, v):
         return self.adj[v]
-
+    
 
 import re
 import string
-
-
-b = "[]"
-lista = []
-final = ''
+lista = []   
 with open('interpreterworkflow.wk') as arquivo:
     dados = arquivo.readlines()[57:78]  # array de strings
     # print(dados)
@@ -75,17 +73,33 @@ with open('interpreterworkflow.wk') as arquivo:
         for ares in resp:
             resp = list(map(int, resp))
             lista.append(ares)
-#print(tuple(lista))       
-n = 3
-splited = ares
-len_l = len(ares)
+arestas = list(map(int,lista))
+print(arestas)
+
+print("Tamanho da lista",len(arestas))
+n = len(arestas)//2
+len_arestas = len(arestas)
+splited = []
 for i in range(n):
-    start = int(i*len_l/n)
-    end = int((i+1)*len_l/n)
-    splited.append(ares[start:end])
-print(splited) # [[0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 13, 14]]
-print(teste)
-#grafo = Grafo(teste,direcionado=True)
-#print(grafo.adj)
-#print(grafo.get_arestas())
-#print(grafo.get_vertices())
+    start = int(i*len_arestas/n)
+    end = int((i+1)*len_arestas/n)
+    splited.append(arestas[start:end])
+
+
+
+
+print("Saida da lista de nodes:")
+print(splited[0])  
+grafo = Grafo(splited,direcionado=True)
+interar = []
+
+print(interar)
+print("======================================")
+print("Saida do grafo:")
+print(grafo.adj)
+print("Saida das arestas:")
+print(grafo.get_arestas())
+print("Saida dos vertices:")
+print(grafo.get_vertices())
+
+

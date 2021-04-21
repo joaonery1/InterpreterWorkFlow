@@ -3,12 +3,13 @@ from collections import defaultdict
 
 class Grafo(object):
     """ Implementação básica de um grafo. """
-
+    
     def __init__(self, arestas, direcionado=False):
         """Inicializa as estruturas base do grafo."""
         self.adj = defaultdict(set)
         self.direcionado = direcionado
-        self.adiciona_arestas(arestas)
+        self.adiciona_arestas(arestas) 
+        
 
 
     def get_vertices(self):
@@ -50,7 +51,7 @@ class Grafo(object):
 
     def __getitem__(self, v):
         return self.adj[v]
-
+    
 
 import re
 import string
@@ -83,13 +84,15 @@ for i in range(n):
     end = int((i+1)*len_arestas/n)
     splited.append(arestas[start:end])
 print("Saida da lista de nodes:")
-print(splited)  
+print(splited[0])  
+grafo = Grafo(splited,direcionado=False)
+print(grafo.get_arestas()[1])
+print("====================================")
 
-
-grafo = Grafo(splited,direcionado=True)
 print("Saida do grafo:")
 print(grafo.adj)
 print("Saida das arestas:")
 print(grafo.get_arestas())
 print("Saida dos vertices:")
 print(grafo.get_vertices())
+
