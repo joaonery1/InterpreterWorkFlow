@@ -1,53 +1,108 @@
+""" A Python Class
+A simple Python graph class, demonstrating the essential 
+facts and functionalities of graphs.
+"""
 
-import re
-import string
+
+class Graph(object):
+
+    def __init__(self, graph_dict=None):
+        """ initializes a graph object 
+            If no dictionary or None is given, 
+            an empty dictionary will be used
+        """
+        if graph_dict == None:
+            graph_dict = {}
+        self.__graph_dict = graph_dict
+
+    def vertices(self):
+        """ returns the vertices of a graph """
+        return list(self.__graph_dict.keys())
+
+    def edges(self):
+        """ returns the edges of a graph """
+        return self.__generate_edges()
+
+    def add_vertex(self, vertex):
+        """ If the vertex "vertex" is not in 
+            self.__graph_dict, a key "vertex" with an empty
+            list as a value is added to the dictionary. 
+            Otherwise nothing has to be done. 
+        """
+        if vertex not in self.__graph_dict:
+            self.__graph_dict[vertex] = []
+
+    def add_edge(self, edge):
+        """ assumes that edge is of type set, tuple or list; 
+            between two vertices can be multiple edges! 
+        """
+        edge = set(edge)
+        (vertex1, vertex2) = tuple(edge)
+        if vertex1 in self.__graph_dict:
+            self.__graph_dict[vertex1].append(vertex2)
+        else:
+            self.__graph_dict[vertex1] = [vertex2]
+
+    def __generate_edges(self):
+        """ A static method generating the edges of the 
+            graph "graph". Edges are represented as sets 
+            with one (a loop back to the vertex) or two 
+            vertices 
+        """
+        edges = []
+        for vertex in self.__graph_dict:
+            for neighbour in self.__graph_dict[vertex]:
+                if {neighbour, vertex} not in edges:
+                    edges.append({vertex, neighbour})
+        return edges
+
+    def __str__(self):
+        res = "vertices: "
+        for k in self.__graph_dict:
+            res += str(k) + " "
+        res += "\nedges: "
+        for edge in self.__generate_edges():
+            res += str(edge) + " "
+        return res
 
 
-b = "[]"
-lista = []
-final = ''
-with open('interpreterworkflow.wk') as arquivo:
-    dados = arquivo.readlines()[57:78]  # array de strings
-    # print(dados)
-    texto = dados  # varíavel para armazenar o array de string
-    for letra in texto:  # for para transformar em string
-        # print(letra)
-        filtro = re.compile('([0-9]+)')  # pegar só digitos númericos
-        
-        resp = filtro.findall(letra)  # funcao para trasnformar em números
-        #resp = list(map(int, resp))  # função apra transformar em inteiros
-        #print(resp)
+if __name__ == "__main__":
 
-       # print(resp)
-        for ares in resp:                  #for para percorrer nas linhas de 'numeros'
-            resp = list(map(int, resp))
-            lista.append(ares)             #add dos valores em uma lista
-print(tuple(lista))                        #transforma a lista em tuplas
-def chunks(lista, n):
-    for i in range(0, len(lista), n): # fiz um for para fazer as dívisoes de listas, para melhor visualizacao
-        yield lista[i:i + n]
-print(list(chunks(lista, 2)))   #divide em sublsitas de 2 
+    g = { "1" : ["3","7","11","15","19"],
+          "3" : ["5"],
+          "7" : ["9"],
+          "11" : ["13"],
+          "15" : ["17"],
+          "19" : ["21"]
+        }
 
-'''
-    filtro =  re.compile('([0-9]+)')
-    resp = filtro.findall(texto)
-    print(resp)   
-nome = "interpreterworkflow.wk"
 
-with open(nome, "r") as arquivo:  # (endereço,modo)  r = ler
-    for linha in arquivo:
-        linha = arquivo.readlines()
-        for linha in linha:
-            linha_sem = linha.split()
-            for linha_sem in linha_sem:
-                palavra = linha_sem.split()
-                print(palavra)
+    graph = Graph(g)
+
+    print("Vertices of graph:")
+    print(graph.vertices())
+
+    print("Edges of graph:")
+    print(graph.edges())
+
+    print("Add vertex:")
+    graph.add_vertex("z")
+
+    print("Vertices of graph:")
+    print(graph.vertices())
+ 
+    print("Add an edge:")
+    graph.add_edge({"a","z"})
     
+    print("Vertices of graph:")
+    print(graph.vertices())
 
-  
-    
+    print("Edges of graph:")
+    print(graph.edges())
 
-# arquivo = open ("mensagem.txt","w")  w = escrever , notar que se o arquivo ja existir ele ira deletar e escrever
-# conteudo = arquivo.write()
-    # arquivo.close()
-'''
+    print('Adding an edge {"x","y"} with new vertices:')
+    graph.add_edge({"x","y"})
+    print("Vertices of graph:")
+    print(graph.vertices())
+    print("Edges of graph:")
+    print(graph.edges())

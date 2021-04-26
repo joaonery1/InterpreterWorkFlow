@@ -1,5 +1,94 @@
-'1', '3'
-'1', '7'
-'1', '11'
-'1', '15'
-'1', '19'
+
+# Khoros Visual Programming Workspace
+#
+# cantata 
+# on 25/02/2021
+# by user joaonery1
+#
+
+WorkspaceBegin : 2.1
+
+VariablesBegin:
+
+#Nenhuma variavel#
+
+
+
+VariablesEnd:
+#Glyph 'vglClLoadImage'
+Glyph:[lib]:loadimage:1:70:150::-xoffset '0' -yoffset '0'
+
+#Glyph 'vglClBlurSq3'
+Glyph:CL:vglBlurSq3:3:70:150::-img_input -img_output
+
+#Glyph 'ShowImage'
+Glyph:[lib]:loadimage:5:70:150::-xoffset '0' -yoffset '0'
+
+#Glyph 'vglCl3dConvolution'
+Glyph:CL:vglCl3dConvolution:7:150:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
+
+#Glyph 'ShowImage'
+Glyph:[lib]:loadimage:9:70:150::-xoffset '0' -yoffset '0'
+
+#Glyph 'vglClDilate'
+Glyph:CL:vglClDilate:11:250:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
+
+#Glyph 'ShowImage'
+Glyph:[lib]:loadimage:13:70:150::-xoffset '0' -yoffset '0'
+
+#Glyph 'vglCl3dCopy'
+Glyph:CL:vglCl3d:15:250:440::-img_input -img_output
+
+#Glyph 'ShowImage
+Glyph:[lib]:loadimage:17:70:150::-xoffset '0' -yoffset '0'
+
+#Glyph 'vglCl3dNot'
+Glyph:CL:vglCl3dNot:19:250:440::-img_input -img_input
+
+#Glyph 'ShowImage'
+Glyph:[lib]:loadimage:21:70:1560::-xoffset '0' -yoffset '0'
+
+
+
+#GlyphEnd
+#ConnectionsBegin
+
+
+#loadimage
+NodeConnection:data:1:img_input:3:img_output
+NodeConnection:data:1:img_input:7:img_output
+NodeConnection:data:1:img_input:11:img_output
+NodeConnection:data:1:img_input:15:img_output
+NodeConnection:data:1:img_input:19:img_output
+
+
+#vglClBlurSq
+NodeConnection:data:3:img_input:5:img_output
+
+#vglCldConvolution
+NodeConnection:data:7:img_input:5:img_output
+
+#vglClDilate
+NodeConnection:data:11:img_input:5:img_output
+
+#vglCldCopy
+NodeConnection:data:15:img_input:5:img_output
+
+#vglCldNot
+NodeConnection:data:19:img_input:5:img_output
+
+
+
+
+
+#ConnectionEnd
+
+#ExternalConnectionEnd
+
+AnnotationsBegin
+AnnotationsEnd
+
+
+
+
+

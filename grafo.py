@@ -86,7 +86,7 @@ for i in range(n):
 
 print("Saida da lista de nodes:")
 print(splited)  
-grafo = Grafo(splited,direcionado=False)
+grafo = Grafo(splited,direcionado=True)
 print(grafo.get_arestas()[1])
 print("====================================")
 
@@ -98,6 +98,7 @@ v = grafo.get_arestas()
 print("Saida dos vertices:")
 print(grafo.get_vertices())
 u = grafo.get_vertices()
+
 
 
 'fazer implementacao pra saida apontar pra varias entradas  e especificar ql entrada recebe a aresta e qual aresta ai'
