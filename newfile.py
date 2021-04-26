@@ -7,7 +7,6 @@ class Grafo(object):
     def __init__(self, arestas, direcionado=False):
         """Inicializa as estruturas base do grafo."""
         self.adj = defaultdict(set)
-        'self.adj = for defaultdict(set) in range(n)
         self.direcionado = direcionado
         self.adiciona_arestas(arestas) 
         
@@ -57,8 +56,8 @@ class Grafo(object):
 import re
 import string
 lista = []   
-with open('interpreterworkflow.wk') as arquivo:
-    dados = arquivo.readlines()[57:78]  # array de strings
+with open('interpolation.wk') as arquivo:
+    dados = arquivo.readlines()[135:225]  # array de strings
     # print(dados)
     texto = dados  # varíavel para armazenar o array de string
     for letra in texto:  # for para transformar em string
@@ -69,13 +68,13 @@ with open('interpreterworkflow.wk') as arquivo:
         #resp = list(map(int, resp))  # função apra transformar em inteiros
         #print(resp)
 
-       # print(resp)
+        print(resp)
         for ares in resp:
             resp = list(map(int, resp))
             lista.append(ares)
 arestas = list(map(int,lista))
 print(arestas)
-
+print(resp)
 print("Tamanho da lista",len(arestas))
 n = len(arestas)//2
 len_arestas = len(arestas)
@@ -85,21 +84,20 @@ for i in range(n):
     end = int((i+1)*len_arestas/n)
     splited.append(arestas[start:end])
 
-
-
-
 print("Saida da lista de nodes:")
-print(splited[0])  
-grafo = Grafo(splited,direcionado=True)
-interar = []
+print(splited)  
+grafo = Grafo(splited,direcionado=False)
+print(grafo.get_arestas()[1])
+print("====================================")
 
-print(interar)
-print("======================================")
 print("Saida do grafo:")
 print(grafo.adj)
 print("Saida das arestas:")
 print(grafo.get_arestas())
+v = grafo.get_arestas()
 print("Saida dos vertices:")
 print(grafo.get_vertices())
+u = grafo.get_vertices()
 
 
+'fazer implementacao pra saida apontar pra varias entradas  e especificar ql entrada recebe a aresta e qual aresta ai'

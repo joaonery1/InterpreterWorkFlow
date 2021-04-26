@@ -68,13 +68,13 @@ with open('interpreterworkflow.wk') as arquivo:
         #resp = list(map(int, resp))  # função apra transformar em inteiros
         #print(resp)
 
-       # print(resp)
+        print(resp)
         for ares in resp:
             resp = list(map(int, resp))
             lista.append(ares)
 arestas = list(map(int,lista))
 print(arestas)
-
+print(resp)
 print("Tamanho da lista",len(arestas))
 n = len(arestas)//2
 len_arestas = len(arestas)
@@ -83,8 +83,9 @@ for i in range(n):
     start = int(i*len_arestas/n)
     end = int((i+1)*len_arestas/n)
     splited.append(arestas[start:end])
+
 print("Saida da lista de nodes:")
-print(splited[0])  
+print(splited)  
 grafo = Grafo(splited,direcionado=False)
 print(grafo.get_arestas()[1])
 print("====================================")
@@ -93,7 +94,10 @@ print("Saida do grafo:")
 print(grafo.adj)
 print("Saida das arestas:")
 print(grafo.get_arestas())
+v = grafo.get_arestas()
 print("Saida dos vertices:")
 print(grafo.get_vertices())
+u = grafo.get_vertices()
+
 
 'fazer implementacao pra saida apontar pra varias entradas  e especificar ql entrada recebe a aresta e qual aresta ai'
