@@ -3,7 +3,7 @@
 def __init__(self):
   self.add_vertex()
 
-def add_vertex(v):
+def add_vertex(*v):
   global graph
   global vertices_no
   if v in graph:
@@ -48,6 +48,7 @@ desvio_padrao:7:o:i:11
 
 graph = {}
 vertices_no = 0
+add_vertex(1, 3, 5, 7, 9)
 add_vertex(1)
 add_vertex(3)
 add_vertex(5)
