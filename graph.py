@@ -2,8 +2,6 @@
 A simple Python graph class, demonstrating the essential 
 facts and functionalities of graphs.
 """
-
-
 class Graph(object):
 
     def __init__(self, graph_dict=None):

@@ -1,56 +1,27 @@
-# Python program for 
-# validation of a graph
-  
-# import dictionary for graph
-from collections import defaultdict
-  
-# function for adding edge to graph
-graph = defaultdict(list)
-def addEdge(graph,u,v):
-    graph[u].append(v)
-  
-# definition of function
-def generate_edges(graph):
-    edges = []
-  
-    # for each node in graph
-    for node in graph:
-          
-        # for each neighbour node of a single node
-        for neighbour in graph[node]:
-              
-            # if edge exists then append
-            edges.append((node, neighbour))
-    return edges
+class Grafo:
 
+    def __init__(self, vertices):
+        self.vertices = vertices
+        self.grafo = [[] for i in range(self.vertices)]
 
-parametro = defaultdict(list)
-def addParam(parametro,input,output):
-        parametro[input].append[output]
+    def adiciona_aresta(self, u, v, peso,peso1):
+        # estamos pensando em grafo direcionado com peso nas arestas
+        self.grafo[u-1].append([v, peso,peso1])
 
+        # self.grafo[v-1].append([u,peso]) se o grafo não for direcionado
 
-def gerar_param(parametro):
-        lista_parametro = []
+    def mostra_lista(self):
+        for i in range(self.vertices):
+            print(f'{i+1}:', end='  ')
+            for j in self.grafo[i]:
+                print(f'{j}  ->', end='  ')
+            print('')
 
-        for i in parametro:
-                for j in parametro[i]:
-                        lista_parametro.append((i,j))
-        return lista_parametro
+g = Grafo(4)
 
+g.adiciona_aresta(1, 2, 5,3)
+g.adiciona_aresta(1, 3, 7,4)
+g.adiciona_aresta(1, 4, 6,5)
+g.adiciona_aresta(2, 3, 9,9)
 
-# declaration of graph as dictionary
-addEdge(graph,'a','c')
-addEdge(graph,'b','c')
-addEdge(graph,'b','e')
-addEdge(graph,'c','d')
-addEdge(graph,'c','e')
-addEdge(graph,'c','a')
-addEdge(graph,'c','b')
-addEdge(graph,'e','b')
-addEdge(graph,'d','c')
-addEdge(graph,'e','c')
-
-addParam(parametro,"i","o")
-# Driver Function call 
-# to print generated graph
-print(generate_edges(graph)) 
+g.mostra_lista()

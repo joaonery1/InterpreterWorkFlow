@@ -1,6 +1,8 @@
-# # https://www.educative.io/edpresso/how-to-implement-a-graph-in-python
-# https://www.techiedelight.com/graph-implementation-python/
 # funcao pra adcioanar o vertice
+
+def __init__(self):
+  self.add_vertex()
+
 def add_vertex(v):
   global graph
   global vertices_no
@@ -10,9 +12,11 @@ def add_vertex(v):
     vertices_no = vertices_no + 1
     graph[v] = []
 
+
 # funcao pra adcionar o vertice e o parametro
-def add_edge(v1, v2, i,o):
+def add_edge(v1, v2, lista_entrada, lista_saida):
   global graph
+
   # verificar se o v1 eh valido
   if v1 not in graph:
     print("Vertice ", v1, " não existe.")
@@ -20,8 +24,12 @@ def add_edge(v1, v2, i,o):
   elif v2 not in graph:
     print("Vertice", v2, " nao existe")
   else:
-    temp = [o,v2,i]
+    temp = [v2]
+    inputs = [lista_entrada]
+    outputs = [lista_saida]
     graph[v1].append(temp)
+    graph[v1].append(inputs)
+    graph[v1].append(outputs)
 
 def print_graph():
   global graph
@@ -36,6 +44,8 @@ media:5:o:i:9
 mediadp:3:o1:5:i1
 desvio_padrao:7:o:i:11
 '''
+
+
 graph = {}
 vertices_no = 0
 add_vertex(1)
@@ -44,7 +54,6 @@ add_vertex(5)
 add_vertex(7)
 add_vertex(9)
 add_vertex(11)
-
 
 add_edge(1, 3,'o','i')
 add_edge(3, 5, 'o','i')

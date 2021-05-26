@@ -1,34 +1,33 @@
-class Graph:
-    def __init__(self):
-        self.neighbors = []
-        self.name2node = {}
-        self.node2name = []
-        self.weight = []
+class Grafo(object):
 
-    def __len__(self):
-        return len(self.node2name)
+    def __init__(self, vertices,arestas,lista_i,lista_o):
+        self.vertices = vertices
+        self.adiciona_aresta(self,arestas,lista_i,lista_o)
+        self.grafo = [[] for i in range(self.vertices)]
 
-    def __getitem__(self, v):
-        return self.neighbors[v]
+    def adiciona_aresta(self, u, v, lista_i,lista_o):
+        # estamos pensando em grafo direcionado com peso nas arestas
+        # self.grafo[u-1].append([v,lista_i,lista_o])
 
-    def add_node(self, name):
-        assert name not in self.name2node
-        self.name2node[name] = len(self.name2node)
-        self.node2name.append(name)
-        self.neighbors.append([])
-        self.weight.append({})
-        return self.name2node[name]
 
-    def add_edge(self, name_u, name_v, weight_uv=None):
-        self.add_arc(name_u, name_v, weight_uv)
-        self.add_arc(name_v, name_u, weight_uv)
+        self.grafo[v-1].append([u,lista_i,lista_o])
 
-    def add_arc(self, name_u, name_v, weight_uv=None):
-        u = self.name2node[name_u]
-        v = self.name2node[name_v]
-        self.neighbors[u].append(v)
-        self.weight[u][v] = weight_uv
+    def mostra_lista(self):
+        for i in range(self.vertices):
+            print(f'{i+1}:', end='  ')
+            for j in self.grafo[i]:
+                print(f'{j}  ->', end='  ')
+            print('')
 
-grafo = Graph()
-grafo.add_node("teste")
-grafo.add_node("teste2")
+# g = Grafo(4)
+arestas = (1,2)
+lista_i = ['o']
+lista_o = ['i']
+g =Grafo(1,arestas,lista_i,lista_o)
+# g.adiciona_aresta(1, 2, 5,4)
+# g.adiciona_aresta(1, 2, 5,4)
+# g.adiciona_aresta(1, 3, 7,5)
+# g.adiciona_aresta(1, 4, 6,6)
+# g.adiciona_aresta(2, 3, 9,3)
+g = Grafo()
+g.mostra_lista()

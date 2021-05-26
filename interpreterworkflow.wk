@@ -55,7 +55,7 @@ Glyph:[lib]:loadimage:21:70:1560::-xoffset '0' -yoffset '0'
 
 
 #loadimage
-NodeConnection:data:1:img_input:3:img_output
+NodeConnection:data:1:i:3:o
 NodeConnection:data:1:img_input:7:img_output
 NodeConnection:data:1:img_input:11:img_output
 NodeConnection:data:1:img_input:15:img_output
