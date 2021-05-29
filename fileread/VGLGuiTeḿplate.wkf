@@ -14,40 +14,36 @@ VariablesBegin:
 VariablesEnd:
 
 #  Glyph '[GlyphName]'
-Glyph:[Library]:comment::localhost:[Glyph_ID]:[Glyph_X]:[Glyph_Y]:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
+Glyph:[library]:[localhost]:[glyph_id]:[glyph_name]:[glyph_x]:[glyph_y]::[par1_value]:[par2_valeu]:[parn_valeu]
 
 #  Glyph '[GlyphName]'
-Glyph:[Library]:comment::localhost:[Glyph_ID]:[Glyph_X]:[Glyph_Y]:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
+Glyph:[library]:[localhost]:[glyph_id]:[glyph_name]:[glyph_x]:[glyph_y]::[par1_value]:[par2_valeu]:[parn_valeu]
 
 #  Connections '[GlyphName]'
-NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
-NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
+NodeConnection:data:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
+NodeConnection:data:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
 
 #  Connections '[GlyphName]'
-NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
-NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
+NodeConnection:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
+NodeConnection:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
 
 AnnotationsBegin
 # Glyph --> representação gráfica de uma imagem ou função da biblioteca VisionGL
 # Tipos Glifo: imagem, conexão, procedimento
-#       [Library] --> nome da bliblioteca (Ex: VisionGL)
-#       comment --> nome da imagem ou função da VisionGL
-#       localhost --> pasta onde está o arquivo da imagem ou função da biblioteca
-#       [Glyph_ID] --> código identificador do Glifo
-#       [Glyph_X] --> coordenada númerica da posição linear do Glifo na tela 
-#       [Glyph_Y] --> coordenada númerica da posiço colunar do Glifo na tela
-#       [var_str] --> nome da variável do tipo string
-#       [var_str_value] --> valor da variável do tipo string
-#       [var_num] --> nome da variável do tipo numrica
-#       [var_num_value] --> valor da variável do tipo númerica
+#       [library] --> nome da bliblioteca (Ex: VisionGL)
+#       [localhost] --> pasta onde está o arquivo da imagem ou função da biblioteca
+#       [glyph_id] --> código identificador do Glifo
+#       [glyph_name] --> nome da imagem ou função da VisionGL
+#       [glyph_x] --> coordenada númerica da posição linear do Glifo na tela 
+#       [glyph_y] --> coordenada númerica da posiço colunar do Glifo na tela
+#       [lst_par] --> lista de parâmetros
 #
 # NodeConnection --> representaço gŕafica da conexão entre dois Glifos
 # Tipo conexão: conexão de dados ou conexão de controle (loop, pausas na execução, if/else, merge. expression)      
-#       data --> 
-#       [output_Glyph_ID] --> código identificador Glifo saída 
-#       [output_varname] -->  nome variável de saída
-#       [input_Glyph_ID] --> código identificador Glifo entrada
-#       [input_varname] --> nome variável de entrada
+#       [output_glyph_id] --> código identificador Glifo saída 
+#       [output_img] --> imagem de saída
+#       [input_glyph_id] --> código identificador Glifo entrada
+#       [input_img] --> imagem de entrada
 #
 # The glyph and the connections must be in order by glyph name. Start glyph section, end glyph section, start node conection section, end node conection section.
 AnnotationsEnd
