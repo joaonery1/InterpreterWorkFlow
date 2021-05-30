@@ -4,20 +4,20 @@
 # on [DoW] [Month] [Day] [HH:MM:SS] [Year]
 # by user [username]
 #
-# Glyph --> representação gráfica de uma imagem ou função da biblioteca VisionGL
-# Tipos Glifo: imagem, conexão, procedimento
-#       [library] --> nome da bliblioteca (Ex: VisionGL)
-#       [localhost] --> pasta onde está o arquivo da imagem ou função da biblioteca
-#       [glyph_id] --> código identificador do Glifo
-#       [glyph_name] --> nome da imagem ou função da VisionGL
-#       [glyph_x] --> coordenada númerica da posição linear do Glifo na tela 
-#       [glyph_y] --> coordenada númerica da posiço colunar do Glifo na tela
-#       [lst_par] --> lista de parâmetros
+# Glyph --> graphical representation of an image or function from the VisionGL library
+# Glyph types: image, connection, procedure
+#       [library] --> library name (Ex: VisionGL)
+#       [localhost] --> folder where the image file or library function is located
+#       [glyph_id] --> Glyph identifier code
+#       [glyph_name] --> VisionGL image or function name
+#       [glyph_x] --> numerical coordinate of the glyph's linear position on the screen 
+#       [glyph_y] --> numerical coordinate of the column position of the Glyph on the screen
+#       [lst_par] --> parameter list
 #
-# NodeConnection --> representaço gŕafica da conexão entre dois Glifos
-# Tipo conexão: conexão de dados ou conexão de controle (loop, pausas na execução, if/else, merge. expression)      
-#       [output_glyph_id] --> código identificador Glifo saída 
-#       [input_glyph_id] --> código identificador Glifo entrada
+# NodeConnection --> graphic representation of the connection between two glyphs
+# Connection type: data connection or control connection (loop, pauses in execution, if / else, merge, expression)      
+#       [output_glyph_id] --> glyph identifier code output
+#       [input_glyph_id] --> glyph identifier code input
 #
 # The glyph and the connections must be in order by glyph name. Start glyph section, end glyph section, start node conection section, end node conection section.
 
