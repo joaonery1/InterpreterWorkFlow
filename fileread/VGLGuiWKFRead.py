@@ -43,18 +43,18 @@ conteudo = []
 
 #
 def fileRead(lstGlyph):
-    if os.path.isfile("VGLGui.wkf"):
-        file1 = open("VGLGui.wkf","r")
+    if os.path.isfile("fileread/vglgui.wkf"):
+        file1 = open("fileread/vglgui.wkf","r")
         for line in file1:
             if 'glyph' in line.lower():
-                conteudo = line.split(':')
-                for column in conteudo:
-                    lstGlyph.append(conteudo[conteudo])
+                content = line.split(':')
+                for column in content:
+                    lstGlyph.append(content[conteudo])
         file1.close()
 
 # Program execution
 lstGlyph = []
-conteudo = []
+content = []
 
 fileRead(lstGlyph)
 print(lstGlyph)
