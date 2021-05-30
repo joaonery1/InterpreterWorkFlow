@@ -2,7 +2,9 @@
 # File type: VGLGuiTemplate.wkf
 
 #
+import re
 import os
+import string
 
 # Glyph object structure
 from collections import defaultdict
@@ -20,7 +22,7 @@ class objGlyph(object):
         self.lst_par = vlst_par       #parameter list
 
 # File to be read
-vfile = "VGLGui.wkf"
+vfile = 'VGLGui.wkf'
 
 # Glyph - graphical representation of an image or function from the VisionGL library
 vlibrary = ''    #library name (Ex: VisionGL)
@@ -39,23 +41,17 @@ lstGlyph = []
 #def input_glyph_id = 0  # glyph identifier code input
 
 #
-#def WorkflowRead(lstu,lstout,lstinp):
+def fileRead(lstGlyph):
     if os.path.isfile(vfile):
         file1 = open(vfile,"r")
         for line in file1:
             if 'Glyph' in line.lower():
-                conexao = line.split(':')
-                #lstu.append(conexao[2])
-                #lstu.append(conexao[4])
-                #lstinp.append(conexao[5])
-                #lstout.append(conexao[3])
-                print(conexao)
+                conteudo = line.split(':')
+                for column in conteudo:
+                    lstGlyph.append(conteudo)
         file1.close()
 
 # Program execution
-#lstarestas = []
-#lstout = []
-#lstv = []
-#lstinp = []
-#WorkflowRead(lstarestas,lstout,lstinp)
-#print(lstarestas,lstout,lstinp)
+lstGlyph = []
+fileRead(lstGlyph)
+print(lstGlyph)
