@@ -4,6 +4,22 @@
 # on [DoW] [Month] [Day] [HH:MM:SS] [Year]
 # by user [username]
 #
+# Glyph --> representação gráfica de uma imagem ou função da biblioteca VisionGL
+# Tipos Glifo: imagem, conexão, procedimento
+#       [library] --> nome da bliblioteca (Ex: VisionGL)
+#       [localhost] --> pasta onde está o arquivo da imagem ou função da biblioteca
+#       [glyph_id] --> código identificador do Glifo
+#       [glyph_name] --> nome da imagem ou função da VisionGL
+#       [glyph_x] --> coordenada númerica da posição linear do Glifo na tela 
+#       [glyph_y] --> coordenada númerica da posiço colunar do Glifo na tela
+#       [lst_par] --> lista de parâmetros
+#
+# NodeConnection --> representaço gŕafica da conexão entre dois Glifos
+# Tipo conexão: conexão de dados ou conexão de controle (loop, pausas na execução, if/else, merge. expression)      
+#       [output_glyph_id] --> código identificador Glifo saída 
+#       [input_glyph_id] --> código identificador Glifo entrada
+#
+# The glyph and the connections must be in order by glyph name. Start glyph section, end glyph section, start node conection section, end node conection section.
 
 WorkspaceBegin: 0.1
 
@@ -20,32 +36,14 @@ Glyph:[library]:[localhost]:[glyph_id]:[glyph_name]:[glyph_x]:[glyph_y]::-[par1_
 Glyph:[library]:[localhost]:[glyph_id]:[glyph_name]:[glyph_x]:[glyph_y]::-[par1_value] -[par2_valeu] -[parn_valeu]
 
 #  Connections '[GlyphName]'
-NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
-NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
+NodeConnection:[output_glyph_id]:[input_glyph_id]
+NodeConnection:[output_glyph_id]:[input_glyph_id]
 
 #  Connections '[GlyphName]'
-NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
-NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
+NodeConnection:[output_glyph_id]:[input_glyph_id]
+NodeConnection:[output_glyph_id]:[input_glyph_id]
 
 AnnotationsBegin
-# Glyph --> representação gráfica de uma imagem ou função da biblioteca VisionGL
-# Tipos Glifo: imagem, conexão, procedimento
-#       [library] --> nome da bliblioteca (Ex: VisionGL)
-#       [localhost] --> pasta onde está o arquivo da imagem ou função da biblioteca
-#       [glyph_id] --> código identificador do Glifo
-#       [glyph_name] --> nome da imagem ou função da VisionGL
-#       [glyph_x] --> coordenada númerica da posição linear do Glifo na tela 
-#       [glyph_y] --> coordenada númerica da posiço colunar do Glifo na tela
-#       [lst_par] --> lista de parâmetros
-#
-# NodeConnection --> representaço gŕafica da conexão entre dois Glifos
-# Tipo conexão: conexão de dados ou conexão de controle (loop, pausas na execução, if/else, merge. expression)      
-#       [output_glyph_id] --> código identificador Glifo saída 
-#       [output_img] --> imagem de saída
-#       [input_glyph_id] --> código identificador Glifo entrada
-#       [input_img] --> imagem de entrada
-#
-# The glyph and the connections must be in order by glyph name. Start glyph section, end glyph section, start node conection section, end node conection section.
 AnnotationsEnd
 
 WorkspaceEnd: 0.1
