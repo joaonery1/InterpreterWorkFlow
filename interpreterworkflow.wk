@@ -55,11 +55,11 @@ Glyph:[lib]:loadimage:21:70:1560::-xoffset '0' -yoffset '0'
 
 
 #loadimage
-NodeConnection:data:1:oa:3:i
-NodeConnection:data:1:ob:7:i
-NodeConnection:data:1:oc:11:i
-NodeConnection:data:1:od:15:i
-NodeConnection:data:1:oe:19:i
+NodeConnection:data:1:o:3:i
+NodeConnection:data:1:o1:7:i
+NodeConnection:data:1:o2:11:i
+NodeConnection:data:1:o3:15:i
+NodeConnection:data:1:o4:19:i
 
 
 #vglClBlurSq
