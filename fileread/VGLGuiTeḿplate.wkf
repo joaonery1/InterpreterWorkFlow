@@ -20,12 +20,12 @@ Glyph:[library]:[localhost]:[glyph_id]:[glyph_name]:[glyph_x]:[glyph_y]::[par1_v
 Glyph:[library]:[localhost]:[glyph_id]:[glyph_name]:[glyph_x]:[glyph_y]::[par1_value]:[par2_valeu]:[parn_valeu]
 
 #  Connections '[GlyphName]'
-NodeConnection:data:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
-NodeConnection:data:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
+NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
+NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
 
 #  Connections '[GlyphName]'
-NodeConnection:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
-NodeConnection:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
+NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
+NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
 
 AnnotationsBegin
 # Glyph --> representação gráfica de uma imagem ou função da biblioteca VisionGL
