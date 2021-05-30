@@ -50,7 +50,7 @@ def fileRead(lstGlyph):
                 lstGlyph.append(vGlyph)
 
             # Creates the connections of the workflow file
-            if 'NodeConnection:' in line.lower():
+            if 'nodeconnection:' in line.lower():
                 contentCon = line.split(':')
                 vConnection = objConnection(contentCon[1], contentCon[2])
                 lstConnection.append(vConnection)
