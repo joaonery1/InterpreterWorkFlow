@@ -29,25 +29,25 @@ Glyph:VisionGL:image:11:image6:170:200::-xoffset '0' -yoffset '0'
 #  Connections 
 
 # image1
-NodeConnection:1:2
-NodeConnection:1:6    
-NodeConnection:1:8
+NodeConnection:1:2:
+NodeConnection:1:6:
+NodeConnection:1:8:
 
 # image2
-NodeConnection:3:6
-NodeConnection:3:10
+NodeConnection:3:6:
+NodeConnection:3:10:
 
 # image3
-NodeConnection:5:2
-NodeConnection:5:4
+NodeConnection:5:2:
+NodeConnection:5:4:
 
 # image4
-NodeConnection:7:4
-NodeConnection:7:8
+NodeConnection:7:4:
+NodeConnection:7:8:
 
 # image5
-NodeConnection:9:2
-NodeConnection:9:4
+NodeConnection:9:2:
+NodeConnection:9:4:
 
 AnnotationsBegin
 AnnotationsEnd
