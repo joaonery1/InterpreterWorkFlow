@@ -30,7 +30,7 @@ Glyph:VisionGL:image:11:image6:170:200::-xoffset '0' -yoffset '0'
 
 # image1
 NodeConnection:1:2
-NodeConnection:1:6    #Image1 - vglBlurSq3
+NodeConnection:1:6    
 NodeConnection:1:8
 
 # image2
