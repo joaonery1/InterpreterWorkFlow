@@ -13,24 +13,18 @@ VariablesBegin:
 
 VariablesEnd:
 
-#  Glyph '[GlyphName]'
-Glyph:[library]:[localhost]:[glyph_id]:[glyph_name]:[glyph_x]:[glyph_y]::-[par1_value] -[par2_valeu] -[parn_valeu]
-
-#  Glyph '[GlyphName]'
-Glyph:[library]:[localhost]:[glyph_id]:[glyph_name]:[glyph_x]:[glyph_y]::-[par1_value] -[par2_valeu] -[parn_valeu]
-
-Glyph:VisionGL:image:1:image1:70:150::-xoffset '0' -yoffset '0'
-Glyph:VisionGL:CL:2:vglBlurSq3:80:150::-img_input -img_output
-
-Glyph:VisionGL:image:loadimage:5:70:150::-xoffset '0' -yoffset '0'
-Glyph:CL:vglCl3dConvolution:7:150:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
-Glyph:[lib]:loadimage:9:70:150::-xoffset '0' -yoffset '0'
-Glyph:CL:vglClDilate:11:250:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
-Glyph:[lib]:loadimage:13:70:150::-xoffset '0' -yoffset '0'
-Glyph:CL:vglCl3d:15:250:440::-img_input -img_output
-Glyph:[lib]:loadimage:17:70:150::-xoffset '0' -yoffset '0'
-Glyph:CL:vglCl3dNot:19:250:440::-img_input -img_input
-Glyph:[lib]:loadimage:21:70:1560::-xoffset '0' -yoffset '0'
+#  Glyph 
+Glyph:VisionGL:image:1:image1:70:100::-xoffset '0' -yoffset '0'
+Glyph:VisionGL:CL:2:vglBlurSq3:80:110::-img_input -img_output
+Glyph:VisionGL:image:3:image2:90:120::-xoffset '0' -yoffset '0'
+Glyph:VisionGL:CL:4:vglCl3dConvolution:100:130::-img_input -img_output -convolution_window -window_size_x -window_size_y
+Glyph:VisionGL:image:5:image3:110:140::-xoffset '0' -yoffset '0'
+Glyph:VisionGL:CL:6:vglClDilate:120:150::-img_input -img_output -convolution_window -window_size_x -window_size_y
+Glyph:VisionGL:image:7:image4:130:160::-xoffset '0' -yoffset '0'
+Glyph:VisionGL:CL:8:vglCl3d:140:170::-img_input -img_output
+Glyph:VisionGL:image:9:image5:150:180::-xoffset '0' -yoffset '0'
+Glyph:VisionGL:CL:10:vglCl3dNot:160:190::-img_input -img_input
+Glyph:VisionGL:image:11:image6:170:200::-xoffset '0' -yoffset '0'
 
 
 #  Connections '[GlyphName]'
@@ -42,24 +36,6 @@ NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
 NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
 
 AnnotationsBegin
-# Glyph --> representação gráfica de uma imagem ou função da biblioteca VisionGL
-# Tipos Glifo: imagem, conexão, procedimento
-#       [library] --> nome da bliblioteca (Ex: VisionGL)
-#       [localhost] --> pasta onde está o arquivo da imagem ou função da biblioteca
-#       [glyph_id] --> código identificador do Glifo
-#       [glyph_name] --> nome da imagem ou função da VisionGL
-#       [glyph_x] --> coordenada númerica da posição linear do Glifo na tela 
-#       [glyph_y] --> coordenada númerica da posiço colunar do Glifo na tela
-#       [lst_par] --> lista de parâmetros
-#
-# NodeConnection --> representaço gŕafica da conexão entre dois Glifos
-# Tipo conexão: conexão de dados ou conexão de controle (loop, pausas na execução, if/else, merge. expression)      
-#       [output_glyph_id] --> código identificador Glifo saída 
-#       [output_img] --> imagem de saída
-#       [input_glyph_id] --> código identificador Glifo entrada
-#       [input_img] --> imagem de entrada
-#
-# The glyph and the connections must be in order by glyph name. Start glyph section, end glyph section, start node conection section, end node conection section.
 AnnotationsEnd
 
 WorkspaceEnd: 0.1
