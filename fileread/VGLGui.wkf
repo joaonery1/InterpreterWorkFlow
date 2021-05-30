@@ -19,6 +19,20 @@ Glyph:[library]:[localhost]:[glyph_id]:[glyph_name]:[glyph_x]:[glyph_y]::-[par1_
 #  Glyph '[GlyphName]'
 Glyph:[library]:[localhost]:[glyph_id]:[glyph_name]:[glyph_x]:[glyph_y]::-[par1_value] -[par2_valeu] -[parn_valeu]
 
+Glyph:VisionGL:image:1:image1:70:150::-xoffset '0' -yoffset '0'
+Glyph:VisionGL:CL:2:vglBlurSq3:80:150::-img_input -img_output
+
+Glyph:VisionGL:image:loadimage:5:70:150::-xoffset '0' -yoffset '0'
+Glyph:CL:vglCl3dConvolution:7:150:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
+Glyph:[lib]:loadimage:9:70:150::-xoffset '0' -yoffset '0'
+Glyph:CL:vglClDilate:11:250:440::-img_input -img_output -convolution_window -window_size_x -window_size_y
+Glyph:[lib]:loadimage:13:70:150::-xoffset '0' -yoffset '0'
+Glyph:CL:vglCl3d:15:250:440::-img_input -img_output
+Glyph:[lib]:loadimage:17:70:150::-xoffset '0' -yoffset '0'
+Glyph:CL:vglCl3dNot:19:250:440::-img_input -img_input
+Glyph:[lib]:loadimage:21:70:1560::-xoffset '0' -yoffset '0'
+
+
 #  Connections '[GlyphName]'
 NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
 NodeConnection:[output_glyph_id]:[output_image]:[input_glyph_id]:[input_image]
