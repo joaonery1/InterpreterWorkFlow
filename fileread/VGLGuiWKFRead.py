@@ -35,6 +35,7 @@ vlst_par = []    #parameter list
 
 # List to store glyphs
 lstGlyph = []
+conteudo = []
 
 # NodeConnection - graphic representation of the connection between two glyphs
 #def output_glyph_id = 0 # glyph identifier code output
@@ -42,16 +43,18 @@ lstGlyph = []
 
 #
 def fileRead(lstGlyph):
-    if os.path.isfile(vfile):
-        file1 = open(vfile,"r")
+    if os.path.isfile("fileread/vglgui.wkf"):
+        file1 = open("fileread/vglgui.wkf","r")
         for line in file1:
-            if 'Glyph' in line.lower():
-                conteudo = line.split(':')
-                for column in conteudo:
-                    lstGlyph.append(conteudo)
+            if 'glyph' in line.lower():
+                content = line.split(':')
+                for column in content:
+                    lstGlyph.append(content[conteudo])
         file1.close()
 
 # Program execution
 lstGlyph = []
+content = []
+
 fileRead(lstGlyph)
 print(lstGlyph)
