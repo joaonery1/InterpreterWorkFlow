@@ -3,6 +3,7 @@ import re
 import os
 import string
 
+# -*- coding: utf-8 -* 
 from collections import defaultdict
 
 #funcao para fazer sublistas dado um N
@@ -10,7 +11,16 @@ def chunks(lista,n):
     for i in range(0,len(lista),n):
         yield lista[i:i +n]
    
-    
+
+def vertex_graph(lstv):
+    if os.path.isfile("arquivo2.wk"):
+        file1 = open("arquivo2.wk","r")
+        for line in file1:
+            if 'glyph:' in line.lower():
+                vertex = line.split(':')
+                lstv.append(vertex[3])
+        file1.close()
+
 def node_connection(lstu):
     if os.path.isfile("arquivo2.wk"):
         file1 = open("arquivo2.wk","r")
@@ -22,16 +32,41 @@ def node_connection(lstu):
                 lstu.append(conexao[1])
                 lstu.append(conexao[2])
                 #lstinp.append(conexao[5])
-                #lstout.append(conexao[3])
+                #lstout.append(conexao[3])              
         file1.close()
 
+
+#ideia de leitura com parametros
+def node_connection_parameters(lstu,lstv,listin,listout,listassc):
+    if os.path.isfile("interpreterworkflow.wk"):
+        file1 = open("interpreterworkflow.wk","r")
+        for line in file1:
+            if 'nodeconnection' in line.lower():
+                conexao = line.split(':')
+                lstu.append(conexao[1])
+                lstu.append(conexao[3])
+                lstv.append(conexao[3])
+                listin.append(conexao[4])
+                listout.append(conexao[2])
+                listassc.append(conexao[1])
+                listassc.append(conexao[2])
+                listassc.append(conexao[3])
+                listassc.append(conexao[4])
+                #pensar em outra forma de aramazenar nessa lista os parametros associados
+                #dessa forma pode dizer que ele está associado?
+                #pensar em criar uma funcao apenas para ler parametros? Ou funcao para ler os dois?
+                #verificar um jeito de tirar o '/n' no final de caracter no .split 
+                #talvez criar uma função para transformar uma lista de str em int, ao inves de fazer um for na 'raiz'
+        file1.close()
 
 #script para leitura do arquivo e aplicao das funcoes
 
 lstarestas= []
-lstout = []
+
 lstv = []
-lstinp = []
+listout= []
+listin = []
+listassc = []
 '''
 with open('interpreterworkflow.wk') as file:
     for line in file:
@@ -52,75 +87,38 @@ with open('interpreterworkflow.wk') as file:
 '''
 #print(lstu,lstout)
 
+vertex_graph(lstv)
 node_connection(lstarestas)
+#tratamento, str -> int
 lista_arestas = []
-
+lista_vertices = []
 for val in lstarestas:
     lista_arestas.append(int(val))
-lista_arestas = list(chunks(lista_arestas,2))
-lstarestas = list(chunks(lstarestas,2))
+for val in lstv:
+    lista_vertices.append(int(val))
+lista_arestas = list(chunks(lista_arestas,2)) #nova lista tratada
+lstarestas = list(chunks(lstarestas,2))       #nova lsita tratada
 #print(lista_arestas)
-#print(lstarestas)
-lista_de_vercites = [1,3,5,7,9]
-class Grafo(object):
-    """ Implementação básica de um grafo. """
-    
-    def __init__(self, arestas, direcionado=False):
-        """Inicializa as estruturas base do grafo."""
-        self.adj = defaultdict(set)
-        self.direcionado = direcionado
-        self.adiciona_arestas(arestas) 
-        
+#print(lista_vertices)
+
+#aplicação da função
+lstu1 = []
+node_connection_parameters(lstu1,lstv,listin,listout,listassc)
 
 
-    def get_vertices(self):
-        """ Retorna a lista de vértices do grafo. """
-        return list(self.adj.keys())
 
 
-    def get_arestas(self):
-        """ Retorna a lista de arestas do grafo. """
-        return [([k, v]) for k in self.adj.keys() for v in self.adj[k]]
-
-
-    def adiciona_arestas(self, arestas):
-        """ Adiciona arestas ao grafo. """
-        for u, v in arestas:
-            self.adiciona_arco(u, v)
-
-
-    def adiciona_arco(self, u, v):
-        """ Adiciona uma ligação (arco) entre os nodos 'u' e 'v'. """
-        self.adj[u].add(v)
-        # Se o grafo é não-direcionado, precisamos adicionar arcos nos dois sentidos.
-        if not self.direcionado:
-            self.adj[v].add(u)
-
-
-    def existe_aresta(self, u, v):
-        """ Existe uma aresta entre os vértices 'u' e 'v'? """
-        return u in self.adj and v in self.adj[u]
-
-
-    def __len__(self):
-        return len(self.adj)
-
-
-    def __str__(self):
-        return '{}({})'.format(self.__class__.__name__, dict(self.adj))
-
-
-    def __getitem__(self, v):
-        return self.adj[v]
-    
-
+#função para criar grafo
 def cria_grafo(lista_de_vertices, lista_de_arestas):
     grafo = {}
     for vertice in lista_de_vertices:
         grafo[vertice] = []
     for aresta in lista_de_arestas:
+        grafo[aresta[0]].append(aresta[1])
         grafo[aresta[1]].append(aresta[0])
     return grafo
+
+#função que percorre o grafo inicio->fim
 def dfs_caminhos(grafo, inicio, fim):
     pilha = [(inicio, [inicio])]
     while pilha:
@@ -130,28 +128,24 @@ def dfs_caminhos(grafo, inicio, fim):
                 yield caminho + [proximo]
             else:
                 pilha.append((proximo, caminho + [proximo]))
-def gerar_caminhos(grafo, caminho, final):
-    """Enumera todos os caminhos no grafo `grafo` iniciados por `caminho` e que terminam no vértice `final`."""
 
-    # Se o caminho de fato atingiu o vértice final, não há o que fazer.
-    if caminho[-1] == final:
-        yield caminho
-        return
+'''
+lista genérica
+l_de_vertices = [1,2,3,4,5,6,7,8,9,10]
+l_de_arestas = [[1, 2], [1, 6], [1, 8], [3, 6], [3, 10], [5, 2], [5, 4], [7, 4], [7, 8], [9, 2], [9, 4]]
+'''
+grafo = cria_grafo(lista_vertices,lista_arestas)
 
-    # Procuramos todos os vértices para os quais podemos avançar…
-    for vizinho in G[caminho[-1]]:
-        # …mas não podemos visitar um vértice que já está no caminho.
-        if vizinho in caminho:
-            continue
-        # Se você estiver usando python3, você pode substituir o for
-        # pela linha "yield from gerar_caminhos(grafo, caminho + [vizinho], final)"
-        for caminho_maior in gerar_caminhos(grafo, caminho + [vizinho], final):
-            yield caminho_maior
+print("Representação\n",grafo)
+print("####################################")
+caminhos = list(dfs_caminhos(grafo,1,9))
+print("Caminhos percorridos\n",caminhos)
+print("####################################")
 
-grafo = Grafo(lista_arestas,direcionado=True)
-dic1 = grafo.adj
-for caminho in gerar_caminhos(dic1,1,9):
-    print (caminho)
-print(dic1)
-caminhos = list(dfs_caminhos(dic1,1,9 ))
-print(caminhos)
+#separa em sublistas
+lista_assc = list(chunks(listassc,4))
+print(lista_assc)
+
+'''
+implementar para um grafo junto com os parametros
+'''

@@ -55,27 +55,27 @@ Glyph:[lib]:loadimage:21:70:1560::-xoffset '0' -yoffset '0'
 
 
 #loadimage
-NodeConnection:data:1:o:3:i
-NodeConnection:data:1:o1:7:i
-NodeConnection:data:1:o2:11:i
-NodeConnection:data:1:o3:15:i
-NodeConnection:data:1:o4:19:i
+NodeConnection:1:o:3:i:
+NodeConnection:1:o1:7:i:
+NodeConnection:1:o2:11:i:
+NodeConnection:1:o3:15:i:
+NodeConnection:1:o4:19:i:
 
 
 #vglClBlurSq
-NodeConnection:data:3:o:5:i
+NodeConnection:3:o:5:i:
 
 #vglCldConvolution
-NodeConnection:data:7:o:9:i
+NodeConnection:7:o:9:i:
 
 #vglClDilate
-NodeConnection:data:11:o:13:i
+NodeConnection:11:o:13:i:
 
 #vglCldCopy
-NodeConnection:data:15:o:17:i
+NodeConnection:15:o:17:i:
 
 #vglCldNot
-NodeConnection:data:19:o:21:i
+NodeConnection:19:o:21:i:
 
 
 
