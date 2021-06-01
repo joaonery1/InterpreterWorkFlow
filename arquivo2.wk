@@ -24,7 +24,7 @@ Glyph:VisionGL:image:7:image4:130:160::-xoffset '0' -yoffset '0'
 Glyph:VisionGL:CL:8:vglCl3dCopy:140:170::-img_input -img_output
 Glyph:VisionGL:image:9:image5:150:180::-xoffset '0' -yoffset '0'
 Glyph:VisionGL:CL:10:vglCl3dNot:160:190::-img_input -img_input
-Glyph:VisionGL:image:11:image6:170:200::-xoffset '0' -yoffset '0'
+
 
 #  Connections 
 
