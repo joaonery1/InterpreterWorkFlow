@@ -72,9 +72,10 @@ fileRead(lstGlyph)
 
 # Shows the content of the Glyphs
 for vGlyph in lstGlyph:
-    print("Library:", vGlyph.library, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, "Glyph_Name:", vGlyph.glyph_name,
+    print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
           "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y, "Parameters:", vGlyph.lst_par)
 
 # Shows the content of the Connections
 for vConnection in lstConnection:
-    print("Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Input_Id:", vConnection.input_glyph_id)
+    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.voutput_varname,
+          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.vinput_varname)
