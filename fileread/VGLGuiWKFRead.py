@@ -27,7 +27,7 @@ class objConnection(object):
     def __init__(self, vtype, voutput_glyph_id, voutput_varname, vinput_glyph_id, vinput_varname):       
         self.type = vtype                           #type 'data', 'controle' 
         self.output_glyph_id = voutput_glyph_id     #glyph identifier code output
-        self.voutput_varname = voutput_varname      #nome variável saída
+        self.output_varname = voutput_varname      #nome variável saída
         self.input_glyph_id = vinput_glyph_id       #glyph identifier code input
         self.input_varname = vinput_varname         #nome variável entrada
 
@@ -77,5 +77,5 @@ for vGlyph in lstGlyph:
 
 # Shows the content of the Connections
 for vConnection in lstConnection:
-    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.voutput_varname,
-          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.vinput_varname)
+    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
+          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
