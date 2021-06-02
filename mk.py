@@ -112,7 +112,8 @@ def fun_vertex(vertex):
     for i in valores: #for para passar uma lista de inteiros
         lista_vertices.append(int(i))
     return lista_vertices
-
+    
+from collections import defaultdict
 
 class Grafo(object):
     """ Implementação básica de um grafo. """
@@ -164,4 +165,10 @@ class Grafo(object):
 
     def __getitem__(self, v):
         return self.adj[v]
-    
+
+lv = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 1, 3, 5, 7, 13, 37, 39, 41, 43, 45, 47, 49, 51, 53, 90, 93]
+la = [[1, 13], [3, 5], [3, 7], [3, 1], [3, 13], [5, 7], [5, 1], [7, 1], [11, 5], [13, 9], [1, 3], [3, 5], [3, 39], [5, 7], [5, 53], [7, 33], [7, 31], [9, 37], [11, 9], [13, 11], [15, 9], [15, 13], [17, 15], [19, 9], [19, 17], [21, 19], [23, 25], [25, 9], [25, 21], [27, 9], [27, 
+31], [29, 27], [31, 23], [33, 29], [35, 49], [39, 51], [39, 21], [41, 13], [43, 17], [47, 35], [49, 1], [51, 45], [53, 21], [53, 17], [53, 13], [90, 47], [93, 39], [93, 43], [93, 41]]
+
+grafo = Grafo(la,direcionado=False)
+print(grafo.adj)

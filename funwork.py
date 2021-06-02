@@ -59,7 +59,7 @@ def vertex_graph(lstv):
         file1.close()
 
 def node_connection(lstu):
-    if os.path.isfile("arquivo2.wk"):
+    if os.path.isfile("arquivos.wk/"):
         file1 = open("arquivo2.wk","r")
         for line in file1:
             if 'nodeconnection' in line.lower():
@@ -75,18 +75,18 @@ def node_connection(lstu):
 
 #ideia de leitura com parametros
 def connection_parameters(lstGlyph):
-    if os.path.isfile("interpreterworkflow.wk"):
-        file1 = open("interpreterworkflow.wk","r")
+    if os.path.isfile("arquivos.wk/data.wksp"):
+        file1 = open("arquivos.wk/data.wksp","r")
         
         for line in file1:
             if 'glyph:' in line.lower():
                 conexao = line.split(':')
-                vGlyph = objGlyph(conexao[3])
+                vGlyph = objGlyph(conexao[5])
                 lsti.append(vGlyph)
 
             if 'nodeconnection' in line.lower():
                 conexao = line.split(':')
-                vConnection = objConnection(conexao[1],conexao[2],conexao[3],conexao[4])
+                vConnection = objConnection(conexao[2],conexao[3],conexao[4],conexao[5])
                 lstConnection.append(vConnection)
         file1.close()
 
@@ -100,8 +100,8 @@ lstvertex = []
 connection_parameters(lstGlyph)
 for vConnection in lstConnection:
     lstedge.append(vConnection.u_id)
-    lstedge.append(vConnection.v_id)
     lstparam.append(vConnection.u_output)
+    lstedge.append(vConnection.v_id)
     lstparam.append(vConnection.v_input)
     #print(vConnection.u_id,vConnection.v_id)
 
@@ -112,14 +112,21 @@ for vGlyph in lstGlyph:
 for val in lstedge:
     lstedges.append(int(val))
 
-print(lsti)
-lstedges = list(chunks(lstedges,2))
+for val1 in lsti:
+    lstvertex.append(str(val))
+
+    
+
+
+
 lstcomplete= [*sum(zip(lstedges,lstparam),())]    #juntei depois de alimentar a lista
+lstedges = list(chunks(lstedges,2))
 lstcomplete = list(chunks(lstcomplete,4))    
 
 print(lsti)   #lista de vertices 
 print(lstedges) #lista de arestas
 print(lstcomplete) #lista arestas c/ parametros
+
 
 
 ############################################################
@@ -164,16 +171,27 @@ def dfs_caminhos(grafo, inicio, fim):
             else:
                 pilha.append((proximo, caminho + [proximo]))
 
-'''
-lista genérica
+def remove_repetidos(lista):
+    l = []
+    for i in lista:
+        if i not in l:
+            l.append(i)
+    l.sort()
+    return l
 
-'''
-l_de_vertices = [1, 2, 3 ,4, 5, 6, 7, 8, 9, 10]
-l_de_arestas = [[1, 2], [1, 6], [1, 8], [3, 6], [3, 10], [5, 2], [5, 4], [7, 4], [7, 8], [9, 2], [9, 4]]
+l_de_vertices = lsti
+l_de_arestas = lstedges
 
-grafo = cria_grafo(l_de_vertices,l_de_arestas)
+lv = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 1, 3, 5, 7, 13, 37, 39, 41, 43, 45, 47, 49, 51, 53, 90, 93]
+la = [[1, 13], [3, 5], [3, 7], [3, 1], [3, 13], [5, 7], [5, 1], [7, 1], [11, 5], [13, 9], [1, 3], [3, 5], [3, 39], [5, 7], [5, 53], [7, 33], [7, 31], [9, 37], [11, 9], [13, 11], [15, 9], [15, 13], [17, 15], [19, 9], [19, 17], [21, 19], [23, 25], [25, 9], [25, 21], [27, 9], [27, 
+31], [29, 27], [31, 23], [33, 29], [35, 49], [39, 51], [39, 21], [41, 13], [43, 17], [47, 35], [49, 1], [51, 45], [53, 21], [53, 17], [53, 13], [90, 47], [93, 39], [93, 43], [93, 41]]
 
-print("Representação\n",grafo)
+lv = remove_repetidos(lv)
+la = remove_repetidos(la)
+
+print(lv)
+grafo = cria_grafo(lv,la)
+
 print("####################################")
 #caminhos = list(dfs_caminhos(grafo,1,9))
 #print("Caminhos percorridos\n",caminhos)
