@@ -172,3 +172,23 @@ la = [[1, 13], [3, 5], [3, 7], [3, 1], [3, 13], [5, 7], [5, 1], [7, 1], [11, 5],
 
 grafo = Grafo(la,direcionado=False)
 print(grafo.adj)
+#função para criar grafo
+def cria_grafo(lista_de_vertices, lista_de_arestas):
+    grafo = {}
+    for vertice in lista_de_vertices:
+        grafo[vertice] = []
+    for aresta in lista_de_arestas:
+        grafo[aresta[0]].append(aresta[1])
+        grafo[aresta[1]].append(aresta[0])
+    return grafo    
+
+#função que percorre o grafo inicio->fim
+def dfs_caminhos(grafo, inicio, fim):
+    pilha = [(inicio, [inicio])]
+    while pilha:
+        vertice, caminho = pilha.pop()
+        for proximo in set(grafo[vertice]) - set(caminho):
+            if proximo == fim:
+                yield caminho + [proximo]
+            else:
+                pilha.append((proximo, caminho + [proximo]))
