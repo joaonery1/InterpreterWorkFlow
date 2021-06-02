@@ -172,3 +172,48 @@ la = [[1, 13], [3, 5], [3, 7], [3, 1], [3, 13], [5, 7], [5, 1], [7, 1], [11, 5],
 
 grafo = Grafo(la,direcionado=False)
 print(grafo.adj)
+#função para criar grafo
+def cria_grafo(lista_de_vertices, lista_de_arestas):
+    grafo = {}
+    for vertice in lista_de_vertices:
+        grafo[vertice] = []
+    for aresta in lista_de_arestas:
+        grafo[aresta[0]].append(aresta[1])
+        grafo[aresta[1]].append(aresta[0])
+    return grafo    
+
+#função que percorre o grafo inicio->fim
+def dfs_caminhos(grafo, inicio, fim):
+    pilha = [(inicio, [inicio])]
+    while pilha:
+        vertice, caminho = pilha.pop()
+        for proximo in set(grafo[vertice]) - set(caminho):
+            if proximo == fim:
+                yield caminho + [proximo]
+            else:
+                pilha.append((proximo, caminho + [proximo]))
+
+
+def gerar_caminhos(grafo, caminho, final):
+    """Enumera todos os caminhos no grafo `grafo` iniciados por `caminho` e que terminam no vértice `final`."""
+
+    # Se o caminho de fato atingiu o vértice final, não há o que fazer.
+    if caminho[-1] == final:
+        yield caminho
+        return
+
+    # Procuramos todos os vértices para os quais podemos avançar…
+    for vizinho in G[caminho[-1]]:
+        # …mas não podemos visitar um vértice que já está no caminho.
+        if vizinho in caminho:
+            continue
+        # Se você estiver usando python3, você pode substituir o for
+        # pela linha "yield from gerar_caminhos(grafo, caminho + [vizinho], final)"
+        for caminho_maior in gerar_caminhos(grafo, caminho + [vizinho], final):
+            yield caminho_maior
+
+# Exemplo de uso
+G = {'A': ['B', 'C'], 'B': ['A', 'C', 'D'], 'C': ['A', 'B', 'D'], 'D': ['B', 'C']}
+for caminho in gerar_caminhos(G, ['A'], 'D'):
+    # "print(caminho)" em python3
+    print (caminho)

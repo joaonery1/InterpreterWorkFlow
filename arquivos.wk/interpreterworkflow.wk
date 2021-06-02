@@ -45,37 +45,33 @@ Glyph:[lib]:loadimage:17:70:150::-xoffset '0' -yoffset '0'
 
 Glyph:CL:vglCl3dNot:19:250:440::-img_input -img_input
 
-
 Glyph:[lib]:loadimage:21:70:1560::-xoffset '0' -yoffset '0'
-
-
-
 
 #ConnectionsBegin
 
 
 #loadimage
-NodeConnection:1:o:3:i:
-NodeConnection:1:o1:7:i:
-NodeConnection:1:o2:11:i:
-NodeConnection:1:o3:15:i:
-NodeConnection:1:o4:19:i:
+NodeConnection:data:1:o:3:i:
+NodeConnection:data:1:o1:7:i:
+NodeConnection:data:1:o2:11:i:
+NodeConnection:data:1:o3:15:i:
+NodeConnection:data:1:o4:19:i:
 
 
 #vglClBlurSq
-NodeConnection:3:o:5:i:
+NodeConnection:data:3:o:5:i:
 
 #vglCldConvolution
-NodeConnection:7:o:9:i:
+NodeConnection:data:7:o:9:i:
 
 #vglClDilate
-NodeConnection:11:o:13:i:
+NodeConnection:data:11:o:13:i:
 
 #vglCldCopy
-NodeConnection:15:o:17:i:
+NodeConnection:data:15:o:17:i:
 
 #vglCldNot
-NodeConnection:19:o:21:i:
+NodeConnection:data:19:o:21:i:
 
 
 
