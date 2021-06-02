@@ -71,17 +71,20 @@ def fileRead(lstGlyph):
                 contentGlyPar = contentGly[9].split(' ')
                 for vpar in contentGlyPar:
                     if vpar != '' and vpar != '\n':
-
-                        if vparName != '' and vparName != vpar:
-                            vGlyphPar = objGlyphParameters(contentGly[5], vparName, vparValue)
-                            lstGlyphPar.append(vGlyphPar)
-                            vparName = ''
-                            vparValue = ''
-                        else:
-                            if vpar.find('-') >= 0:
-                                vparName = vpar.replace('-', '')
-                            else:
-                                vparValue = vpar
+                        vparName = vpar.replace('-', '')                        
+                        vGlyphPar = objGlyphParameters(contentGly[5], vparName, 'fixo')
+                        lstGlyphPar.append(vGlyphPar)
+                        
+                        #if vparName != '' and vparName != vpar:
+                        #    vGlyphPar = objGlyphParameters(contentGly[5], vparName, vparValue)
+                        #    lstGlyphPar.append(vGlyphPar)
+                        #    vparName = ''
+                        #    vparValue = ''
+                        #else:
+                        #    if vpar.find('-') >= 0:
+                        #        vparName = vpar.replace('-', '')
+                        #    else:
+                        #        vparValue = vpar
 
                 #Create the Glyph
                 vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], lstGlyphPar)
