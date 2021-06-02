@@ -95,9 +95,7 @@ for val1 in lstvetx:
 
 
 
-
-
-
+print("####################################")
 
 lstcomplete= [*sum(zip(lstedges,lstparam),())]    #juntei depois de alimentar a lista
 lstcomplete = list(vConnection.chunks(lstcomplete,4))
@@ -109,7 +107,4 @@ print(lstcomplete,"\n") #lista arestas c/ parametros
 print("Parametros de saida:" ,lstPout)
 print("Parametros de entrada:" ,lstPinp)
 
-print("####################################")
-#caminhos = list(dfs_caminhos(grafo,1,9))
-#print("Caminhos percorridos\n",caminhos)
 print("####################################")
