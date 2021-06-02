@@ -20,6 +20,14 @@ class objGlyph(object):
         self.glyph_y = vglyph_y       #numerical coordinate of the column position of the Glyph on the screen
         self.lst_par = vlst_par       #parameter list
 
+# Structure for storing Parameters in memory
+class objGlyphParameters(object):
+
+    def __init__(self, vglyph_id, vname, vvalue):
+        self.glyph_id = vglyph_id   #glyph identifier code
+        self.name = vname           #variable name
+        self.value = vvalue         #variable value
+
 # Structure for storing Connections in memory
 class objConnection(object):
 
@@ -34,10 +42,13 @@ class objConnection(object):
 # File to be read
 vfile = 'fileread/data.wksp'
 
-lstGlyph = []                #List to store Glyphs
-lstConnection = []           #List to store Connections
-vGlyph = objGlyph            #Glyph in memory 
-vConnection = objConnection  #Connection in memory
+lstGlyph = []                   #List to store Glyphs
+lstGlyphPar = []                #List to store Glyphs Parameters
+lstConnection = []              #List to store Connections
+
+vGlyph = objGlyph               #Glyph in memory 
+vGlyphPar = objGlyphParameters  #Glyp parameters in memory
+vConnection = objConnection     #Connection in memory
 
 # Method for reading the workflow file
 def fileRead(lstGlyph):
@@ -49,8 +60,31 @@ def fileRead(lstGlyph):
 
             # Creates the glyphs of the workflow file
             if 'glyph:' in line.lower():
-                contentGly = line.split(':')
-                vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], contentGly[8])
+
+                contentGly = line.split(':')    #extracts the contents of the workflow file line in a list separated by the information between the ":" character
+                contentGlyPar = []              #clears the glyph parameter list
+                vparName = ''
+                vparValue = ''
+
+                #Creates the parameters of the Glyph
+                #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
+                contentGlyPar = contentGly[9].split(' ')
+                for vpar in contentGlyPar:
+                    if vpar != '' and vpar != '\n':
+
+                        if vparName != '' and vparName != vpar:
+                            vGlyphPar = objGlyphParameters(contentGly[5], vparName, vparValue)
+                            lstGlyphPar.append(vGlyphPar)
+                            vparName = ''
+                            vparValue = ''
+                        else:
+                            if vpar.find('-') >= 0:
+                                vparName = vpar.replace('-', '')
+                            else:
+                                vparValue = vpar
+
+                #Create the Glyph
+                vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], lstGlyphPar)
                 lstGlyph.append(vGlyph)
 
             # Creates the connections of the workflow file
@@ -73,7 +107,7 @@ fileRead(lstGlyph)
 # Shows the content of the Glyphs
 for vGlyph in lstGlyph:
     print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
-          "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y, "Parameters:", vGlyph.lst_par)
+          "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
 
 # Shows the content of the Connections
 for vConnection in lstConnection:
