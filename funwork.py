@@ -102,8 +102,8 @@ lstcomplete = list(vConnection.chunks(lstcomplete,4))
 lstedges = list(vConnection.chunks(lstedges,2))
 lstvertex = vConnection.remove_repetidos(lstvertex)
 print("Lista de vertices:\n",lstvertex,"\n")   #lista de vertices 
-print(lstedges,"\n") #lista de arestas
-print(lstcomplete,"\n") #lista arestas c/ parametros
+print("Lista de arestas:\n",lstedges,"\n") #lista de arestas
+print("Lista com arestas e parametros, seguindo a esturtura de conexões:\n",lstcomplete,"\n") #lista arestas c/ parametros
 print("Parametros de saida:" ,lstPout)
 print("Parametros de entrada:" ,lstPinp)
 
