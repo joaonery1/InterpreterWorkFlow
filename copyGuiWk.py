@@ -7,6 +7,37 @@ import os
 import string
 from collections import defaultdict
 
+class Error(Exception):
+    """Classe base para exceções dessa módulo"""
+    pass
+
+class InputError(Error):
+    """Exceções levantadas por erros na entrada
+
+    Atributos:
+        expr -- expressão da entrada onde o erro ocorreu
+        msg  -- explicação do erro
+    """
+
+    def __init__(self, expr, msg):
+        self.expr = expr
+        self.msg = msg
+
+class TransitionError(Error):
+    """Levantada quando uma operação tenta fazer uma transição de estado não
+    permitida.
+
+    Atributos:
+        anterior -- estado do início da transição
+        proximo -- novo estado
+        msg  -- explicação do porquê a transação específica não é permitida
+    """
+
+    def __init__(self, anterior, proximo, msg):
+        self.anterior = anterior
+        self.proximo = proximo
+        self.msg = msg
+
 # Structure for storing Glyphs in memory
 class objGlyph(object):
         
@@ -53,6 +84,8 @@ vGlyphPar = objGlyphParameters  #Glyp parameters in memory
 vConnection = objConnection     #Connection in memory
 
 
+
+
 # Method for reading the workflow file
 def fileRead(lstGlyph):
     if os.path.isfile(vfile):
@@ -60,9 +93,8 @@ def fileRead(lstGlyph):
         # Opens the workflow file
         file1 = open(vfile,"r")
         for line in file1:
-
             # Creates the glyphs of the workflow file
-            if 'glyph:' in line.lower():
+            if 'glyph' in line.lower():
 
                 contentGly = line.split(':')    #extracts the contents of the workflow file line in a list separated by the information between the ":" character
                 contentGlyPar = []              #clears the glyph parameter list
@@ -88,10 +120,12 @@ def fileRead(lstGlyph):
                         #        vparName = vpar.replace('-', '')
                         #    else:
                         #        vparValue = vpar
+                
 
                 #Create the Glyph
                 vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], lstGlyphPar)
                 lstGlyph.append(vGlyph)
+                
 
             # Creates the connections of the workflow file
             if 'nodeconnection:' in line.lower():
@@ -113,12 +147,12 @@ fileRead(lstGlyph)
 
 # Shows the content of the Glyphs
 
-for vGlyph in lstGlyph:
-    print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
-          "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
+#for vGlyph in lstGlyph:
+#    print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
+#          "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
 # Shows the content of the Connections
-for vConnection in lstConnection:
-    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
-          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
+#for vConnection in lstConnection:
+#    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
+#          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
 
-print(lstConnection)
+#print(lstConnection)
