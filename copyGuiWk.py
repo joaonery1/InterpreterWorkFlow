@@ -35,16 +35,10 @@ class objConnection(object):
     def __init__(self, vtype, voutput_glyph_id, voutput_varname, vinput_glyph_id, vinput_varname):       
         self.type = vtype                           #type 'data', 'controle' 
         self.output_glyph_id = voutput_glyph_id     #glyph identifier code output
-        self.output_varname = []      #nome variável saída
+        self.output_varname = voutput_varname      #nome variável saída
         self.input_glyph_id = vinput_glyph_id       #glyph identifier code input
-        self.input_varname = []     #nome variável entrada
+        self.input_varname = vinput_varname    #nome variável entrada
     
-    def addOutParameters(self,out_param):
-        self.output_varname.append(out_param)
-    def addInpParameters(self,inp_param):
-        self.input_varname.append(inp_param)
-    
-
 
 # File to be read
 vfile = 'fileread/data.wksp'
@@ -53,9 +47,11 @@ lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
 lstConnection = []              #List to store Connections
 
+
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyp parameters in memory
 vConnection = objConnection     #Connection in memory
+
 
 # Method for reading the workflow file
 def fileRead(lstGlyph):
@@ -102,8 +98,7 @@ def fileRead(lstGlyph):
                 contentCon = line.split(':')
                 vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
                 lstConnection.append(vConnection)
-                vConnection.addOutParameters(contentCon[3])
-                vConnection.addInpParameters(contentCon[5])
+                
 
         file1.close()
 
@@ -117,17 +112,13 @@ contentCon = []
 fileRead(lstGlyph)
 
 # Shows the content of the Glyphs
-'''
+
 for vGlyph in lstGlyph:
     print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
           "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
-
 # Shows the content of the Connections
 for vConnection in lstConnection:
     print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
           "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
 
-'''
-#saida da lista de parametros
-for vConnection in lstConnection:
-    print(vConnection.output_varname,vConnection.input_varname)
+print(lstConnection)
