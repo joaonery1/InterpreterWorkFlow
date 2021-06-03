@@ -1,0 +1,2 @@
+from copyGuiWk import vConnection
+print(vConnection.output_varname,vConnection.input_varname)
