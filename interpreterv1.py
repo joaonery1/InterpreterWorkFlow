@@ -1,2 +1,5 @@
-from copyGuiWk import vConnection
-print(vConnection.output_varname,vConnection.input_varname)
+from copyGuiWk import lstConnection,lstGlyph
+
+print(lstConnection)
+
+
