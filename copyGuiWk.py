@@ -2,6 +2,8 @@
 # File type: structure.txt
 
 #
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import re
 import os
 import string
@@ -100,7 +102,7 @@ def fileRead(lstGlyph):
                         vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
                         lstConnection.append(vConnection)
                     except IndexError as c:
-                        print('Falta indices nas conexões',{c},'na linha ',{i},'do arquivo')
+                        print('Falta indices nos nós de conexões',{c},'na linha ',{i},'do arquivo')
     
     finally:
         file1.close()
