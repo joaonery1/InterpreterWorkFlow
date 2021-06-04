@@ -40,7 +40,7 @@ class objConnection(object):
         self.input_varname = vinput_varname         #nome variável entrada
 
 # File to be read
-vfile = 'arquivoteste.wk'
+vfile = 'fileread/data.wksp'
 
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
@@ -54,11 +54,11 @@ vConnection = objConnection     #Connection in memory
 def fileRead(lstGlyph):
     try:
         if os.path.isfile(vfile):
-
+            i = 0
             # Opens the workflow file
             file1 = open(vfile,"r")
             for line in file1:
-                
+                i+=1 #count variable for lines
 
                 # Creates the glyphs of the workflow file
                 if 'glyph:' in line.lower():
@@ -92,7 +92,7 @@ def fileRead(lstGlyph):
                         vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], lstGlyphPar)
                         lstGlyph.append(vGlyph)
                     except IndexError as d:
-                        print("Falta indices no glifo",{d})
+                        print("Falta indices no glifo",{d},'na linha ',{i},'do arquivo')
                 # Creates the connections of the workflow file
                 if 'nodeconnection:' in line.lower():
                     try:
@@ -100,7 +100,8 @@ def fileRead(lstGlyph):
                         vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
                         lstConnection.append(vConnection)
                     except IndexError as c:
-                        print('Falta indices nas conexões',{c})
+                        print('Falta indices nas conexões',{c},'na linha ',{i},'do arquivo')
+    
     finally:
         file1.close()
 
@@ -111,7 +112,10 @@ contentGly = []
 contentCon = []
 
 # Reading the workflow file
-fileRead(lstGlyph)
+try:
+    fileRead(lstGlyph)
+except UnboundLocalError as c:
+    print("Arquivo inexistente",{c})
 
 # Shows the content of the Glyphs
 for vGlyph in lstGlyph: 
