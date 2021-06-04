@@ -7,37 +7,6 @@ import os
 import string
 from collections import defaultdict
 
-class Error(Exception):
-    """Classe base para exceções dessa módulo"""
-    pass
-
-class InputError(Error):
-    """Exceções levantadas por erros na entrada
-
-    Atributos:
-        expr -- expressão da entrada onde o erro ocorreu
-        msg  -- explicação do erro
-    """
-
-    def __init__(self, expr, msg):
-        self.expr = expr
-        self.msg = msg
-
-class TransitionError(Error):
-    """Levantada quando uma operação tenta fazer uma transição de estado não
-    permitida.
-
-    Atributos:
-        anterior -- estado do início da transição
-        proximo -- novo estado
-        msg  -- explicação do porquê a transação específica não é permitida
-    """
-
-    def __init__(self, anterior, proximo, msg):
-        self.anterior = anterior
-        self.proximo = proximo
-        self.msg = msg
-
 # Structure for storing Glyphs in memory
 class objGlyph(object):
         
@@ -68,72 +37,71 @@ class objConnection(object):
         self.output_glyph_id = voutput_glyph_id     #glyph identifier code output
         self.output_varname = voutput_varname      #nome variável saída
         self.input_glyph_id = vinput_glyph_id       #glyph identifier code input
-        self.input_varname = vinput_varname    #nome variável entrada
-    
+        self.input_varname = vinput_varname         #nome variável entrada
 
 # File to be read
-vfile = 'fileread/data.wksp'
+vfile = 'arquivoteste.wk'
 
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
 lstConnection = []              #List to store Connections
 
-
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyp parameters in memory
 vConnection = objConnection     #Connection in memory
 
-
-
-
 # Method for reading the workflow file
 def fileRead(lstGlyph):
-    if os.path.isfile(vfile):
+    try:
+        if os.path.isfile(vfile):
 
-        # Opens the workflow file
-        file1 = open(vfile,"r")
-        for line in file1:
-            # Creates the glyphs of the workflow file
-            if 'glyph' in line.lower():
-
-                contentGly = line.split(':')    #extracts the contents of the workflow file line in a list separated by the information between the ":" character
-                contentGlyPar = []              #clears the glyph parameter list
-                vparName = ''
-                vparValue = ''
-
-                #Creates the parameters of the Glyph
-                #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
-                contentGlyPar = contentGly[9].split(' ')
-                for vpar in contentGlyPar:
-                    if vpar != '' and vpar != '\n':
-                        vparName = vpar.replace('-', '')                        
-                        vGlyphPar = objGlyphParameters(contentGly[5], vparName, 'fixo')
-                        lstGlyphPar.append(vGlyphPar)
-                        
-                        #if vparName != '' and vparName != vpar:
-                        #    vGlyphPar = objGlyphParameters(contentGly[5], vparName, vparValue)
-                        #    lstGlyphPar.append(vGlyphPar)
-                        #    vparName = ''
-                        #    vparValue = ''
-                        #else:
-                        #    if vpar.find('-') >= 0:
-                        #        vparName = vpar.replace('-', '')
-                        #    else:
-                        #        vparValue = vpar
+            # Opens the workflow file
+            file1 = open(vfile,"r")
+            for line in file1:
                 
 
-                #Create the Glyph
-                vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], lstGlyphPar)
-                lstGlyph.append(vGlyph)
-                
+                # Creates the glyphs of the workflow file
+                if 'glyph:' in line.lower():
+                    try:
+                        contentGly = line.split(':')    #extracts the contents of the workflow file line in a list separated by the information between the ":" character
+                        contentGlyPar = []              #clears the glyph parameter list
+                        vparName = ''
+                        vparValue = ''
 
-            # Creates the connections of the workflow file
-            if 'nodeconnection:' in line.lower():
-                contentCon = line.split(':')
-                vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
-                lstConnection.append(vConnection)
-                
+                        #Creates the parameters of the Glyph
+                        #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
+                        contentGlyPar = contentGly[9].split(' ')
+                        for vpar in contentGlyPar:
+                            if vpar != '' and vpar != '\n':
+                                vparName = vpar.replace('-', '')                        
+                                vGlyphPar = objGlyphParameters(contentGly[5], vparName, 'fixo')
+                                lstGlyphPar.append(vGlyphPar)
+                                
+                                #if vparName != '' and vparName != vpar:
+                                #    vGlyphPar = objGlyphParameters(contentGly[5], vparName, vparValue)
+                                #    lstGlyphPar.append(vGlyphPar)
+                                #    vparName = ''
+                                #    vparValue = ''
+                                #else:
+                                #    if vpar.find('-') >= 0:
+                                #        vparName = vpar.replace('-', '')
+                                #    else:
+                                #        vparValue = vpar
 
+                        #Create the Glyph
+                        vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], lstGlyphPar)
+                        lstGlyph.append(vGlyph)
+                    except IndexError as d:
+                        print("Falta indices no glifo",{d})
+                # Creates the connections of the workflow file
+                if 'nodeconnection:' in line.lower():
+                    try:
+                        contentCon = line.split(':')
+                        vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
+                        lstConnection.append(vConnection)
+                    except IndexError as c:
+                        print('Falta indices nas conexões',{c})
+    finally:
         file1.close()
 
 # Program execution
@@ -146,13 +114,11 @@ contentCon = []
 fileRead(lstGlyph)
 
 # Shows the content of the Glyphs
+for vGlyph in lstGlyph: 
+    print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
+          "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
 
-#for vGlyph in lstGlyph:
-#    print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
-#          "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
 # Shows the content of the Connections
-#for vConnection in lstConnection:
-#    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
-#          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
-
-#print(lstConnection)
+for vConnection in lstConnection:
+    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
+          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
