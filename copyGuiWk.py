@@ -56,7 +56,7 @@ vConnection = objConnection     #Connection in memory
 def fileRead(lstGlyph):
     try:
         if os.path.isfile(vfile):
-            i = 0
+            i = 0 #cout variable
             # Opens the workflow file
             file1 = open(vfile,"r")
             for line in file1:
