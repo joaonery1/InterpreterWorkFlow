@@ -29,7 +29,7 @@ class objGlyphParameters(object):
         self.glyph_id = vglyph_id   #glyph identifier code
         self.name = vname           #variable name
         self.value = vvalue         #variable value
-
+        
 # Structure for storing Connections in memory
 class objConnection(object):
 
@@ -41,22 +41,45 @@ class objConnection(object):
         self.input_glyph_id = vinput_glyph_id       #glyph identifier code input
         self.input_varname = vinput_varname         #nome variável entrada
 
+class objNodeParameters(object):
+    def __init__(self,vinput,voutput,vready,vdone):
+        self.input = vinput
+        self.ouptut = voutput
+        vready = False
+        vdone = False
+        self.ready = vready
+        self.done = vdone
+
 # File to be read
 vfile = 'fileread/data.wksp'
 
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
 lstConnection = []              #List to store Connections
+lstNodeParameters = []
 
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyp parameters in memory
 vConnection = objConnection     #Connection in memory
+vNodePar = objNodeParameters
+
+
+'''
+laço que percorre a lista de glifos
+    se o glifo estiver READY=TRUE e DONE=FALSE
+        executar o glifo
+        atualizar status para DONE=TRUE
+        atualizar o status das arestas de saída para READY=TRUE
+            se o glifo onde incide a aresta estiver com todas as arestas READY=TRUE
+               atualizar o status do glifo para READY=TRUE
+'''
+
 
 # Method for reading the workflow file
 def fileRead(lstGlyph):
     try:
         if os.path.isfile(vfile):
-            i = 0 #cout variable
+            i = 0 #cout variable 
             # Opens the workflow file
             file1 = open(vfile,"r")
             for line in file1:
@@ -101,6 +124,7 @@ def fileRead(lstGlyph):
                         contentCon = line.split(':')
                         vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
                         lstConnection.append(vConnection)
+                        
                     except IndexError as c:
                         print('Falta indices nos nós de conexões',{c},'na linha ',{i},'do arquivo')
     
@@ -118,7 +142,7 @@ try:
     fileRead(lstGlyph)
 except UnboundLocalError as c:
     print("Arquivo inexistente",{c})
-
+'''
 # Shows the content of the Glyphs
 for vGlyph in lstGlyph: 
     print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
@@ -128,3 +152,4 @@ for vGlyph in lstGlyph:
 for vConnection in lstConnection:
     print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
           "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
+'''
