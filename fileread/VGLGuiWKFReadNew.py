@@ -8,6 +8,7 @@ import string
 from collections import defaultdict
 
 # Structure for storing Glyphs in memory
+# Glyph represents a function
 class objGlyph(object):
         
     #Glyph:[Library]:comment::localhost:[Glyph_ID]:[Glyph_X]:[Glyph_Y]:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]    
@@ -19,6 +20,25 @@ class objGlyph(object):
         self.glyph_x = vglyph_x       #numerical coordinate of the glyph's linear position on the screen 
         self.glyph_y = vglyph_y       #numerical coordinate of the column position of the Glyph on the screen
         self.lst_par = vlst_par       #parameter list
+        self.ready = False            #defines if the glyph is ready to run
+        self.done = False             #defines if the glyph was executed
+        self.lst_entry = False        #glyph entries list
+        self.lst_output = False       #glyph output list
+
+    #Function to add glyph input
+    ########
+    ######## P E N D E N T E   T E S T A R   S E   E N T R A D A   J A   E X I S T E
+    ########
+    def funcGlyphAddEnt (self, vinput_varname):
+        self.lst_entry.append(vinput_varname)
+
+    #Function to add glyph output
+    ########
+    ######## P E N D E N T E   T E S T A R   S E   S A Í D A   J A   E X I S T E
+    ########
+    def funcGlyphAddOut (self, voutput_varname):
+        self.lst_entry.append(voutput_varname)
+
 
 # Structure for storing Parameters in memory
 class objGlyphParameters(object):
@@ -28,16 +48,33 @@ class objGlyphParameters(object):
         self.name = vname           #variable name
         self.value = vvalue         #variable value
 
+# Structure for storing Glyphs entries list in memory
+class objGlyphEntry(object):
+
+    def __init__(self, vglyph_id, vnameent):
+        self.glyph_id = vglyph_id   #glyph identifier code
+        self.nameent = vnameent     #glyph entry name
+
+# Structure for storing Glyphs output list in memory
+class objGlyphOutput(object):
+
+    def __init__(self, vglyph_id, vnameout):
+        self.glyph_id = vglyph_id   #glyph identifier code
+        self.nameout = vnameout     #glyph output name
+
 # Structure for storing Connections in memory
+# Images are stored on edges (connections between Glyphs)
 class objConnection(object):
 
     #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
     def __init__(self, vtype, voutput_glyph_id, voutput_varname, vinput_glyph_id, vinput_varname):       
         self.type = vtype                           #type 'data', 'controle' 
         self.output_glyph_id = voutput_glyph_id     #glyph identifier code output
-        self.output_varname = voutput_varname      #nome variável saída
+        self.output_varname = voutput_varname       #variable name output
         self.input_glyph_id = vinput_glyph_id       #glyph identifier code input
-        self.input_varname = vinput_varname         #nome variável entrada
+        self.input_varname = vinput_varname         #variable name input
+        self.image = None                           #image
+        self.ready = False                          #False = unread or unexecuted image; True = image read or executed
 
 # File to be read
 vfile = 'fileread/data.wksp'
@@ -45,6 +82,8 @@ vfile = 'fileread/data.wksp'
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
 lstConnection = []              #List to store Connections
+lstGlyphEnt = []                #List to store Glyphs Entries
+lstGlyphOut = []                #List to store Glyphs Outputs
 
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyp parameters in memory
@@ -74,7 +113,11 @@ def fileRead(lstGlyph):
                         vparName = vpar.replace('-', '')                        
                         vGlyphPar = objGlyphParameters(contentGly[5], vparName, 'fixo')
                         lstGlyphPar.append(vGlyphPar)
-                        
+
+                        ########
+                        ######## P E N D E N T E   A R M A Z E N A R   O S   P A R A M E T R O S
+                        ########
+
                         #if vparName != '' and vparName != vpar:
                         #    vGlyphPar = objGlyphParameters(contentGly[5], vparName, vparValue)
                         #    lstGlyphPar.append(vGlyphPar)
@@ -90,11 +133,19 @@ def fileRead(lstGlyph):
                 vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], lstGlyphPar)
                 lstGlyph.append(vGlyph)
 
-            # Creates the connections of the workflow file
+            #Creates the connections of the workflow file
+            #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
             if 'nodeconnection:' in line.lower():
                 contentCon = line.split(':')
                 vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
-                lstConnection.append(vConnection)
+                lstConnection.append(vConnection)           
+
+                #Create the entries for the glyph
+                for vGlyph in lstGlyph:
+                    if vGlyph.glyph_id == contentCon[4]:
+                        lstGlyph.vGlyph.funcGlyphAddEnt (contentCon[4])
+                 
+                #Creates the outputs for the glyph  
 
         file1.close()
 
