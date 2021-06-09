@@ -93,65 +93,71 @@ vConnection = objConnection     #Connection in memory
 
 # Method for reading the workflow file
 def fileRead(lstGlyph):
-    if os.path.isfile(vfile):
+    try:
+        if os.path.isfile(vfile):
+            count = 0   #variable to count the lines 
+            # Opens the workflow file
+            file1 = open(vfile,"r")
+            for line in file1:
+                count += 1
 
-        # Opens the workflow file
-        file1 = open(vfile,"r")
-        for line in file1:
+                # Creates the glyphs of the workflow file
+                if 'glyph:' in line.lower():
+                    try:
+                        contentGly = line.split(':')    #extracts the contents of the workflow file line in a list separated by the information between the ":" character
+                        contentGlyPar = []              #clears the glyph parameter list
+                        vparName = ''
+                        vparValue = ''
 
-            # Creates the glyphs of the workflow file
-            if 'glyph:' in line.lower():
+                        #Creates the parameters of the Glyph
+                        #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
+                        contentGlyPar = contentGly[9].split(' ')
+                        for vpar in contentGlyPar:
+                            if vpar != '' and vpar != '\n':
+                                vparName = vpar.replace('-', '')                        
+                                vGlyphPar = objGlyphParameters(contentGly[5], vparName, 'fixo')
+                                lstGlyphPar.append(vGlyphPar)
 
-                contentGly = line.split(':')    #extracts the contents of the workflow file line in a list separated by the information between the ":" character
-                contentGlyPar = []              #clears the glyph parameter list
-                vparName = ''
-                vparValue = ''
+                                ########
+                                ######## P E N D E N T E   A R M A Z E N A R   O S   P A R A M E T R O S
+                                ########
 
-                #Creates the parameters of the Glyph
-                #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
-                contentGlyPar = contentGly[9].split(' ')
-                for vpar in contentGlyPar:
-                    if vpar != '' and vpar != '\n':
-                        vparName = vpar.replace('-', '')                        
-                        vGlyphPar = objGlyphParameters(contentGly[5], vparName, 'fixo')
-                        lstGlyphPar.append(vGlyphPar)
+                                #if vparName != '' and vparName != vpar:
+                                #    vGlyphPar = objGlyphParameters(contentGly[5], vparName, vparValue)
+                                #    lstGlyphPar.append(vGlyphPar)
+                                #    vparName = ''
+                                #    vparValue = ''
+                                #else:
+                                #    if vpar.find('-') >= 0:
+                                #        vparName = vpar.replace('-', '')
+                                #    else:
+                                #        vparValue = vpar
 
-                        ########
-                        ######## P E N D E N T E   A R M A Z E N A R   O S   P A R A M E T R O S
-                        ########
+                        #Create the Glyph
+                        vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], lstGlyphPar)
+                        lstGlyph.append(vGlyph)
+                    except IndexError as d:
+                        print("Falta incides no glifo", {d}, "na linha",{count},"do arquivo")
+                    #Creates the connections of the workflow file
+                    #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
+                if 'nodeconnection:' in line.lower():
+                    try:
+                        contentCon = line.split(':')
+                        vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
+                        lstConnection.append(vConnection)           
 
-                        #if vparName != '' and vparName != vpar:
-                        #    vGlyphPar = objGlyphParameters(contentGly[5], vparName, vparValue)
-                        #    lstGlyphPar.append(vGlyphPar)
-                        #    vparName = ''
-                        #    vparValue = ''
-                        #else:
-                        #    if vpar.find('-') >= 0:
-                        #        vparName = vpar.replace('-', '')
-                        #    else:
-                        #        vparValue = vpar
-
-                #Create the Glyph
-                vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], lstGlyphPar)
-                lstGlyph.append(vGlyph)
-
-            #Creates the connections of the workflow file
-            #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
-            if 'nodeconnection:' in line.lower():
-                contentCon = line.split(':')
-                vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
-                lstConnection.append(vConnection)           
-
-                #Create the entries for the glyph
-                for i, vGlyph in enumerate(lstGlyph):
-                    #If the glyph has input
-                    if contentCon[5] != '\n' and vGlyph.glyph_id == contentCon[4]:
-                        lstGlyph[i].funcGlyphAddEnt (contentCon[5])
-                    
-                #Creates the outputs for the glyph 
-                    if contentCon[3] != '\n' and vGlyph.glyph_id == contentCon[2]:
-                        lstGlyph[i].funcGlyphAddOut (contentCon[3]) 
-
+                        #Create the entries for the glyph
+                        for i, vGlyph in enumerate(lstGlyph):
+                            #If the glyph has input
+                            if contentCon[5] != '\n' and vGlyph.glyph_id == contentCon[4]:
+                                lstGlyph[i].funcGlyphAddEnt (contentCon[5])
+                            
+                        #Creates the outputs for the glyph 
+                            if contentCon[3] != '\n' and vGlyph.glyph_id == contentCon[2]:
+                                lstGlyph[i].funcGlyphAddOut (contentCon[3]) 
+                    except IndexError as c:
+                        print("falta indices nas conexões",{c},"na linha",{count},"do arquivo")
+    finally:
         file1.close()
 
 # Program execution
@@ -163,15 +169,19 @@ lstGlyphEnt = []                #List to store Glyphs Entries
 lstGlyphOut = []                #List to store Glyphs Outputs
 
 # Reading the workflow file
-fileRead(lstGlyph)
+try:
+    fileRead(lstGlyph)
+except UnboundLocalError as c:
+    print("Arquivo inexistente ou diretório selecionado errado", {c})
 
 # Shows the content of the Glyphs
 for vGlyph in lstGlyph:
     print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
           "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
+    #show entries
     for vGlyphEnt in vGlyph.lst_entry:
         print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Ent:", vGlyphEnt)
-    
+    #show outputs
     for vGlyphOut in vGlyph.lst_output:
         print("Glyph_Id:",vGlyph.glyph_id,  "Glyph_Out:", vGlyphOut)
 
