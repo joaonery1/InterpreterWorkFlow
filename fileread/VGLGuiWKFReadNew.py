@@ -86,7 +86,9 @@ lstGlyphEnt = []                #List to store Glyphs Entries
 lstGlyphOut = []                #List to store Glyphs Outputs
 
 vGlyph = objGlyph               #Glyph in memory 
-vGlyphPar = objGlyphParameters  #Glyp parameters in memory
+vGlyphPar = objGlyphParameters  #Glyph parameters in memory
+vGlyphEnt = objGlyphEntry       #Glyph entry in memory
+vGlyphOut = objGlyphOutput      #Glyph output in memory
 vConnection = objConnection     #Connection in memory
 
 # Method for reading the workflow file
@@ -141,10 +143,11 @@ def fileRead(lstGlyph):
                 lstConnection.append(vConnection)           
 
                 #Create the entries for the glyph
-                for vGlyph in lstGlyph:
-                    if vGlyph.glyph_id == contentCon[4]:
-                        lstGlyph.vGlyph.funcGlyphAddEnt (contentCon[4])
-                 
+                for i, vGlyph in enumerate(lstGlyph):
+                    #If the glyph has input
+                    if contentCon[4] != '' and vGlyph.glyph_id == contentCon[4]:
+                        lstGlyph[i].funcGlyphAddEnt (contentCon[6])                 
+
                 #Creates the outputs for the glyph  
 
         file1.close()
@@ -154,6 +157,8 @@ lstGlyph = []
 lstConnection = []
 contentGly = []
 contentCon = []
+lstGlyphEnt = []                #List to store Glyphs Entries
+lstGlyphOut = []                #List to store Glyphs Outputs
 
 # Reading the workflow file
 fileRead(lstGlyph)
@@ -162,8 +167,11 @@ fileRead(lstGlyph)
 for vGlyph in lstGlyph:
     print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
           "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
+    for vGlyphEnt in vGlyph.lst_entry:
+        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Ent:", vGlyphEnt)
+
 
 # Shows the content of the Connections
-for vConnection in lstConnection:
-    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
-          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
+#for vConnection in lstConnection:
+#    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
+#          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
