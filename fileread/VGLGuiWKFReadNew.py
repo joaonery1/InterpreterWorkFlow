@@ -145,7 +145,7 @@ def fileRead(lstGlyph):
                 #Create the entries for the glyph
                 for i, vGlyph in enumerate(lstGlyph):
                     #If the glyph has input
-                    if contentCon[5] != '' and contentCon[5] != '\n' and vGlyph.glyph_id == contentCon[4]:
+                    if contentCon[5] != '\n' and vGlyph.glyph_id == contentCon[4]:
                         lstGlyph[i].funcGlyphAddEnt (contentCon[5])                 
 
                 #Creates the outputs for the glyph  
