@@ -22,8 +22,8 @@ class objGlyph(object):
         self.lst_par = vlst_par       #parameter list
         self.ready = False            #defines if the glyph is ready to run
         self.done = False             #defines if the glyph was executed
-        self.lst_entry = False        #glyph entries list
-        self.lst_output = False       #glyph output list
+        self.lst_entry = []           #glyph entries list
+        self.lst_output = []          #glyph output list
 
     #Function to add glyph input
     ########
@@ -145,8 +145,8 @@ def fileRead(lstGlyph):
                 #Create the entries for the glyph
                 for i, vGlyph in enumerate(lstGlyph):
                     #If the glyph has input
-                    if contentCon[4] != '' and vGlyph.glyph_id == contentCon[4]:
-                        lstGlyph[i].funcGlyphAddEnt (contentCon[6])                 
+                    if contentCon[5] != '' and contentCon[5] != '\n' and vGlyph.glyph_id == contentCon[4]:
+                        lstGlyph[i].funcGlyphAddEnt (contentCon[5])                 
 
                 #Creates the outputs for the glyph  
 
