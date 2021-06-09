@@ -20,25 +20,31 @@ class objGlyph(object):
         self.glyph_x = vglyph_x       #numerical coordinate of the glyph's linear position on the screen 
         self.glyph_y = vglyph_y       #numerical coordinate of the column position of the Glyph on the screen
         self.lst_par = vlst_par       #parameter list
-        self.ready = False            #defines if the glyph is ready to run
-        self.done = False             #defines if the glyph was executed
+        self.ready = False            #TRUE = glyph is ready to run
+        self.done = False             #TRUE = glyph was executed
         self.lst_entry = []           #glyph entries list
         self.lst_output = []          #glyph output list
 
-    #Function to add glyph input
+    #Add glyph input function
     ########
     ######## P E N D E N T E   T E S T A R   S E   E N T R A D A   J A   E X I S T E
     ########
     def funcGlyphAddEnt (self, vinput_varname):
+        #Glyph input has input value and ready
         self.lst_entry.append(vinput_varname)
 
-    #Function to add glyph output
+    #Add glyph output function 
     ########
     ######## P E N D E N T E   T E S T A R   S E   S A Í D A   J A   E X I S T E
     ########
     def funcGlyphAddOut (self, voutput_varname):
-        self.lst_entry.append(voutput_varname)
+        self.lst_output.append(voutput_varname)
 
+    #Function to update glyph status
+    #def funcGlyphUpdateStatus(self:
+    #    for vGlyphEnt in lst_entry:
+    #        self.ready = True
+    #        if self. 
 
 # Structure for storing Parameters in memory
 class objGlyphParameters(object):
@@ -51,15 +57,13 @@ class objGlyphParameters(object):
 # Structure for storing Glyphs entries list in memory
 class objGlyphEntry(object):
 
-    def __init__(self, vglyph_id, vnameent):
-        self.glyph_id = vglyph_id   #glyph identifier code
+    def __init__(self, vnameent):
         self.nameent = vnameent     #glyph entry name
 
 # Structure for storing Glyphs output list in memory
 class objGlyphOutput(object):
 
-    def __init__(self, vglyph_id, vnameout):
-        self.glyph_id = vglyph_id   #glyph identifier code
+    def __init__(self, vnameout):
         self.nameout = vnameout     #glyph output name
 
 # Structure for storing Connections in memory
@@ -149,6 +153,10 @@ def fileRead(lstGlyph):
                         lstGlyph[i].funcGlyphAddEnt (contentCon[5])                 
 
                 #Creates the outputs for the glyph  
+                for i, vGlyph in enumerate(lstGlyph):
+                    #If the glyph has output
+                    if contentCon[3] != '\n' and vGlyph.glyph_id == contentCon[2]:
+                        lstGlyph[i].funcGlyphAddOut (contentCon[3])                 
 
         file1.close()
 
@@ -167,8 +175,14 @@ fileRead(lstGlyph)
 for vGlyph in lstGlyph:
     print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
           "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
+
+    #Shows the list of glyph entries
     for vGlyphEnt in vGlyph.lst_entry:
         print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Ent:", vGlyphEnt)
+
+    #Shows the list of glyph outputs
+    for vGlyphOut in vGlyph.lst_output:
+        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut)
 
 
 # Shows the content of the Connections
