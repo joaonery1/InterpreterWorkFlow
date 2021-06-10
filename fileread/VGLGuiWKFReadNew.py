@@ -22,27 +22,27 @@ class objGlyph(object):
         self.lst_par = vlst_par       #parameter list
         self.ready = False            #TRUE = glyph is ready to run
         self.done = False             #TRUE = glyph was executed
-        self.lst_entry = []           #glyph entries list
-        self.lst_output = []          #glyph output list
+        self.lst_input = [objGlyphInput]           #glyph input list
+        self.lst_output = [objGlyphOutput]          #glyph output list
 
     #Add glyph input function
     ########
     ######## P E N D E N T E   T E S T A R   S E   E N T R A D A   J A   E X I S T E
     ########
-    def funcGlyphAddEnt (self, vinput_varname):
+    def funcGlyphAddIn (vGlyphIn):
         #Glyph input has input value and ready
-        self.lst_entry.append(vinput_varname)
+        self.lst_input.append(vGlyphIn)
 
     #Add glyph output function 
     ########
     ######## P E N D E N T E   T E S T A R   S E   S A Í D A   J A   E X I S T E
     ########
-    def funcGlyphAddOut (self, voutput_varname):
-        self.lst_output.append(voutput_varname)
+    def funcGlyphAddOut (voutput_varname, vGlyphOutStatus):
+        self.lst_output.append(voutput_varname, vGlyphOutStatus)
 
     #Function to update glyph status
     #def funcGlyphUpdateStatus(self:
-    #    for vGlyphEnt in lst_entry:
+    #    for vGlyphIn in lst_input:
     #        self.ready = True
     #        if self. 
 
@@ -54,17 +54,19 @@ class objGlyphParameters(object):
         self.name = vname           #variable name
         self.value = vvalue         #variable value
 
-# Structure for storing Glyphs entries list in memory
-class objGlyphEntry(object):
+# Structure for storing Glyphs input list in memory
+class objGlyphInput(object):
 
-    def __init__(self, vnameent):
-        self.nameent = vnameent     #glyph entry name
+    def __init__(self, vnamein, vstatus):
+        self.namein = vnamein     #glyph input name
+        self.status = vstatus     #glyph input status
 
 # Structure for storing Glyphs output list in memory
 class objGlyphOutput(object):
 
-    def __init__(self, vnameout):
+    def __init__(self, vnameout, vstatus):
         self.nameout = vnameout     #glyph output name
+        self.status = vstatus       #glyph output status
 
 # Structure for storing Connections in memory
 # Images are stored on edges (connections between Glyphs)
@@ -86,12 +88,12 @@ vfile = 'fileread/data.wksp'
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
 lstConnection = []              #List to store Connections
-lstGlyphEnt = []                #List to store Glyphs Entries
+lstGlyphIn = []                 #List to store Glyphs Inputs
 lstGlyphOut = []                #List to store Glyphs Outputs
 
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyph parameters in memory
-vGlyphEnt = objGlyphEntry       #Glyph entry in memory
+vGlyphIn = objGlyphInput        #Glyph input in memory
 vGlyphOut = objGlyphOutput      #Glyph output in memory
 vConnection = objConnection     #Connection in memory
 
@@ -146,18 +148,6 @@ def fileRead(lstGlyph):
                 vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
                 lstConnection.append(vConnection)           
 
-                #Create the entries for the glyph
-                for i, vGlyph in enumerate(lstGlyph):
-                    #If the glyph has input
-                    if contentCon[5] != '\n' and vGlyph.glyph_id == contentCon[4]:
-                        lstGlyph[i].funcGlyphAddEnt (contentCon[5])                 
-
-                #Creates the outputs for the glyph  
-                for i, vGlyph in enumerate(lstGlyph):
-                    #If the glyph has output
-                    if contentCon[3] != '\n' and vGlyph.glyph_id == contentCon[2]:
-                        lstGlyph[i].funcGlyphAddOut (contentCon[3])                 
-
         file1.close()
 
 # Program execution
@@ -165,24 +155,44 @@ lstGlyph = []
 lstConnection = []
 contentGly = []
 contentCon = []
-lstGlyphEnt = []                #List to store Glyphs Entries
+lstGlyphIn = []                 #List to store Glyphs Inputs
 lstGlyphOut = []                #List to store Glyphs Outputs
 
 # Reading the workflow file
 fileRead(lstGlyph)
+
+#Create the inputs and outputs for the glyph
+for vConnection in lstConnection:
+
+    #If the glyph has input
+    for i, vGlyph in enumerate(lstGlyph):
+        if vConnection.input_varname != '\n' and vGlyph.glyph_id == vConnection.input_glyph_id:
+            vGlyphIn = objGlyphInput(vConnection.input_varname, False)
+            lstGlyph[i].funcGlyphAddIn (vGlyphIn)
+
+    #If the glyph has output   
+    #for i, vGlyph in enumerate(lstGlyph):
+    #    if vConnection.output_varname != '\n' and vGlyph.glyph_id == vConnection.output_glyph_id:
+    #        lstGlyph[i].funcGlyphAddOut (vConnection.output_varname, False)
+
+#Creates the outputs for the glyph  
+#for i, vGlyph in enumerate(lstGlyph):
+#    #If the glyph has output
+#        if contentCon[3] != '\n' and vGlyph.glyph_id == contentCon[2]:
+#            lstGlyph[i].funcGlyphAddOut (contentCon[3], False)                 
 
 # Shows the content of the Glyphs
 for vGlyph in lstGlyph:
     print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
           "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
 
-    #Shows the list of glyph entries
-    for vGlyphEnt in vGlyph.lst_entry:
-        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Ent:", vGlyphEnt)
+    #Shows the list of glyph inputs
+    for vGlyphIn in vGlyph.lst_input:
+        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_In:", vGlyphIn.namein)
 
     #Shows the list of glyph outputs
     for vGlyphOut in vGlyph.lst_output:
-        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut)
+        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut.nameout)
 
 
 # Shows the content of the Connections
