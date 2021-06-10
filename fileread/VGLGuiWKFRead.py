@@ -29,7 +29,7 @@ class objGlyph(object):
     ########
     ######## P E N D E N T E   T E S T A R   S E   E N T R A D A   J A   E X I S T E
     ########
-    def funcGlyphAddIn (vGlyphIn):
+    def funcGlyphAddIn (self, vGlyphIn):
         #Glyph input has input value and ready
         self.lst_input.append(vGlyphIn)
 
@@ -37,8 +37,8 @@ class objGlyph(object):
     ########
     ######## P E N D E N T E   T E S T A R   S E   S A Í D A   J A   E X I S T E
     ########
-    def funcGlyphAddOut (voutput_varname, vGlyphOutStatus):
-        self.lst_output.append(voutput_varname, vGlyphOutStatus)
+    def funcGlyphAddOut (self, vGlyphOut):
+        self.lst_output.append(vGlyphOut)
 
     #Function to update glyph status
     #def funcGlyphUpdateStatus(self:
