@@ -107,39 +107,55 @@ def fileRead(lstGlyph):
             # Creates the glyphs of the workflow file
             if 'glyph:' in line.lower():
 
-                contentGly = line.split(':')    #extracts the contents of the workflow file line in a list separated by the information between the ":" character
-                contentGlyPar = []              #clears the glyph parameter list
+                contentGly = line.split(':')     #extracts the contents of the workflow file line in a list separated by the information between the ":" character
+                contentGlyPar = []               #clears the glyph parameter list
+                lstParAux = [objGlyphParameters] #auxiliary parameter list
 
                 #Create the Glyph
                 vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7])
 
-                #Creates the parameters of the Glyph
+                #Identifies the parameters
                 #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
                 contentGlyPar = contentGly[9].split(' ')
                 for vpar in contentGlyPar:
                     if vpar != '' and vpar != '\n':
 
                         # Examples:
+                        # -wh -hw -dd 
                         # -real 'width_size'
                         # -backvalue 0 -masklogic 1
                         # -conn 1  
-                        # -real '100'                  
-                        vparName = ''
-                        vparValue = ''
+                        # -real '100'              
+                        vGlyphPar = objGlyphParameters  
 
-                        #Defines the name and value of the parameter
+                        #Differentiates parameter name and value
                         if vpar[0] == '\'' or vpar.isdigit():
-                            vparValue = vpar.replace("'", '')
+                            vGlyphPar = objGlyphParameters('Value', vpar.replace("'", '')) 
 
                         if vpar[0] == "-":             
                             if vpar[1].isdigit():
-                                vparValue = vpar.replace("-", '')
+                                vGlyphPar = objGlyphParameters('Value', vpar.replace("-", ''))
                             else:
-                                vparName = vpar.replace('-', '')
+                                vGlyphPar = objGlyphParameters('Name', vpar.replace('-', ''))
+
+                        lstParAux.append(vGlyphPar)
                         
-                        if vparName != '':
-                            vGlyphPar = objGlyphParameters(vparName, vparValue)
-                            vGlyph.funcGlyphAddPar(vGlyphPar)                     
+                #Creates the parameters of the Glyph
+                for i in enumerate (lstParAux):
+
+                    vParAux = lstParAux[i].__name__
+                    vParAuxNext = lstParAux[i+1].__name__
+
+                    #Um nome de parâmetro seguido de outro nome de parâmetro
+                    if vParAux.Name == 'Name' and vParAuxNext.__name__ == 'Name':
+                        vGlyphPar = objGlyphParameters(lstParAux[i].Name, '')
+
+                    #Um nome de parâmetro seguido de um valor
+                    if vParAux.Name == 'Name' and vParAuxNext.__name__ == 'Value':
+                        vGlyphPar = objGlyphParameters(vParAux.Name, vParAuxNext.Value)
+
+
+                    vGlyph.funcGlyphAddPar(vGlyphPar)                     
 
                 lstGlyph.append(vGlyph)
 
