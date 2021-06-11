@@ -33,6 +33,9 @@ class objGlyph(object):
         #Glyph input has input value and ready
         self.lst_input.append(vGlyphIn)
 
+        def __show__(self):
+            return "{},{}".format(self.namein,self.status)
+
     #Add glyph output function 
     ########
     ######## P E N D E N T E   T E S T A R   S E   S A Í D A   J A   E X I S T E
@@ -181,6 +184,8 @@ for vConnection in lstConnection:
 #        if contentCon[3] != '\n' and vGlyph.glyph_id == contentCon[2]:
 #            lstGlyph[i].funcGlyphAddOut (contentCon[3], False)                 
 
+
+
 # Shows the content of the Glyphs
 for vGlyph in lstGlyph:
     print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
@@ -188,7 +193,7 @@ for vGlyph in lstGlyph:
 
     #Shows the list of glyph inputs
     for vGlyphIn in vGlyph.lst_input:
-        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_In:", vGlyphIn.namein)
+        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_In:", vGlyphIn.show())
 
     #Shows the list of glyph outputs
     for vGlyphOut in vGlyph.lst_output:
