@@ -50,6 +50,12 @@ class objGlyphParameters(object):
         self.name = vnamepar           #variable name
         self.value = vvaluepar         #variable value
 
+    def getName(self):
+        return self.name
+
+    def getValue(self):
+        return self.value
+
 # Structure for storing Glyphs input list in memory
 class objGlyphInput(object):
 
@@ -139,21 +145,20 @@ def fileRead(lstGlyph):
                                 vGlyphPar = objGlyphParameters('Name', vpar.replace('-', ''))
 
                         lstParAux.append(vGlyphPar)
-                        
-                #Creates the parameters of the Glyph
-                for i in enumerate (lstParAux):
 
-                    vParAux = lstParAux[i].__name__
-                    vParAuxNext = lstParAux[i+1].__name__
+                #Creates the parameters of the Glyph
+                for i, vParAux in enumerate(lstParAux):
+                    
+                    vParName = lstParAux[i].getName('')
+                    vParAuxNext = objGlyphParameters(lstParAux[i+1].getName(), lstParAux[i+1].getValue())
 
                     #Um nome de parâmetro seguido de outro nome de parâmetro
-                    if vParAux.Name == 'Name' and vParAuxNext.__name__ == 'Name':
-                        vGlyphPar = objGlyphParameters(lstParAux[i].Name, '')
+                    if vParAux.getName() == 'Name' and vParAuxNext.getName() == 'Name':
+                        vGlyphPar = objGlyphParameters(lstParAux[i].getName(), '')
 
                     #Um nome de parâmetro seguido de um valor
-                    if vParAux.Name == 'Name' and vParAuxNext.__name__ == 'Value':
+                    if vParAux.getName() == 'Name' and vParAuxNext.getName() == 'Value':
                         vGlyphPar = objGlyphParameters(vParAux.Name, vParAuxNext.Value)
-
 
                     vGlyph.funcGlyphAddPar(vGlyphPar)                     
 
