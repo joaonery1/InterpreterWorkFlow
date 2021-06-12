@@ -37,9 +37,9 @@ class objGlyph(object):
     def funcGlyphAddOut (self, vGlyphOut):
         self.lst_output.append(vGlyphOut)
 
-    #Function to update if the glyph is ready
+    #Function to update if the glyph is ready and return status
     #When all glyph entries are READY=TRUE, the glyph changes status to READY=TRUE
-    def funcGlyphUpdateStatus(self):
+    def getGlyphReady(self):
         vGlyphReady = True
 
         for vGlyphIn in self.lst_input:            
@@ -47,6 +47,15 @@ class objGlyph(object):
                 vGlyphReady = False
  
         self.ready = vGlyphReady
+        return self.ready
+
+    #Assign done to glyph
+    def setGlyphDone(self, status):
+        self.done = status
+
+    #Return Done status
+    def getGlyphDone(self):
+        return self.done
 
 # Structure for storing Parameters in memory
 class objGlyphParameters(object):
@@ -232,7 +241,15 @@ for vConnection in lstConnection:
 
 #Update the status of glyph entries
 for vGlyph in lstGlyph:
-    vGlyph.funcGlyphUpdateStatus()
+
+    if vGlyph.getGlyphReady() and vGlyph.getGlyphDone() == False:
+
+        #Glyph execute
+        # xxxxxxxxx
+        #
+
+        vGlyph.setGlyphDone(True)
+
 
 # Shows the content of the Glyphs
 #for vGlyph in lstGlyph:
