@@ -47,8 +47,8 @@ class objGlyph(object):
 class objGlyphParameters(object):
 
     def __init__(self, vnamepar, vvaluepar):
-        self.name = vnamepar           #variable name
-        self.value = vvaluepar         #variable value
+        self.name = vnamepar      #variable name
+        self.value = vvaluepar    #variable value
 
     def getName(self):
         return self.name
@@ -115,7 +115,7 @@ def fileRead(lstGlyph):
 
                 contentGly = line.split(':')     #extracts the contents of the workflow file line in a list separated by the information between the ":" character
                 contentGlyPar = []               #clears the glyph parameter list
-                lstParAux = [objGlyphParameters] #auxiliary parameter list
+                lstParAux = []                   #auxiliary parameter list
 
                 #Create the Glyph
                 vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7])
@@ -128,6 +128,10 @@ def fileRead(lstGlyph):
 
                         # Examples:
                         # -wh -hw -dd 
+                        # -conn 1 
+                        # -wh -hw -dd
+                        # -ms 0 -mc 0 -mi 0 -mr 0 -col 0 
+                        # -append 1 -mapping 0 -e
                         # -real 'width_size'
                         # -backvalue 0 -masklogic 1
                         # -conn 1  
@@ -149,14 +153,16 @@ def fileRead(lstGlyph):
                 #Creates the parameters of the Glyph
                 for i, vParAux in enumerate(lstParAux):
                     
-                    vParName = lstParAux[i].getName('')
+                    vParName = lstParAux[i].getName()
                     vParAuxNext = objGlyphParameters(lstParAux[i+1].getName(), lstParAux[i+1].getValue())
 
-                    #Um nome de parâmetro seguido de outro nome de parâmetro
+                    #A parameter name followed by another parameter name
+                    #Write the parameter because it will have no value
                     if vParAux.getName() == 'Name' and vParAuxNext.getName() == 'Name':
-                        vGlyphPar = objGlyphParameters(lstParAux[i].getName(), '')
+                        vGlyphPar = objGlyphParameters(lstParAux[i].getValue(), '')
 
-                    #Um nome de parâmetro seguido de um valor
+                    #A parameter name followed by a value
+                    #Write the parameter with its value
                     if vParAux.getName() == 'Name' and vParAuxNext.getName() == 'Value':
                         vGlyphPar = objGlyphParameters(vParAux.Name, vParAuxNext.Value)
 
