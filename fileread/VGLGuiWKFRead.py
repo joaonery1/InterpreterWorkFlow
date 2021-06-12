@@ -21,9 +21,9 @@ class objGlyph(object):
         self.glyph_y = vglyph_y                 #numerical coordinate of the column position of the Glyph on the screen
         self.ready = False                      #TRUE = glyph is ready to run
         self.done = False                       #TRUE = glyph was executed
-        self.lst_par = [objGlyphParameters]     #parameter list
-        self.lst_input = [objGlyphInput]        #glyph input list
-        self.lst_output = [objGlyphOutput]      #glyph output list
+        self.lst_par = []                       #parameter list
+        self.lst_input = []                     #glyph input list
+        self.lst_output = []                    #glyph output list
 
     #Add glyph parameter function
     def funcGlyphAddPar (self, vGlyphPar):
@@ -37,18 +37,23 @@ class objGlyph(object):
     def funcGlyphAddOut (self, vGlyphOut):
         self.lst_output.append(vGlyphOut)
 
-    #Function to update glyph status
-    #def funcGlyphUpdateStatus(self:
-    #    for vGlyphIn in lst_input:
-    #        self.ready = True
-    #        if self. 
+    #Function to update if the glyph is ready
+    #When all glyph entries are READY=TRUE, the glyph changes status to READY=TRUE
+    def funcGlyphUpdateStatus(self):
+        vGlyphReady = True
+
+        for vGlyphIn in self.lst_input:            
+            if vGlyphIn.getStatus() == False:
+                vGlyphReady = False
+ 
+        self.ready = vGlyphReady
 
 # Structure for storing Parameters in memory
 class objGlyphParameters(object):
 
-    def __init__(self, vnamepar, vvaluepar):
-        self.name = vnamepar      #variable name
-        self.value = vvaluepar    #variable value
+    def __init__(self, namepar, valuepar):
+        self.name = namepar      #variable name
+        self.value = valuepar    #variable value
 
     def getName(self):
         return self.name
@@ -59,19 +64,19 @@ class objGlyphParameters(object):
 # Structure for storing Glyphs input list in memory
 class objGlyphInput(object):
 
-    def __init__(self, vnamein, vstatusin):
-        self.namein = vnamein         #glyph input name
-        self.statusin = vstatusin     #glyph input status
+    def __init__(self, namein, statusin):
+        self.namein = namein         #glyph input name
+        self.statusin = statusin     #glyph input status
 
-        #def __repr__(self):
-        #    return "{},{}".format(self.namein,self.statusin)
+    def getStatus(self):
+        return self.statusin
 
 # Structure for storing Glyphs output list in memory
 class objGlyphOutput(object):
 
-    def __init__(self, vnameout, vstatusout):
-        self.nameout = vnameout     #glyph output name
-        self.statusout = vstatusout       #glyph output status
+    def __init__(self, nameout, statusout):
+        self.nameout = nameout     #glyph output name
+        self.statusout = statusout       #glyph output status
 
 # Structure for storing Connections in memory
 # Images are stored on edges (connections between Glyphs)
@@ -120,9 +125,15 @@ def fileRead(lstGlyph):
                 #Create the Glyph
                 vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7])
 
+                #Image type parameter
+                if 'image' in contentGly[9]:
+                    contentGly[9] = contentGly[9].replace('image', '-image')
+                    contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
+                    
                 #Identifies the parameters
                 #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
                 contentGlyPar = contentGly[9].split(' ')
+
                 for vpar in contentGlyPar:
                     if vpar != '' and vpar != '\n':
 
@@ -219,19 +230,22 @@ for vConnection in lstConnection:
             vGlyphIn = objGlyphInput(vConnection.output_varname, False)
             lstGlyph[i].funcGlyphAddOut (vGlyphOut)
 
-# Shows the content of the Glyphs
+#Update the status of glyph entries
 for vGlyph in lstGlyph:
-    print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
-          "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
+    vGlyph.funcGlyphUpdateStatus()
 
-    #Shows the list of glyph inputs
-    for vGlyphIn in vGlyph.lst_input:
-        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_In:", vGlyphIn)
-
-    #Shows the list of glyph outputs
-    for vGlyphOut in vGlyph.lst_output:
-        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut)
-
+# Shows the content of the Glyphs
+#for vGlyph in lstGlyph:
+#    print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
+#          "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
+#
+#    #Shows the list of glyph inputs
+#    for vGlyphIn in vGlyph.lst_input:
+#        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_In:", vGlyphIn)
+#
+#    #Shows the list of glyph outputs
+#    for vGlyphOut in vGlyph.lst_output:
+#        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut)
 
 # Shows the content of the Connections
 #for vConnection in lstConnection:
