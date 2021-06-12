@@ -40,16 +40,28 @@ class objGlyph(object):
     #Function to update if the glyph is ready and return status
     #When all glyph entries are READY=TRUE, the glyph changes status to READY=TRUE
     def getGlyphReady(self):
-        
-        if len(self.lst_input) > 0:
-            vGlyphReady = True
+        return self.ready
 
+    #Assign ready to glyph
+    def setGlyphReady(self, status):
+
+        vGlyphReady = status
+
+        #Identifies if all glyph entries were used
+        if vGlyphReady == True and len(self.lst_input) > 0:
+            
+            #If there is an entry without using
             for vGlyphIn in self.lst_input:            
                 if vGlyphIn.getStatus() == False:
                     vGlyphReady = False
+                    self.ready = False
+                    exit    
     
-            self.ready = vGlyphReady
-            return self.ready
+            #If all inputs were used
+            if vGlyphReady:
+                self.ready = vGlyphReady
+
+        #self.ready = status
 
     #Assign done to glyph
     def setGlyphDone(self, status):
@@ -58,6 +70,11 @@ class objGlyph(object):
     #Return Done status
     def getGlyphDone(self):
         return self.done
+
+    #Assign ready to glyph inputs
+    def setGlyphInputAll(self, status):
+        for i, vGlyphIn in enumerate(self.lst_input):
+           self.lst_input[i].setGlyphInput(vGlyphIn, status)
 
     #Assign ready to glyph outputs
     def setGlyphOutputAll(self, status):
@@ -86,6 +103,11 @@ class objGlyphInput(object):
 
     def getStatus(self):
         return self.statusin
+
+    #Assign status to glyph output
+    def setGlyphInput(self, status):
+        self.statusin = status
+
 
 # Structure for storing Glyphs output list in memory
 class objGlyphOutput(object):
