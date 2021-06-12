@@ -254,7 +254,7 @@ contentCon = []
 lstGlyphIn = []                 #List to store Glyphs Inputs
 lstGlyphOut = []                #List to store Glyphs Outputs
 
-# Reading the workflow file
+# Reading the workflow file and loads into memory all glyphs and connections
 fileRead(lstGlyph)
 
 #Create the inputs and outputs for the glyph
@@ -280,8 +280,14 @@ for vGlyph in lstGlyph:
         #Glyph execute
         # xxxxxxxxx
 
-        vGlyph.setGlyphDone(True)
+        #Sets all glyph outputs as executed 
         vGlyph.setGlyphOutputAll(True)
+
+        #Sets all glyph outputs as executed
+        vGlyph.setGlyphInputAll(True)
+
+        #Defines that the glyph was executed
+        vGlyph.setGlyphDone(True)
 
 
 # Shows the content of the Glyphs
