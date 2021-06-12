@@ -126,16 +126,6 @@ def fileRead(lstGlyph):
                 for vpar in contentGlyPar:
                     if vpar != '' and vpar != '\n':
 
-                        # Examples:
-                        # -wh -hw -dd 
-                        # -conn 1 
-                        # -wh -hw -dd
-                        # -ms 0 -mc 0 -mi 0 -mr 0 -col 0 
-                        # -append 1 -mapping 0 -e
-                        # -real 'width_size'
-                        # -backvalue 0 -masklogic 1
-                        # -conn 1  
-                        # -real '100'              
                         vGlyphPar = objGlyphParameters  
 
                         #Differentiates parameter name and value
@@ -148,25 +138,49 @@ def fileRead(lstGlyph):
                             else:
                                 vGlyphPar = objGlyphParameters('Name', vpar.replace('-', ''))
 
+                        #Temporary list to differentiate parameters and their values
                         lstParAux.append(vGlyphPar)
 
                 #Creates the parameters of the Glyph
                 for i, vParAux in enumerate(lstParAux):
                     
-                    vParName = lstParAux[i].getName()
-                    vParAuxNext = objGlyphParameters(lstParAux[i+1].getName(), lstParAux[i+1].getValue())
+                    vParType = vParAux.getName()
+                    vParValue = vParAux.getValue()
+                    
+                    vParTypeNext = ''
+                    vParValueNext = ''
+
+                    #If you don't have the next parameter to include
+                    if i < (len(lstParAux)-1):
+                        vParTypeNext = lstParAux[i+1].getName()
+                        vParValueNext = lstParAux[i+1].getValue()
+                    
+                    ###vParAuxNext = objGlyphParameters(lstParAux[i+1].getName(), lstParAux[i+1].getValue())
 
                     #A parameter name followed by another parameter name
                     #Write the parameter because it will have no value
-                    if vParAux.getName() == 'Name' and vParAuxNext.getName() == 'Name':
-                        vGlyphPar = objGlyphParameters(lstParAux[i].getValue(), '')
+                    #Example: -wh -hw -dd
+                    if vParType == 'Name' and (vParTypeNext == 'Name' or (vParTypeNext == '' and vParType != 'Value')):
+                        vGlyphPar = objGlyphParameters(vParValue, '')
+                        vGlyph.funcGlyphAddPar(vGlyphPar)
 
                     #A parameter name followed by a value
                     #Write the parameter with its value
-                    if vParAux.getName() == 'Name' and vParAuxNext.getName() == 'Value':
-                        vGlyphPar = objGlyphParameters(vParAux.Name, vParAuxNext.Value)
+                    #Example: -conn 1
+                    if vParType == 'Name' and vParTypeNext == 'Value':
+                        vGlyphPar = objGlyphParameters(vParValue, vParValueNext)
+                        vGlyph.funcGlyphAddPar(vGlyphPar)
 
-                    vGlyph.funcGlyphAddPar(vGlyphPar)                     
+                        # Examples:
+                        # -wh -hw -dd 
+                        # -conn 1 
+                        # -wh -hw -dd
+                        # -ms 0 -mc 0 -mi 0 -mr 0 -col 0 
+                        # -append 1 -mapping 0 -e
+                        # -real 'width_size'
+                        # -backvalue 0 -masklogic 1
+                        # -conn 1  
+                        # -real '100'                                                   
 
                 lstGlyph.append(vGlyph)
 
