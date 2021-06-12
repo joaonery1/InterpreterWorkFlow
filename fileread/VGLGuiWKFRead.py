@@ -40,14 +40,16 @@ class objGlyph(object):
     #Function to update if the glyph is ready and return status
     #When all glyph entries are READY=TRUE, the glyph changes status to READY=TRUE
     def getGlyphReady(self):
-        vGlyphReady = True
+        
+        if len(self.lst_input) > 0:
+            vGlyphReady = True
 
-        for vGlyphIn in self.lst_input:            
-            if vGlyphIn.getStatus() == False:
-                vGlyphReady = False
- 
-        self.ready = vGlyphReady
-        return self.ready
+            for vGlyphIn in self.lst_input:            
+                if vGlyphIn.getStatus() == False:
+                    vGlyphReady = False
+    
+            self.ready = vGlyphReady
+            return self.ready
 
     #Assign done to glyph
     def setGlyphDone(self, status):
@@ -56,6 +58,11 @@ class objGlyph(object):
     #Return Done status
     def getGlyphDone(self):
         return self.done
+
+    #Assign ready to glyph outputs
+    def setGlyphOutputAll(self, status):
+        for i, vGlyphOut in enumerate(self.lst_output):
+           self.lst_output[i].setGlyphOutput(vGlyphOut, status)
 
 # Structure for storing Parameters in memory
 class objGlyphParameters(object):
@@ -84,8 +91,12 @@ class objGlyphInput(object):
 class objGlyphOutput(object):
 
     def __init__(self, nameout, statusout):
-        self.nameout = nameout     #glyph output name
-        self.statusout = statusout       #glyph output status
+        self.nameout = nameout      #glyph output name
+        self.statusout = statusout  #glyph output status
+
+    #Assign status to glyph output
+    def setGlyphOutput(self, status):
+        self.statusout = status
 
 # Structure for storing Connections in memory
 # Images are stored on edges (connections between Glyphs)
@@ -246,9 +257,9 @@ for vGlyph in lstGlyph:
 
         #Glyph execute
         # xxxxxxxxx
-        #
 
         vGlyph.setGlyphDone(True)
+        vGlyph.setGlyphOutputAll(True)
 
 
 # Shows the content of the Glyphs
