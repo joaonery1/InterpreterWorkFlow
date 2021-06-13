@@ -7,7 +7,7 @@ Lista de regras para os tratamentos de erros::
 3.
 4.Erro nas coordenadas definidas do Glifo. Caso não seja inteiro ou ultrapasse as dimensões a serem definidas pelo arquivo.
 5.Tratamento de erro - finnaly, última tarefa a ser executada seria o fechamento do arquivo lido
-6. tratar coordenada y do glifo
+6. tratar coordenada x,y do glifo
 erros a serem tratados:
 para arquivo: structure.txt 
     vParTypeNext = lstParAux[i+1].getName()
