@@ -16,17 +16,13 @@ VariablesBegin:
 VariablesEnd:
 
 #  Glyph '[GlyphName]'
-Glyph:[Library]:comment::localhost
+Glyph:VISIONGL:kvision::localhost:2:50:60:: -wh -hw -dd 
+
 #  Glyph '[GlyphName]'
-Glyph:[Library]:comment::localhost:[Glyph_ID]:[Glyph_X]:[Glyph_Y]:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
+Glyph:VISIONGL:kvision::localhost:5:5000:60000:: -wh -hw -dd 
 
 #  Connections '[GlyphName]'
-NodeConnection:data:[output_Glyph_ID]
-NodeConnection:data:[output_Glyph_ID]
-
-#  Connections '[GlyphName]'
-NodeConnection:data:[output_Glyph_ID]:
-NodeConnection:data:[output_Glyph_ID]:
+NodeConnection:data:2:o:5:i
 
 AnnotationsBegin
 #The glyph and the connections must be in order by glyph name. Start glyph section, end glyph section, start node conection section, end node conection section.

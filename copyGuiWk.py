@@ -12,68 +12,116 @@ from collections import defaultdict
 class objGlyph(object):
         
     #Glyph:[Library]:comment::localhost:[Glyph_ID]:[Glyph_X]:[Glyph_Y]:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]    
-    def __init__(self, vlibrary, vfunc, vlocalhost, vglyph_id, vglyph_x, vglyph_y, vlst_par):       
-        self.library = vlibrary       #library name (Ex: VisionGL)
-        self.func = vfunc             #function
-        self.localhost = vlocalhost   #folder where the image file or library function is located
-        self.glyph_id = vglyph_id     #glyph identifier code
-        self.glyph_x = vglyph_x       #numerical coordinate of the glyph's linear position on the screen 
-        self.glyph_y = vglyph_y       #numerical coordinate of the column position of the Glyph on the screen
-        self.lst_par = vlst_par       #parameter list
-        self.ready = False            #TRUE = glyph is ready to run
-        self.done = False             #TRUE = glyph was executed
-        self.lst_input = [objGlyphInput]           #glyph input list
-        self.lst_output = [objGlyphOutput]          #glyph output list
+    def __init__(self, vlibrary, vfunc, vlocalhost, vglyph_id, vglyph_x, vglyph_y):       
+        self.library = vlibrary                 #library name (Ex: VisionGL)
+        self.func = vfunc                       #function
+        self.localhost = vlocalhost             #folder where the image file or library function is located
+        self.glyph_id = vglyph_id               #glyph identifier code
+        self.glyph_x = vglyph_x                 #numerical coordinate of the glyph's linear position on the screen 
+        self.glyph_y = vglyph_y                 #numerical coordinate of the column position of the Glyph on the screen
+        self.ready = False                      #TRUE = glyph is ready to run
+        self.done = False                       #TRUE = glyph was executed
+        self.lst_par = []                       #parameter list
+        self.lst_input = []                     #glyph input list
+        self.lst_output = []                    #glyph output list
+
+    #Add glyph parameter function
+    def funcGlyphAddPar (self, vGlyphPar):
+        self.lst_par.append(vGlyphPar)
 
     #Add glyph input function
-    ########
-    ######## P E N D E N T E   T E S T A R   S E   E N T R A D A   J A   E X I S T E
-    ########
-    def funcGlyphAddIn (self,vGlyphIn):
-        #Glyph input has input value and ready
+    def funcGlyphAddIn (self, vGlyphIn):
         self.lst_input.append(vGlyphIn)
 
     #Add glyph output function 
-    ########
-    ######## P E N D E N T E   T E S T A R   S E   S A Í D A   J A   E X I S T E
-    ########
-    def funcGlyphAddOut (self,vGlyphOut):
+    def funcGlyphAddOut (self, vGlyphOut):
         self.lst_output.append(vGlyphOut)
 
-    #Function to update glyph status
-    #def funcGlyphUpdateStatus(self:
-    #    for vGlyphIn in lst_input:
-    #        self.ready = True
-    #        if self. 
+    #Function to update if the glyph is ready and return status
+    #When all glyph entries are READY=TRUE, the glyph changes status to READY=TRUE
+    def getGlyphReady(self):
+        return self.ready
+
+    #Assign ready to glyph
+    def setGlyphReady(self, status):
+
+        vGlyphReady = status
+
+        #Identifies if all glyph entries were used
+        if vGlyphReady == True and len(self.lst_input) > 0:
+            
+            #If there is an entry without using
+            for vGlyphIn in self.lst_input:            
+                if vGlyphIn.getStatus() == False:
+                    vGlyphReady = False
+                    self.ready = False
+                    exit    
+    
+            #If all inputs were used
+            if vGlyphReady:
+                self.ready = vGlyphReady
+
+        #self.ready = status
+
+    #Assign done to glyph
+    def setGlyphDone(self, status):
+        self.done = status
+
+    #Return Done status
+    def getGlyphDone(self):
+        return self.done
+
+    #Assign ready to glyph inputs
+    def setGlyphInputAll(self, status):
+        for i, vGlyphIn in enumerate(self.lst_input):
+           self.lst_input[i].setGlyphInput(vGlyphIn, status)
+
+    #Assign ready to glyph outputs
+    def setGlyphOutputAll(self, status):
+        for i, vGlyphOut in enumerate(self.lst_output):
+           self.lst_output[i].setGlyphOutput(vGlyphOut, status)
+    
+    def getGlypX(self):
+        return self.glyph_x
 
 # Structure for storing Parameters in memory
 class objGlyphParameters(object):
 
-    def __init__(self, vglyph_id, vname, vvalue):
-        self.glyph_id = vglyph_id   #glyph identifier code
-        self.name = vname           #variable name
-        self.value = vvalue         #variable value
+    def __init__(self, namepar, valuepar):
+        self.name = namepar      #variable name
+        self.value = valuepar    #variable value
+
+    def getName(self):
+        return self.name
+
+    def getValue(self):
+        return self.value
 
 # Structure for storing Glyphs input list in memory
 class objGlyphInput(object):
 
-    def __init__(self, vnamein, vstatus):
-        self.namein = vnamein     #glyph input name
-        self.status = vstatus     #glyph input status
+    def __init__(self, namein, statusin):
+        self.namein = namein         #glyph input name
+        self.statusin = statusin     #glyph input status
 
-    def __repr__(self):
-        return "{},{}".format(self.namein,self.status)
+    def getStatus(self):
+        return self.statusin
+
+    #Assign status to glyph output
+    def setGlyphInput(self, status):
+        self.statusin = status
 
 
 # Structure for storing Glyphs output list in memory
 class objGlyphOutput(object):
 
-    def __init__(self, vnameout, vstatus):
-        self.nameout = vnameout     #glyph output name
-        self.status = vstatus       #glyph output status
+    def __init__(self, nameout, statusout):
+        self.nameout = nameout      #glyph output name
+        self.statusout = statusout  #glyph output status
 
-    def __repr__(self):
-        return "{},{}".format(self.nameout,self.status)
+    #Assign status to glyph output
+    def setGlyphOutput(self, status):
+        self.statusout = status
 
 # Structure for storing Connections in memory
 # Images are stored on edges (connections between Glyphs)
@@ -87,17 +135,23 @@ class objConnection(object):
         self.input_glyph_id = vinput_glyph_id       #glyph identifier code input
         self.input_varname = vinput_varname         #variable name input
         self.image = None                           #image
-        self.ready = False                          #False = unread or unexecuted image; True = image read or executed
+        self.ready = False     
+ #False = unread or unexecuted image; True = image read or executed
 
+class Error (Exception): #classe para tratar uma execeção definida pelo usuário
+    pass
+    '''
+        FALTA OS AJUSTES PARA SAÍDA DA CLASSE, POREM SÓ COM A FUNÇÃO 'raise' JA FUNCIONA
+    '''
 # File to be read
-vfile = 'fileread/data.wksp'
+vfile = 'arquivoteste.wk'
 
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
 lstConnection = []              #List to store Connections
 lstGlyphIn = []                 #List to store Glyphs Inputs
 lstGlyphOut = []                #List to store Glyphs Outputs
-
+lst_sizes = []
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyph parameters in memory
 vGlyphIn = objGlyphInput        #Glyph input in memory
@@ -106,55 +160,119 @@ vConnection = objConnection     #Connection in memory
 
 # Method for reading the workflow file
 def fileRead(lstGlyph):
-    if os.path.isfile(vfile):
+    try:
+        if os.path.isfile(vfile):
+            c = 0 #declaração do contador de linhas
 
-        # Opens the workflow file
-        file1 = open(vfile,"r")
-        for line in file1:
+            # Opens the workflow file
+            file1 = open(vfile,"r")
+            for line in file1:
+                c +=1   #varaiavel contador
+            
+                # Creates the glyphs of the workflow file
+                if 'glyph:' in line.lower():
+                    try:
+                        contentGly = line.split(':')     #extracts the contents of the workflow file line in a list separated by the information between the ":" character
+                        contentGlyPar = []               #clears the glyph parameter list
+                        lstParAux = []                   #auxiliary parameter list
+                        
+                        #Create the Glyph
+                        vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7])
+                    except IndexError as d: #rule 2
+                        #caso falte alguma informção de contentGly 
+                        print("Falta parametros a serem declarados na linha do Glyph","\nLinha",{c})
+                    #Caso ultrapasse os limites, ainda falta definir os limites
+                    if int(contentGly[6]) and int(contentGly[7]) > 100000 or int(contentGly[6]) and int(contentGly[7]) < 0:
+                        raise Error("Ultrapassou o limite das dimensões") #rule 4
+                    
 
-            # Creates the glyphs of the workflow file
-            if 'glyph:' in line.lower():
+                            
+                    # lst_sizes.append(contentGly[5])
+                    # lst_sizes.append(contentGly[6])
 
-                contentGly = line.split(':')    #extracts the contents of the workflow file line in a list separated by the information between the ":" character
-                contentGlyPar = []              #clears the glyph parameter list
-                vparName = ''
-                vparValue = ''
 
-                #Creates the parameters of the Glyph
-                #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
-                contentGlyPar = contentGly[9].split(' ')
-                for vpar in contentGlyPar:
-                    if vpar != '' and vpar != '\n':
-                        vparName = vpar.replace('-', '')                        
-                        vGlyphPar = objGlyphParameters(contentGly[5], vparName, 'fixo')
-                        lstGlyphPar.append(vGlyphPar)
+                    #Image type parameter
+                    if 'image' in contentGly[9]:
+                        contentGly[9] = contentGly[9].replace('image', '-image')
+                        contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
+                        
+                    # #Identifies the parameters
+                    # #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
+                    # contentGlyPar = contentGly[9].split(' ')
 
-                        ########
-                        ######## P E N D E N T E   A R M A Z E N A R   O S   P A R A M E T R O S
-                        ########
+                    for vpar in contentGlyPar:
+                        if vpar != '' and vpar != '\n':
 
-                        #if vparName != '' and vparName != vpar:
-                        #    vGlyphPar = objGlyphParameters(contentGly[5], vparName, vparValue)
-                        #    lstGlyphPar.append(vGlyphPar)
-                        #    vparName = ''
-                        #    vparValue = ''
-                        #else:
-                        #    if vpar.find('-') >= 0:
-                        #        vparName = vpar.replace('-', '')
-                        #    else:
-                        #        vparValue = vpar
+                            vGlyphPar = objGlyphParameters  
 
-                #Create the Glyph
-                vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7], lstGlyphPar)
-                lstGlyph.append(vGlyph)
+                            #Differentiates parameter name and value
+                            if vpar[0] == '\'' or vpar.isdigit():
+                                vGlyphPar = objGlyphParameters('Value', vpar.replace("'", '')) 
 
-            #Creates the connections of the workflow file
-            #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
-            if 'nodeconnection:' in line.lower():
-                contentCon = line.split(':')
-                vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
-                lstConnection.append(vConnection)           
+                            if vpar[0] == "-":             
+                                if vpar[1].isdigit():
+                                    vGlyphPar = objGlyphParameters('Value', vpar.replace("-", ''))
+                                else:
+                                    vGlyphPar = objGlyphParameters('Name', vpar.replace('-', ''))
 
+                            #Temporary list to differentiate parameters and their values
+                            lstParAux.append(vGlyphPar)
+
+                    #Creates the parameters of the Glyph
+                    for i, vParAux in enumerate(lstParAux):
+                        
+                        vParType = vParAux.getName()
+                        vParValue = vParAux.getValue()
+                        
+                        vParTypeNext = ''
+                        vParValueNext = ''
+
+                        #If you don't have the next parameter to include
+                        if i < (len(lstParAux)-1):
+                            vParTypeNext = lstParAux[i+1].getName()
+                            vParValueNext = lstParAux[i+1].getValue()
+                        
+                        ###vParAuxNext = objGlyphParameters(lstParAux[i+1].getName(), lstParAux[i+1].getValue())
+
+                        #A parameter name followed by another parameter name
+                        #Write the parameter because it will have no value
+                        #Example: -wh -hw -dd
+                        if vParType == 'Name' and (vParTypeNext == 'Name' or (vParTypeNext == '' and vParType != 'Value')):
+                            vGlyphPar = objGlyphParameters(vParValue, '')
+                            vGlyph.funcGlyphAddPar(vGlyphPar)
+
+                        #A parameter name followed by a value
+                        #Write the parameter with its value
+                        #Example: -conn 1
+                        if vParType == 'Name' and vParTypeNext == 'Value':
+                            vGlyphPar = objGlyphParameters(vParValue, vParValueNext)
+                            vGlyph.funcGlyphAddPar(vGlyphPar)
+
+                            # Examples:
+                            # -wh -hw -dd 
+                            # -conn 1 
+                            # -wh -hw -dd
+                            # -ms 0 -mc 0 -mi 0 -mr 0 -col 0 
+                            # -append 1 -mapping 0 -e
+                            # -real 'width_size'
+                            # -backvalue 0 -masklogic 1
+                            # -conn 1  
+                            # -real '100'                                                   
+
+                    lstGlyph.append(vGlyph)
+
+                #Creates the connections of the workflow file
+                #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
+                if 'nodeconnection:' in line.lower():
+                    try:
+                        contentCon = line.split(':')
+                        vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
+                        lstConnection.append(vConnection)
+                    except IndexError as f: #rule 2
+                        print("Falta indices nas conexões",{f},"na linha",{c},"do arquivo")
+                
+    finally: #rule 5
+        #print("ARQUIVO LIDO")
         file1.close()
 
 # Program execution
@@ -165,8 +283,11 @@ contentCon = []
 lstGlyphIn = []                 #List to store Glyphs Inputs
 lstGlyphOut = []                #List to store Glyphs Outputs
 
-# Reading the workflow file
-fileRead(lstGlyph)
+# Reading the workflow file and loads into memory all glyphs and connections
+try:
+    fileRead(lstGlyph)
+except UnboundLocalError: #rule 1
+    print("Arquivo não encontrado.")
 
 #Create the inputs and outputs for the glyph
 for vConnection in lstConnection:
@@ -177,34 +298,42 @@ for vConnection in lstConnection:
             vGlyphIn = objGlyphInput(vConnection.input_varname, False)
             lstGlyph[i].funcGlyphAddIn (vGlyphIn)
 
-            vGlyphOut = objGlyphOutput(vConnection.output_varname,False)
-            lstGlyph[i].funcGlyphAddOut(vGlyphOut)
-
-
     #If the glyph has output   
-    #for i, vGlyph in enumerate(lstGlyph):
-    #    if vConnection.output_varname != '\n' and vGlyph.glyph_id == vConnection.output_glyph_id:
-    #        lstGlyph[i].funcGlyphAddOut (vConnection.output_varname, False)
+    for i, vGlyph in enumerate(lstGlyph):
+        if vConnection.output_varname != '\n' and vGlyph.glyph_id == vConnection.output_glyph_id:
+            vGlyphIn = objGlyphInput(vConnection.output_varname, False)
+            lstGlyph[i].funcGlyphAddOut (vGlyphOut)
 
-#Creates the outputs for the glyph  
-#for i, vGlyph in enumerate(lstGlyph):
-#    #If the glyph has output
-#        if contentCon[3] != '\n' and vGlyph.glyph_id == contentCon[2]:
-#            lstGlyph[i].funcGlyphAddOut (contentCon[3], False)                 
+#Update the status of glyph entries
+for vGlyph in lstGlyph:
+
+    if vGlyph.getGlyphReady() and vGlyph.getGlyphDone() == False:
+
+        #Glyph execute
+        # xxxxxxxxx
+
+        #Sets all glyph outputs as executed 
+        vGlyph.setGlyphOutputAll(True)
+
+        #Sets all glyph outputs as executed
+        vGlyph.setGlyphInputAll(True)
+
+        #Defines that the glyph was executed
+        vGlyph.setGlyphDone(True)
+
 
 # Shows the content of the Glyphs
 for vGlyph in lstGlyph:
     print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
           "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
-
-    #Shows the list of glyph inputs
-    for vGlyphIn in vGlyph.lst_input:
-        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_In:", vGlyphIn)
-
-    #Shows the list of glyph outputs
-    for vGlyphOut in vGlyph.lst_output:
-        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut)
-
+#
+#    #Shows the list of glyph inputs
+#    for vGlyphIn in vGlyph.lst_input:
+#        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_In:", vGlyphIn)
+#
+#    #Shows the list of glyph outputs
+#    for vGlyphOut in vGlyph.lst_output:
+#        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut)
 
 # Shows the content of the Connections
 #for vConnection in lstConnection:

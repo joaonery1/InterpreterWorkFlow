@@ -1,0 +1,16 @@
+Descrição sobre o tratamento de erros do interpretador
+
+Lista de regras para os tratamentos de erros::
+
+1.Erro na localização do arquivo.
+2.Erro na procura de variáveis no arquivo. (Index Error)
+3.
+4.Erro nas coordenadas definidas do Glifo. Caso não seja inteiro ou ultrapasse as dimensões a serem definidas pelo arquivo.
+5.Tratamento de erro - finnaly, última tarefa a ser executada seria o fechamento do arquivo lido
+
+erros a serem tratados:
+para arquivo: structure.txt 
+    vParTypeNext = lstParAux[i+1].getName()
+TypeError: getName() missing 1 required positional argument: 'self
+
+parametros do glifo, contentGly[9]
