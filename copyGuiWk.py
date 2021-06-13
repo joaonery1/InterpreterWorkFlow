@@ -162,12 +162,12 @@ vConnection = objConnection     #Connection in memory
 def fileRead(lstGlyph):
     try:
         if os.path.isfile(vfile):
-            c = 0 #declaração do contador de linhas
+            count = 0 #declaração do contador de linhas
 
             # Opens the workflow file
             file1 = open(vfile,"r")
             for line in file1:
-                c +=1   #varaiavel contador
+                count +=1   #varaiavel contador
             
                 # Creates the glyphs of the workflow file
                 if 'glyph:' in line.lower():
@@ -180,10 +180,19 @@ def fileRead(lstGlyph):
                         vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7])
                     except IndexError as d: #rule 2
                         #caso falte alguma informção de contentGly 
-                        print("Falta parametros a serem declarados na linha do Glyph","\nLinha",{c})
+                        print("Falta parametros a serem declarados na linha do Glyph","\nLinha",{count}, "{d}")
+                    except ValueError as s: #rule 4
+                        print("Falta parametros a serem declarados na linha do Glyph","\nLinha",{count} , "{s}")
                     #Caso ultrapasse os limites, ainda falta definir os limites
-                    if int(contentGly[6]) and int(contentGly[7]) > 100000 or int(contentGly[6]) and int(contentGly[7]) < 0:
-                        raise Error("Ultrapassou o limite das dimensões") #rule 4
+                    try:
+                        if (int(contentGly[6]) or int(contentGly[7])) > 100000 or (int(contentGly[6]) or int(contentGly[7])) < 0:
+                            raise Error("Ultrapassou o limite das dimensões") #rule 4
+                    except ValueError: #rule 4
+                        print("Valores para as coordenadas estão errados." , " Verificar a linha: ",{count})
+                   
+
+                        
+                    
                     
 
                             
@@ -192,9 +201,12 @@ def fileRead(lstGlyph):
 
 
                     #Image type parameter
-                    if 'image' in contentGly[9]:
-                        contentGly[9] = contentGly[9].replace('image', '-image')
-                        contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
+                    try:
+                        if 'image' in contentGly[9]:
+                            contentGly[9] = contentGly[9].replace('image', '-image')
+                            contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
+                    except IndexError: #rule 2
+                        print("Erro nos parametros do Glyph.", "Verifique a linha ", {count})
                         
                     # #Identifies the parameters
                     # #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
@@ -269,7 +281,8 @@ def fileRead(lstGlyph):
                         vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
                         lstConnection.append(vConnection)
                     except IndexError as f: #rule 2
-                        print("Falta indices nas conexões",{f},"na linha",{c},"do arquivo")
+                        print("Falta indices nas conexões",{f},"na linha",{count},"do arquivo")
+                    
                 
     finally: #rule 5
         #print("ARQUIVO LIDO")
@@ -336,6 +349,7 @@ for vGlyph in lstGlyph:
 #        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut)
 
 # Shows the content of the Connections
-#for vConnection in lstConnection:
-#    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
-#          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
+for vConnection in lstConnection:
+    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
+          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
+#teste

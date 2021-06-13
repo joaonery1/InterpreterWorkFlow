@@ -15,11 +15,11 @@ VariablesBegin:
 
 VariablesEnd:
 
-#  Glyph '[GlyphName]'
+#  Glyph '[F1]'
 Glyph:VISIONGL:kvision::localhost:2:50:60:: -wh -hw -dd 
 
-#  Glyph '[GlyphName]'
-Glyph:VISIONGL:kvision::localhost:5:5000:60000:: -wh -hw -dd 
+#  Glyph '[F2]'
+Glyph:VISIONGL:kvision::localhost:5:-5:100:: -wh -hw -dd 
 
 #  Connections '[GlyphName]'
 NodeConnection:data:2:o:5:i
