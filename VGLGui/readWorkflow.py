@@ -240,6 +240,25 @@ def procCreateConnection(contentCon):
     vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
     lstConnection.append(vConnection)           
 
+#Show info
+def procShowInfo():
+    for vGlyph in lstGlyph:
+        print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
+            "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
+
+        #Shows the list of glyph inputs
+        for vGlyphIn in vGlyph.lst_input:
+            print("Glyph_Id:", vGlyph.glyph_id, "Glyph_In:", vGlyphIn)
+
+        #Shows the list of glyph outputs
+        for vGlyphOut in vGlyph.lst_output:
+            print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut)
+
+    # Shows the content of the Connections
+    for vConnection in lstConnection:
+        print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
+            "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
+
 # File to be read
 vfile = 'VGLGui/data.wksp'
 
@@ -270,6 +289,7 @@ def fileRead(lstGlyph):
             #Creates the connections of the workflow file
             if 'nodeconnection:' in line.lower():
                 procCreateConnection(line.split(':'))
+
         file1.close()
 
         #Create inputs and outputs of the Glyph
@@ -304,19 +324,4 @@ for vGlyph in lstGlyph:
         vGlyph.setGlyphDone(True)
 
 # Shows the content of the Glyphs
-for vGlyph in lstGlyph:
-    print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
-          "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
-
-    #Shows the list of glyph inputs
-    for vGlyphIn in vGlyph.lst_input:
-        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_In:", vGlyphIn)
-
-    #Shows the list of glyph outputs
-    for vGlyphOut in vGlyph.lst_output:
-        print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut)
-
-# Shows the content of the Connections
-for vConnection in lstConnection:
-    print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
-          "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
+procShowInfo()
