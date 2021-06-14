@@ -152,7 +152,7 @@ def procCreateGlyphInOut():
                 lstGlyph[i].funcGlyphAddOut (vGlyphOut)
 
 #Identifies and Creates the parameters of the Glyph
-def procCreateGlyphParameters(vParameters):
+def procCreateGlyphParameters(vGlyph, vParameters):
 
     #Identifies the parameters
     #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
@@ -204,7 +204,6 @@ def procCreateGlyphParameters(vParameters):
 
         #A parameter name followed by a value
         #Write the parameter with its value
-        #Example: -conn 1
         if vParType == 'Name' and vParTypeNext == 'Value':
             vGlyphPar = objGlyphParameters(vParValue, vParValueNext)
             vGlyph.funcGlyphAddPar(vGlyphPar)
@@ -219,6 +218,27 @@ def procCreateGlyphParameters(vParameters):
             # -backvalue 0 -masklogic 1
             # -conn 1  
             # -real '100'                                                   
+
+#Create Glyph
+def procCreateGlyph(contentGly):
+    #Create the Glyph
+    vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7])
+
+    #Image type parameter
+    if 'image' in contentGly[9]:
+        contentGly[9] = contentGly[9].replace('image', '-image')
+        contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
+
+    #Creates the parameters of the Glyph
+    procCreateGlyphParameters(vGlyph, contentGly[9].split(' '))                    
+
+    lstGlyph.append(vGlyph)
+
+#Creates the connections of the workflow file
+def procCreateConnection(contentCon):
+    #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
+    vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
+    lstConnection.append(vConnection)           
 
 # File to be read
 vfile = 'VGLGui/data.wksp'
@@ -243,33 +263,16 @@ def fileRead(lstGlyph):
         file1 = open(vfile,"r")
         for line in file1:
 
-            # Creates the glyphs of the workflow file
+            #Extracts the contents of the workflow file line in a list separated by the information between the ":" character and create Glyph
             if 'glyph:' in line.lower():
-
-                contentGly = line.split(':')     #extracts the contents of the workflow file line in a list separated by the information between the ":" character
-
-                #Create the Glyph
-                vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7])
-
-                #Image type parameter
-                if 'image' in contentGly[9]:
-                    contentGly[9] = contentGly[9].replace('image', '-image')
-                    contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
-
-                #Creates the parameters of the Glyph
-                procCreateGlyphParameters(contentGly[9].split(' '))                    
-
-                lstGlyph.append(vGlyph)
+                procCreateGlyph(line.split(':'))
 
             #Creates the connections of the workflow file
-            #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
             if 'nodeconnection:' in line.lower():
-                contentCon = line.split(':')
-                vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
-                lstConnection.append(vConnection)           
-
+                procCreateConnection(line.split(':'))
         file1.close()
 
+        #Create inputs and outputs of the Glyph
         procCreateGlyphInOut()
 
 # Program execution
