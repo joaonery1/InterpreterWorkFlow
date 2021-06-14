@@ -276,24 +276,27 @@ vConnection = objConnection     #Connection in memory
 
 # Method for reading the workflow file
 def fileRead(lstGlyph):
-    if os.path.isfile(vfile):
+    try:
+        if os.path.isfile(vfile):
 
-        # Opens the workflow file
-        file1 = open(vfile,"r")
-        for line in file1:
+            # Opens the workflow file
+            file1 = open(vfile,"r")
+            for line in file1:
 
-            #Extracts the contents of the workflow file line in a list separated by the information between the ":" character and create Glyph
-            if 'glyph:' in line.lower():
-                procCreateGlyph(line.split(':'))
+                #Extracts the contents of the workflow file line in a list separated by the information between the ":" character and create Glyph
+                if 'glyph:' in line.lower():
+                    procCreateGlyph(line.split(':'))
 
-            #Creates the connections of the workflow file
-            if 'nodeconnection:' in line.lower():
-                procCreateConnection(line.split(':'))
+                #Creates the connections of the workflow file
+                if 'nodeconnection:' in line.lower():
+                    procCreateConnection(line.split(':'))
 
-        file1.close()
+            file1.close()
 
-        #Create inputs and outputs of the Glyph
-        procCreateGlyphInOut()
+            #Create inputs and outputs of the Glyph
+            procCreateGlyphInOut()
+    except UnboundLocalError: #rule 1
+        print("Arquivo não encontrado.")
 
 # Program execution
 lstGlyph = []
