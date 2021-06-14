@@ -21,10 +21,10 @@ height_size = 1144
 VariablesEnd:
 
 #Glyph 'ShowImage'
-Glyph:imgage:kvision::localhost:1:50:60:: -image:ball
+Glyph:imgage:kvision::localhost:1:adqew:60:: -image:ball
 
 #Glyph 'ShowImage'
-Glyph:imgage:kvision::localhost:2:50:60:: -image:ball
+Glyph:imgage:kvision::localhost:2:-50:60:: -image:ball
 
 #Glyph 'ShowImage'
 Glyph:imgage:kvision::localhost:4:50:60:: -image:ball
