@@ -20,7 +20,7 @@ parametros do glifo, contentGly[9]
 
 Pensar o que fazer caso esteja alguma coisa errada. Devemos parar a execução e mostar os erros? Ou continuar, armazenar e mostar as linhas erradas e pedir modificação?
 
-'''Coments'''
+'''Comements'''
 Erro das dimensões - Tem que ser inteiro ( int > 0) e número. 
         Testes : Glyph:VISIONGL:kvision::localhost:9:-5:100:: -img_output -img_input
         Testes : Glyph:VISIONGL:kvision::localhost:a:-5:100:: -img_output -img_input
