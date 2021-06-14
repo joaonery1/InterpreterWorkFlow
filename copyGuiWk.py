@@ -141,7 +141,7 @@ class objConnection(object):
 class Error (Exception): #classe para tratar uma execeção definida pelo usuário
     pass
     '''
-        FALTA OS AJUSTES PARA SAÍDA DA CLASSE, POREM SÓ COM A FUNÇÃO 'raise' JA FUNCIONA
+        FALTA OS AJUSTES PARA SAÍDA DA CLASSE, POREM SÓ COM A FUNÇÃO 'raise' JÁ FUNCIONA
     '''
 # File to be read
 vfile = 'arquivoteste.wk'
@@ -183,15 +183,21 @@ def fileRead(lstGlyph):
                         print("Falta parametros a serem declarados na linha do Glyph","\nLinha",{count}, "{d}")
                     except ValueError as s: #rule 4
                         print("Falta parametros a serem declarados na linha do Glyph","\nLinha",{count} , "{s}")
+                    
                     #Caso ultrapasse os limites, ainda falta definir os limites
                     try:
                         if (int(contentGly[6]) or int(contentGly[7])) > 100000 or (int(contentGly[6]) or int(contentGly[7])) < 0:
-                            raise Error("Ultrapassou o limite das dimensões") #rule 4
+                            raise Error("Ultrapassou o limite das dimensões", "Verifique a linha: ",{count}) #rule 4
                     except ValueError: #rule 4
                         print("Valores para as coordenadas estão errados." , " Verificar a linha: ",{count})
-                   
+                
+                    
 
-                        
+
+
+                ##ARAMAZENAR E TRATAR ALTURA E LARGURA , PROVAVELMENTE SERIA A TELA.
+                       ###width_size = 2342
+                       ###height_size = 1144 
                     
                     
 
@@ -199,7 +205,7 @@ def fileRead(lstGlyph):
                     # lst_sizes.append(contentGly[5])
                     # lst_sizes.append(contentGly[6])
 
-
+ 
                     #Image type parameter
                     try:
                         if 'image' in contentGly[9]:
@@ -282,6 +288,13 @@ def fileRead(lstGlyph):
                         lstConnection.append(vConnection)
                     except IndexError as f: #rule 2
                         print("Falta indices nas conexões",{f},"na linha",{count},"do arquivo")
+
+                    ##tratar conexões node connection contentcon[2] e contentcon[4]
+                    try: #rule 8
+                        if int(contentCon[2])  <0 or int(contentCon[4]) < 0:
+                            raise Error("Conexões erradas, por favor verifique a linha: ",{count})
+                    except ValueError:
+                        print("Valores para as coordenadas estão errados." , " Verificar a linha: ",{count})
                     
                 
     finally: #rule 5

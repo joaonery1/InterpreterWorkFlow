@@ -14,3 +14,14 @@ para arquivo: structure.txt
 TypeError: getName() missing 1 required positional argument: 'self
 
 parametros do glifo, contentGly[9]
+
+7.Tratar palavras reservadas. Quem são essas palavras? NodeConnection? Glyph?
+8.Tratar conxões das NodeConnections, tem que ser números.
+
+Pensar o que fazer caso esteja alguma coisa errada. Devemos parar a execução e mostar os erros? Ou continuar, armazenar e mostar as linhas erradas e pedir modificação?
+
+'''Coments'''
+Erro das dimensões - Tem que ser inteiro ( int > 0) e número. 
+        Testes : Glyph:VISIONGL:kvision::localhost:9:-5:100:: -img_output -img_input
+        Testes : Glyph:VISIONGL:kvision::localhost:a:-5:100:: -img_output -img_input
+        Testes : Glyph:VISIONGL:kvision::localhost:a:-b:100:: -img_output -img_input

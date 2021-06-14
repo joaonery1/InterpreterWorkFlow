@@ -1,6 +1,6 @@
 # Khoros Visual Programming Workspace
 #
-# cantata workspace file (arquivoteste.wk) was created
+# cantata workspace file ([datapython.wk]) was created
 # on 21 06 13 23:21:50 2021
 # by user joaonery
 #
@@ -50,9 +50,10 @@ Glyph:VISIONGL:kvision::localhost:13:5:100:: -img_output -img_input
 #Glyph 'ShowImage'
 Glyph:imgage:kvision::localhost:15:50:60:: -imgage
 
+vglClNdThreshold
 
 #  Connections 'LoadImage'
-NodeConnection:data:a:o:3:i
+NodeConnection:data:1:o:3:i
 NodeConnection:data:1:o1:5:i
 NodeConnection:data:1:o2:7:i
 NodeConnection:data:1:o3:9:i
@@ -62,7 +63,7 @@ NodeConnection:data:1:o3:9:i
 NodeConnection:data:2:o:11:i
 
 #Connections 'LoadImage'
-NodeConnection:data:4:o:d:i
+NodeConnection:data:4:o:13:i
 
 #Connections 'vglClNdCopy'
 NodeConnection:data:3:o:15:i
