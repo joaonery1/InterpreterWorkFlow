@@ -7,6 +7,11 @@ import os
 import string
 from collections import defaultdict
 
+class Error (Exception): #classe para tratar uma execeção definida pelo usuário
+    pass
+    '''
+        FALTA OS AJUSTES PARA SAÍDA DA CLASSE, POREM SÓ COM A FUNÇÃO 'raise' JÁ FUNCIONA
+    '''
 # Structure for storing Glyphs in memory
 # Glyph represents a function
 class objGlyph(object):
@@ -153,111 +158,119 @@ def procCreateGlyphInOut():
 
 #Identifies and Creates the parameters of the Glyph
 def procCreateGlyphParameters(vGlyph, vParameters):
+    try:
 
-    #Identifies the parameters
-    #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
-    contentGlyPar = []               #clears the glyph parameter list
-    lstParAux = []                   #auxiliary parameter list
+        #Identifies the parameters
+        #:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
+        contentGlyPar = []               #clears the glyph parameter list
+        lstParAux = []                   #auxiliary parameter list
 
-    contentGlyPar = vParameters
+        contentGlyPar = vParameters
 
-    for vpar in contentGlyPar:
-        if vpar != '' and vpar != '\n':
+        for vpar in contentGlyPar:
+            if vpar != '' and vpar != '\n':
 
-            vGlyphPar = objGlyphParameters  
+                vGlyphPar = objGlyphParameters  
 
-            #Differentiates parameter name and value
-            if vpar[0] == '\'' or vpar.isdigit():
-                vGlyphPar = objGlyphParameters('Value', vpar.replace("'", '')) 
+                #Differentiates parameter name and value
+                if vpar[0] == '\'' or vpar.isdigit():
+                    vGlyphPar = objGlyphParameters('Value', vpar.replace("'", '')) 
 
-            if vpar[0] == "-":             
-                if vpar[1].isdigit():
-                    vGlyphPar = objGlyphParameters('Value', vpar.replace("-", ''))
-                else:
-                    vGlyphPar = objGlyphParameters('Name', vpar.replace('-', ''))
+                if vpar[0] == "-":             
+                    if vpar[1].isdigit():
+                        vGlyphPar = objGlyphParameters('Value', vpar.replace("-", ''))
+                    else:
+                        vGlyphPar = objGlyphParameters('Name', vpar.replace('-', ''))
 
-            #Temporary list to differentiate parameters and their values
-            lstParAux.append(vGlyphPar)
+                #Temporary list to differentiate parameters and their values
+                lstParAux.append(vGlyphPar)
 
-    #Creates the parameters of the Glyph
-    for i, vParAux in enumerate(lstParAux):
-        
-        vParType = vParAux.getName()
-        vParValue = vParAux.getValue()
-        
-        vParTypeNext = ''
-        vParValueNext = ''
+        #Creates the parameters of the Glyph
+        for i, vParAux in enumerate(lstParAux):
+            
+            vParType = vParAux.getName()
+            vParValue = vParAux.getValue()
+            
+            vParTypeNext = ''
+            vParValueNext = ''
 
-        #If you don't have the next parameter to include
-        if i < (len(lstParAux)-1):
-            vParTypeNext = lstParAux[i+1].getName()
-            vParValueNext = lstParAux[i+1].getValue()
-        
-        ###vParAuxNext = objGlyphParameters(lstParAux[i+1].getName(), lstParAux[i+1].getValue())
+            #If you don't have the next parameter to include
+            if i < (len(lstParAux)-1):
+                vParTypeNext = lstParAux[i+1].getName()
+                vParValueNext = lstParAux[i+1].getValue()
+            
+            ###vParAuxNext = objGlyphParameters(lstParAux[i+1].getName(), lstParAux[i+1].getValue())
 
-        #A parameter name followed by another parameter name
-        #Write the parameter because it will have no value
-        #Example: -wh -hw -dd
-        if vParType == 'Name' and (vParTypeNext == 'Name' or (vParTypeNext == '' and vParType != 'Value')):
-            vGlyphPar = objGlyphParameters(vParValue, '')
-            vGlyph.funcGlyphAddPar(vGlyphPar)
+            #A parameter name followed by another parameter name
+            #Write the parameter because it will have no value
+            #Example: -wh -hw -dd
+            if vParType == 'Name' and (vParTypeNext == 'Name' or (vParTypeNext == '' and vParType != 'Value')):
+                vGlyphPar = objGlyphParameters(vParValue, '')
+                vGlyph.funcGlyphAddPar(vGlyphPar)
 
-        #A parameter name followed by a value
-        #Write the parameter with its value
-        if vParType == 'Name' and vParTypeNext == 'Value':
-            vGlyphPar = objGlyphParameters(vParValue, vParValueNext)
-            vGlyph.funcGlyphAddPar(vGlyphPar)
+            #A parameter name followed by a value
+            #Write the parameter with its value
+            if vParType == 'Name' and vParTypeNext == 'Value':
+                vGlyphPar = objGlyphParameters(vParValue, vParValueNext)
+                vGlyph.funcGlyphAddPar(vGlyphPar)
 
-            # Examples:
-            # -wh -hw -dd 
-            # -conn 1 
-            # -wh -hw -dd
-            # -ms 0 -mc 0 -mi 0 -mr 0 -col 0 
-            # -append 1 -mapping 0 -e
-            # -real 'width_size'
-            # -backvalue 0 -masklogic 1
-            # -conn 1  
-            # -real '100'                                                   
+                # Examples:
+                # -wh -hw -dd 
+                # -conn 1 
+                # -wh -hw -dd
+                # -ms 0 -mc 0 -mi 0 -mr 0 -col 0 
+                # -append 1 -mapping 0 -e
+                # -real 'width_size'
+                # -backvalue 0 -masklogic 1
+                # -conn 1  
+                # -real '100'                  
+                #                                  
+    except IndexError as d: #rule 2 - Variable not found
+        print("Non-standard information in the Parameter declaration"," \nLine",{count}, "{d}")
+    except ValueError as s: #rule 3 - Error in defined Parameters coordinates (not integer or out of bounds)
+        print("Non-standard information in the Parameter declaration","\nLine",{count} , "{s}")
+
 
 #Create Glyph
-def procCreateGlyph(contentGly):
-    #Create the Glyph
-    vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7])
+def procCreateGlyph(contentGly, count):
+    try:
+        #Create the Glyph
+        vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7])
 
-    #Image type parameter
-    if 'image' in contentGly[9]:
-        contentGly[9] = contentGly[9].replace('image', '-image')
-        contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
+        #Image type parameter
+        if 'image' in contentGly[9]:
+            contentGly[9] = contentGly[9].replace('image', '-image')
+            contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
 
-    #Creates the parameters of the Glyph
-    procCreateGlyphParameters(vGlyph, contentGly[9].split(' '))                    
+        #Creates the parameters of the Glyph
+        procCreateGlyphParameters(vGlyph, contentGly[9].split(' '))                    
 
-    lstGlyph.append(vGlyph)
+        #rule 4 - Invalid screen position or exceeds dimensions to be defined by file
+        if (int(contentGly[6]) or int(contentGly[7])) > 100000 or (int(contentGly[6]) or int(contentGly[7])) < 0:
+            raise Error("Glyph position on screen in error,", " check the line: ",{count}) 
+
+        lstGlyph.append(vGlyph)
+    except IndexError as d: #rule 2 - Variable not found
+        print("Non-standard information in the Glyph declaration"," \nLine",{count}, "{d}")
+    except ValueError as s: #rule 3 - Error in defined glyph coordinates (not integer or out of bounds)
+        print("Non-standard information in the Glyph declaration","\nLine",{count} , "{s}")
 
 #Creates the connections of the workflow file
-def procCreateConnection(contentCon):
-    #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
-    vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
-    lstConnection.append(vConnection)           
+def procCreateConnection(contentCon, count):
+    try:
+        #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
+        vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
+        lstConnection.append(vConnection)           
 
-#Show info
-def procShowInfo():
-    for vGlyph in lstGlyph:
-        print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
-            "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
+        #rule 5 - Invalid Glyph Id
+        try:
+            if int(contentCon[2])  <0 or int(contentCon[4]) < 0:
+                raise Error("Invalid glyph id on line: ",{count})
+        except ValueError:
+            print("Invalid Connection Creation Values." , " check the line: ",{count})
 
-        #Shows the list of glyph inputs
-        for vGlyphIn in vGlyph.lst_input:
-            print("Glyph_Id:", vGlyph.glyph_id, "Glyph_In:", vGlyphIn)
-
-        #Shows the list of glyph outputs
-        for vGlyphOut in vGlyph.lst_output:
-            print("Glyph_Id:", vGlyph.glyph_id, "Glyph_Out:", vGlyphOut)
-
-    # Shows the content of the Connections
-    for vConnection in lstConnection:
-        print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
-            "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
+    except IndexError as f: #rule 2 - Variable not found
+        print("Connections indices not found",{f},"on line ",{count}," of the file")
 
 # File to be read
 vfile = 'VGLGui/data.wksp'
@@ -279,17 +292,21 @@ def fileRead(lstGlyph):
     try:
         if os.path.isfile(vfile):
 
+            count = 0 #line counter
+
             # Opens the workflow file
             file1 = open(vfile,"r")
             for line in file1:
 
+                count +=1   #line counter
+
                 #Extracts the contents of the workflow file line in a list separated by the information between the ":" character and create Glyph
                 if 'glyph:' in line.lower():
-                    procCreateGlyph(line.split(':'))
+                    procCreateGlyph(line.split(':'), count)
 
                 #Creates the connections of the workflow file
                 if 'nodeconnection:' in line.lower():
-                    procCreateConnection(line.split(':'))
+                    procCreateConnection(line.split(':'), count)
 
             file1.close()
 
@@ -299,32 +316,12 @@ def fileRead(lstGlyph):
         print("Arquivo não encontrado.")
 
 # Program execution
-lstGlyph = []
-lstConnection = []
-contentGly = []
-contentCon = []
-lstGlyphIn = []                 #List to store Glyphs Inputs
-lstGlyphOut = []                #List to store Glyphs Outputs
+#lstGlyph = []
+#lstConnection = []
+#contentGly = []
+#contentCon = []
+#lstGlyphIn = []                 #List to store Glyphs Inputs
+#lstGlyphOut = []                #List to store Glyphs Outputs
 
 # Reading the workflow file and loads into memory all glyphs and connections
-fileRead(lstGlyph)
-
-#Update the status of glyph entries
-for vGlyph in lstGlyph:
-
-    if vGlyph.getGlyphReady() and vGlyph.getGlyphDone() == False:
-
-        #Glyph execute
-        # xxxxxxxxx
-
-        #Sets all glyph outputs as executed 
-        vGlyph.setGlyphOutputAll(True)
-
-        #Sets all glyph outputs as executed
-        vGlyph.setGlyphInputAll(True)
-
-        #Defines that the glyph was executed
-        vGlyph.setGlyphDone(True)
-
-# Shows the content of the Glyphs
-procShowInfo()
+#fileRead(lstGlyph)
