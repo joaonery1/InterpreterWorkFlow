@@ -157,7 +157,7 @@ def procCreateGlyphInOut():
                 lstGlyph[i].funcGlyphAddOut (vGlyphOut)
 
 #Identifies and Creates the parameters of the Glyph
-def procCreateGlyphParameters(vGlyph, vParameters):
+def procCreateGlyphParameters(vGlyph, vParameters, count):
     try:
 
         #Identifies the parameters
@@ -243,7 +243,7 @@ def procCreateGlyph(contentGly, count):
             contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
 
         #Creates the parameters of the Glyph
-        procCreateGlyphParameters(vGlyph, contentGly[9].split(' '))                    
+        procCreateGlyphParameters(vGlyph, contentGly[9].split(' '), count)                    
 
         #rule 4 - Invalid screen position or exceeds dimensions to be defined by file
         if (int(contentGly[6]) or int(contentGly[7])) > 100000 or (int(contentGly[6]) or int(contentGly[7])) < 0:
