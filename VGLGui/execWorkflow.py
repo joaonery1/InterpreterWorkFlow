@@ -47,3 +47,22 @@ for vGlyph in lstGlyph:
 
 # Shows the content of the Glyphs
 procShowInfo()
+
+
+def execGlyph(vGplph):
+    if(vGlyph.func == 'StrEL2d'):
+        print("") #definir ação do glifo
+    elif (vGlyph.func == "vglClErode"):
+        print("") #definir ação do glifo
+    elif (vGlyph.fun == "vglClNErode"):
+        print("") #definir ação do glifo
+    elif (vGlyph.fun == "vglClNDilate"):
+        print("") #definir ação do glifo
+    elif (vGlyph.fun == "vglClOpen"):
+        print("") #definir ação do glifo
+    elif (vGlyph.fun == "vglClClose"):
+        print("") #definir ação do glifo
+    elif (vGlyph.fun == "vglClOpenRec"):
+        print("") #definir ação do glifo
+    else:
+        print("Error, função nao implementada") #definir tratamento de erro para função nao implementada
