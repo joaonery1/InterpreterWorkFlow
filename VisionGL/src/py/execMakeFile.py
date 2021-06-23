@@ -60,6 +60,13 @@ for vGlyph in lstGlyph:
         print("ERROR")
 
 
+'''
+para execução no MakeFile:
+abrir diretório do arquivo no terminal por exemplo: cd /InterpreterWorkflow/VisionGL/src/py
+verificar no arquivo MakeFile_Python qual o programa a ser executado
+executar programa : make -f Makefile_python rundemopy
+'''
+
 
 
 
