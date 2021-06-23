@@ -22,34 +22,32 @@ sys.path.insert(0,'/VGLGui/')
 from VGLGui.readWorkflow import *
 
 
-
 import time as t
 
 
 
-vl.vglClInit()
+vl.vglClInit()     #inicio das estruturas vgl
 
 fileRead(lstGlyph) #leitura do arquivo
 
 
 
 for vGlyph in lstGlyph:
-    if vGlyph.func == 'in':
+    if vGlyph.func == 'in': #imagem de entrada
         img_input = vl.VglImage(sys.argv[1], None, vl.VGL_IMAGE_2D_IMAGE(), vl.IMAGE_ND_ARRAY())
         vl.vglLoadImage(img_input)
         vl.vglClUpload(img_input)
     
-    elif vGlyph.func == 'vstrflat':
+    elif vGlyph.func == 'vstrflat': #elementro estruturante 
         window = vl.VglStrEl()
         window.constructorFromTypeNdim(vl.VGL_STREL_CROSS(), 2)
     
-    elif vGlyph.func == 'out':
+    elif vGlyph.func == 'out': #imagem de saida
         img_output = vl.create_blank_image_as(img_input)
         img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
         vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
 
-
-    elif vGlyph.func == 'copy':
+    elif vGlyph.func == 'copy': #funcao copy
         inicio = t.time()
         vglClNdCopy(img_input, img_output)
         fim = t.time()
@@ -61,6 +59,9 @@ for vGlyph in lstGlyph:
 
 
 '''
+Implementar as funções (Copy,Dilate,Erode...) em um novo workflow baseado no data.wksp
+
+
 para execução no MakeFile:
 abrir diretório do arquivo no terminal por exemplo: cd /InterpreterWorkflow/VisionGL/src/py
 verificar no arquivo MakeFile_Python qual o programa a ser executado
