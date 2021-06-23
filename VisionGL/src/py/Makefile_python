@@ -2,8 +2,8 @@ rundemopy:
 	#cd src/py/; ./benchmark_cl.py ../../images/lena_std.tif 100 tmp/
 	#cd src/py/; ./benchmark_cl3d.py ../../images/tif/E1154S7I_3d.tif 1 tmp/
 	#cd src/py/; ./benchmark_clnd.py ../../images/lena_std.tif ../../images/retina.tif
-	cd src/py/; ./benchmark_clnd.py ./tmp/orange.jpg
-	#cd src/py/; ./teste.py ./tmp/orange.jpg 
+	#cd src/py/; ./benchmark_clnd.py ./tmp/orange.jpg
+	cd src/py/; ./work.py ./tmp/orange.jpg 
 
 py:
 	./perlModules/cl2py.pl -o src/cl2py_shaders -p CL src/CL/*.cl
