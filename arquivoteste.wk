@@ -30,7 +30,7 @@ Glyph:imgage:kvision::localhost:2:-50:60:: -image:ball
 Glyph:imgage:kvision::localhost:4:50:60:: -image:ball
 
 #  Glyph 'vglClNdCopy'
-Glyph:VISIONGL:kvision::localhost:3:50:60:: -img_output -img_input 
+Glyph:VISIONGL:kmul::localhost:3:50:60:: -img_output -img_input 
 
 #  Glyph 'vglClNdConvolution'
 Glyph:VISIONGL:kvision::localhost:5:55:100:: -img_output -img_input  
